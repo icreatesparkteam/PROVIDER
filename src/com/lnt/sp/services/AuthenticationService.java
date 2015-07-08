@@ -55,6 +55,37 @@ public class AuthenticationService {
 			logger.error("Runtime Exception while login : {}", e.getMessage());
 			return Response.status(e.getCode()).entity(e.getMessage()).build();
 		}
+		catch (com.lnt.core.common.exception.ServiceApplicationException e) {
+			logger.error("Runtime Exception while login : {}", e.getMessage());
+			return Response.status(e.getCode()).entity(e.getMessage()).build();
+		}
+
+	}
+	
+	@POST
+	@Path("/devicelogin")
+	@Produces(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response authenticateDevice(@FormParam("deviceID") String deviceID)
+			throws ServiceApplicationException {
+		logger.info("AuthenticationService authenticate method deviceID:"
+				+ deviceID);
+		String token = null;
+		try {
+			token = authHandler.authenticate(deviceID);
+			return Response.ok().entity(token).build();
+		} catch (ServiceApplicationException e) {
+			logger.error("Application Exception while authenticating : {}",
+					e.getMessage());
+			return Response.status(e.getCode()).entity(e.getMessage()).build();
+		} catch (ServiceRuntimeException e) {
+			logger.error("Runtime Exception while login : {}", e.getMessage());
+			return Response.status(e.getCode()).entity(e.getMessage()).build();
+		}
+		catch (com.lnt.core.common.exception.ServiceApplicationException e) {
+			logger.error("Runtime Exception while login : {}", e.getMessage());
+			return Response.status(e.getCode()).entity(e.getMessage()).build();
+		}
 
 	}
 

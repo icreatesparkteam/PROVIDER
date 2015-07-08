@@ -16,7 +16,7 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
 //Test Client
 
 public class LoginTest {
-	public static String UrlConstant = "http://localhost:8080/iControlE-Core/rest/";
+	public static String UrlConstant = "http://localhost:8080/iControlE-ServiceProvider/rest/";
 	static Client client = Client.create();
 
 	public static void main(String[] args) throws JsonGenerationException,
@@ -32,7 +32,7 @@ public class LoginTest {
 			JsonMappingException, IOException {
 		System.out.println("Login user method : ");
 		MultivaluedMap<String, String> inputMap = new MultivaluedMapImpl();
-		inputMap.add("username", "oem");
+		inputMap.add("username", "servpro1");
 		inputMap.add("password", "Newuser@123");
 		System.out.println("Login user method : inputMap " + inputMap);
 		WebResource webResource = client.resource(UrlConstant + "auth/login");

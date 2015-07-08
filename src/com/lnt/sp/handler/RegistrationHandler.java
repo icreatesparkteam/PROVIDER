@@ -10,8 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.lnt.core.common.dto.ServiceProviderRegistrationDto;
-
 import com.lnt.sp.common.dto.UserRegistrationDto;
 import com.lnt.sp.common.exception.ServiceApplicationException;
 import com.lnt.sp.common.exception.ValidationException;

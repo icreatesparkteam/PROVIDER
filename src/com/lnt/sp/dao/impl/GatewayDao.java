@@ -13,7 +13,7 @@ import com.lnt.core.model.Gateway;
 
 @Repository
 @Component
-public class GatewayDao extends AbstractAppDao<Gateway, Integer> {
+public class GatewayDao extends AbstractAppSPDao<Gateway, Integer> {
 
 	public Gateway findByUserID(int userID, int serviceProviderID) {
 		Session session = (Session) entityManager.getDelegate();

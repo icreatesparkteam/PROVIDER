@@ -1,7 +1,6 @@
 package com.lnt.sp.handler;
 
 import java.util.Date;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.lnt.sp.common.cache.SessionCache;
 import com.lnt.sp.common.dto.SessionInfo;
 import com.lnt.sp.common.exception.InvalidTokenException;
-import com.lnt.sp.common.exception.ServiceApplicationException;
 import com.lnt.sp.common.exception.TokenExpiredException;
 import com.lnt.sp.common.util.DateUtil;
 import com.lnt.sp.common.util.ESessionStatus;

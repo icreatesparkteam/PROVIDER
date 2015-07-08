@@ -9,8 +9,13 @@
 		<property name="jndiName" value="jdbc/iControlE-ServiceProvider"></property>
 		<property name="resourceRef" value="true" />
 	</bean>
-	
+	<bean id="dataSource-core" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="jdbc/iControlE-Core"></property>
+		<property name="resourceRef" value="true" />
+	</bean>
+
 	<tx:annotation-driven transaction-manager="txnManager" proxy-target-class="true"/>
+	<!-- <tx:annotation-driven transaction-manager="txnManager-core" proxy-target-class="true"/> -->
 	
 	<bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">	 	
 	 	<property name="showSql" value="false" />
@@ -38,13 +43,51 @@
 			</props>
 		</property>	
 	</bean>
+	
+	<bean id="entityManagerFactory-core" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+	    <property name="persistenceUnitName" value="iControlE-Core" />
+	 	<property name="dataSource" ref="dataSource-core" />
+	 	<property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
+	 	<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
+				<prop key="hibernate.format_sql">false</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.connection.release_mode">after_transaction</prop>
+				<prop key="hibernate.dbcp.initialSize">10</prop>
+				<prop key="hibernate.dbcp.maxActive">20</prop>
+				<prop key="hibernate.dbcp.maxIdle">20</prop>
+				<prop key="hibernate.dbcp.minIdle">2</prop>
+				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>	
+	</bean>
+	
+	<bean id="transactionManager"
+		class="org.springframework.data.neo4j.transaction.ChainedTransactionManager">
+		<constructor-arg>
+			<list>
+				<ref bean="txnManager" />
+				<ref bean="txnManager-core" />
+			</list>
+		</constructor-arg>
+	</bean>
 	 
 	<bean id="txnManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />		
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="txnManager-core" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory-core" />
+		<property name="dataSource" ref="dataSource-core" />		
 	</bean>
 	
 	<context:annotation-config />
     <context:component-scan base-package="com.lnt.sp"/>
+    <context:component-scan base-package="com.lnt.core"/>
     
 	<bean id="pswdManager" class="com.lnt.sp.manager.PasswordManager">
 		<property name="passwdPolicy" ref="passwdPolicy"/>
