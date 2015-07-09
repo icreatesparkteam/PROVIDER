@@ -1,5 +1,6 @@
 package com.lnt.sp.manager;
 
+import com.lnt.core.model.Gateway;
 import com.lnt.core.model.ServiceProvider;
 import com.lnt.sp.model.User;
 import com.lnt.sp.model.UserLoginSession;
@@ -13,4 +14,6 @@ public interface ISessionManager {
 	void expireSession(UserLoginSession session);
 
 	String createSession(ServiceProvider serviceProvider);
+
+	String createSession(Gateway gateway);
 }

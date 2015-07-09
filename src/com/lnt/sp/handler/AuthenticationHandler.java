@@ -10,17 +10,20 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 
 import com.lnt.core.common.util.IConstants;
+import com.lnt.core.model.Gateway;
 import com.lnt.core.model.ServiceProvider;
 import com.lnt.sp.common.exception.AuthenticationException;
 import com.lnt.sp.common.exception.ServiceApplicationException;
 
 import com.lnt.sp.model.User;
+import com.lnt.sp.common.util.Config;
 import com.lnt.sp.model.UserLoginSession;
 import com.lnt.sp.annotations.WriteTransaction;
 import com.lnt.sp.manager.IGatewayManager;
 import com.lnt.sp.manager.IRegistrationManager;
 import com.lnt.sp.manager.IServiceProviderManager;
 import com.lnt.sp.manager.ISessionManager;
+
 
 @Component
 public class AuthenticationHandler implements IAuthenticationHandler {
@@ -37,6 +40,8 @@ public class AuthenticationHandler implements IAuthenticationHandler {
 	
 	@Autowired
 	private IGatewayManager gatewayMgr;
+	
+	String serviceProviderName = Config.getInstance().getProperty("service.provider.username");
 
 	@Override
 	@Transactional
@@ -121,72 +126,24 @@ public class AuthenticationHandler implements IAuthenticationHandler {
 		logger.info("AuthenticationHandler.authenticate - deviceID : {}", deviceID);
 //		User user = regMgr.getUser(userName);
 		String token = "";
-//		if (user != null)
-//		{
-//			if (true == (user.getActive())) {
-//				throw new AuthenticationException(
-//						"Authentication failed :User marked as deleted  : "
-//								+ userName, 401);
-//			}
-//	
-//			String result = validatePassword(password, user);
-//			if (!"Success".equals(result)) {
-//				regMgr.updateUser(user);
-//				throw new AuthenticationException(
-//						"Please Enter valid login credentials",
-//						HttpStatus.NON_AUTHORITATIVE_INFORMATION.value());
-//			}
-//			token = getToken(user);
-//		}
-//		if(user == null)
-//		{
-//			ServiceProvider serviceProvider = servMgr.getServiceProvider(userName);
-//			if (serviceProvider == null) {
-//				throw new AuthenticationException(
-//						"Authentication failed : Unable to find ServiceProvider : " + userName,
-//						401);
-//			}
-//
-//			if ((serviceProvider.getActive() == 0)) {
-//				throw new AuthenticationException(
-//						"Authentication failed :User marked as deleted  : "
-//								+ userName, 401);
-//			}
-//
-//			if (serviceProvider.getAttemptsLeft() == 0) {
-//				Date lastUpdated = serviceProvider.getUpdated();
-//				Date currentTime = new Date();
-//				long diff = currentTime.getTime() - lastUpdated.getTime();
-//				long diffMinutes = diff / (60 * 1000) % 60;
-//				
-//				if (diffMinutes != IConstants.SESSION_INACTIVE_TIME) {
-//					throw new AuthenticationException(
-//							"You have crossed your maximum no. of attempts for login. Please try after "
-//									+ (IConstants.SESSION_INACTIVE_TIME - diffMinutes)
-//									+ " minute(s)",
-//							HttpStatus.NON_AUTHORITATIVE_INFORMATION.value());
-//				} else {
-//					serviceProvider.setAttemptsLeft(IConstants.LOGIN_ATTEMPTS);
-//					servMgr.updateServiceProvider(serviceProvider);
-//				}
-//			}
-//
-//			String result = validatePassword(password, serviceProvider);
-//			if (!"Success".equals(result)) {
-//				serviceProvider.setAttemptsLeft(serviceProvider.getAttemptsLeft() - 1);
-//				servMgr.updateServiceProvider(serviceProvider);
-//				throw new AuthenticationException(
-//						"Please Enter valid login credentials",
-//						HttpStatus.NON_AUTHORITATIVE_INFORMATION.value());
-//			}
-//			token = getToken(serviceProvider);
-//		}
-//		else
-//		{
-//				throw new AuthenticationException(
-//						"Authentication failed : Unable to find ServiceProvider : " + userName,
-//						401);
-//		}
+		ServiceProvider servProvider = servMgr.getServiceProvider(serviceProviderName);
+		Gateway gateway = gatewayMgr.findGatewayByGatewayID(deviceID, servProvider.getId());
+		if (gateway != null)
+		{
+			if ("1".equals(gateway.getActive())) {
+				throw new AuthenticationException(
+						"Authentication failed :Gateway marked as deleted  : "
+								+ deviceID, 401);
+			}
+	
+			token = getToken(gateway);
+		}
+		else
+		{
+				throw new AuthenticationException(
+						"Authentication failed : Unable to find Gateway : " + deviceID,
+						401);
+		}
 		return token;
 	}
 
@@ -238,6 +195,11 @@ public class AuthenticationHandler implements IAuthenticationHandler {
 	@WriteTransaction
 	private String getToken(ServiceProvider serviceProvider) {
 		return sessionMgr.createSession(serviceProvider);
+	}
+	
+	@WriteTransaction
+	private String getToken(Gateway gateway) {
+		return sessionMgr.createSession(gateway);
 	}
 
 }

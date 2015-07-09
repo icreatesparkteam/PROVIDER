@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.lnt.core.model.Gateway;
 import com.lnt.core.model.ServiceProvider;
 import com.lnt.sp.common.util.ESessionStatus;
 import com.lnt.sp.common.util.TokenGenerator;
@@ -52,6 +53,22 @@ public class SessionManager implements ISessionManager {
 		UserLoginSession session = new UserLoginSession();
 		session.setSessionId(token);
 		session.setUserId(serviceProvider.getId());
+		session.setStatus(ESessionStatus.ACTIVE.ordinal());
+		Date now = new Date();
+		session.setLoginTime(now);
+		sessionDao.create(session);
+		return token;
+	}
+	
+	@Override
+	public String createSession(Gateway gateway) {
+		logger.info("SessionManager Creating login session for Gateway {}",
+				gateway.getGatewayID());
+		String token = TokenGenerator.getInstance().generateToken(
+				gateway.getGatewayID());
+		UserLoginSession session = new UserLoginSession();
+		session.setSessionId(token);
+		session.setUserId(gateway.getId());
 		session.setStatus(ESessionStatus.ACTIVE.ordinal());
 		Date now = new Date();
 		session.setLoginTime(now);
