@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
 
 import com.lnt.core.common.dto.GatewayDto;
 import com.lnt.core.common.dto.ServiceProviderRegistrationDto;
+import com.lnt.core.common.dto.SmartDeviceDto;
 import com.lnt.core.common.exception.ServiceApplicationException;
 import com.lnt.core.common.exception.ServiceRuntimeException;
 import com.lnt.sp.handler.IGatewayHandler;
@@ -124,6 +125,49 @@ public class GatewayService {
 		try {
 			List<GatewayDto> gatewayList = gatewayHandler.getGatewayList();
 			return Response.ok().entity(gatewayList).build();
+		} catch (ServiceRuntimeException e) {
+			logger.error("Runtime Exception while gatewayList : {}",
+					e.getMessage());
+			return Response.status(e.getCode()).entity(e.getMessage()).build();
+		} catch (ServiceApplicationException e) {
+			logger.error(
+					"Application Exception while gatewayList : {}",
+					e.getMessage());
+			return Response.status(e.getCode()).entity(e.getMessage()).build();
+		}
+	}
+	
+	@GET
+	@Produces({ MediaType.TEXT_PLAIN })
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Path("/addsmartdevice")
+	// @PreAuthorize("hasAuthority('VIEW_PROFILE')")
+	public Response addSmartDevice(SmartDeviceDto smartDevice, String gatewayID) {
+		logger.info("GatewayService addSmartDevice method");
+		try {
+			gatewayHandler.addSmartDevice(smartDevice, gatewayID);
+			return Response.ok().entity("Device added successfully").build();
+		} catch (ServiceRuntimeException e) {
+			logger.error("Runtime Exception while gatewayList : {}",
+					e.getMessage());
+			return Response.status(e.getCode()).entity(e.getMessage()).build();
+		} catch (ServiceApplicationException e) {
+			logger.error(
+					"Application Exception while gatewayList : {}",
+					e.getMessage());
+			return Response.status(e.getCode()).entity(e.getMessage()).build();
+		}
+	}
+	
+	@GET
+	@Produces({ MediaType.APPLICATION_JSON })
+	@Path("/devicelist")
+	// @PreAuthorize("hasAuthority('VIEW_PROFILE')")
+	public Response getDeviceList(@PathParam("gatewayid") String gatewayID) {
+		logger.info("GatewayService getDeviceList method");
+		try {
+			List<SmartDeviceDto> deviceList = gatewayHandler.getDeviceList(gatewayID);
+			return Response.ok().entity(deviceList).build();
 		} catch (ServiceRuntimeException e) {
 			logger.error("Runtime Exception while gatewayList : {}",
 					e.getMessage());

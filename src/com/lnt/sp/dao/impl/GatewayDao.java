@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import com.lnt.core.model.Gateway;
+import com.lnt.core.model.SmartDevice;
 
 @Repository
 @Component
@@ -56,4 +57,5 @@ public class GatewayDao extends AbstractAppSPDao<Gateway, Integer> {
 			return gatewayList;
 		return null;
 	}
+
 }

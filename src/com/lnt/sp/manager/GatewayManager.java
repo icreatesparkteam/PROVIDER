@@ -9,10 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.lnt.core.common.dto.GatewayDto;
+import com.lnt.core.common.dto.SmartDeviceDto;
 import com.lnt.core.common.exception.ServiceApplicationException;
 
 import com.lnt.sp.dao.impl.GatewayDao;
+import com.lnt.sp.dao.impl.SmartDeviceDao;
 import com.lnt.core.model.Gateway;
+import com.lnt.core.model.SmartDevice;
 
 @Component
 public class GatewayManager implements IGatewayManager {
@@ -21,6 +24,9 @@ public class GatewayManager implements IGatewayManager {
 			.getLogger(GatewayManager.class);
 	@Autowired
 	private GatewayDao gatewayDao;
+	
+	@Autowired
+	private SmartDeviceDao deviceDao;
 
 	@Override
 	public void createGateway(Gateway gateway) throws ServiceApplicationException {
@@ -77,6 +83,42 @@ public class GatewayManager implements IGatewayManager {
 				gatewayID);
 		Gateway gateway = gatewayDao.findByGatewayID(gatewayID, serviceProviderID);
 		return gateway;
+	}
+	
+	@Override
+	public SmartDevice findDeviceGatewayID(int gatewayID, String deviceID) throws ServiceApplicationException {
+		logger.info("GatewayManager Retrieving gateway information with Device ID {}",
+				deviceID);
+		SmartDevice device = deviceDao.findByDeviceID(gatewayID, deviceID);
+		return device;
+	}
+	
+	@Override
+	public void addDevice(SmartDevice device) throws ServiceApplicationException {
+		logger.info("GatewayManager : addDevice");
+		deviceDao.create(device);
+	}
+	
+	@Override
+	public List<SmartDeviceDto> getAllDevice(int gatewayID) throws ServiceApplicationException {
+		logger.info("GatewayManager  getAllDevice!!!!!!!!!!!!!!");
+		List<SmartDeviceDto> deviceDtoList = new ArrayList<>();
+		List<SmartDevice> device = deviceDao.getAllDevice(gatewayID);
+		if (device == null) {
+			throw new ServiceApplicationException(
+					"Bad request.No device available "
+							);
+		}
+		for (SmartDevice deviceList : device) {
+			SmartDeviceDto dto = new SmartDeviceDto();
+			dto.setDeviceID(deviceList.getDeviceID());
+			dto.setGatewayID(deviceList.getGatewayID());
+			dto.setStatus(deviceList.getActive());
+			
+			deviceDtoList.add(dto);
+
+		}
+		return deviceDtoList;
 	}
 
 }

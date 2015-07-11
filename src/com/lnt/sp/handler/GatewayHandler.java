@@ -9,14 +9,19 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lnt.sp.annotations.WriteTransaction;
+import com.lnt.sp.common.util.Config;
 import com.lnt.core.common.dto.GatewayDto;
+import com.lnt.core.common.dto.SmartDeviceDto;
 
 import com.lnt.core.common.exception.ServiceApplicationException;
 import com.lnt.core.common.exception.ValidationException;
 
 import com.lnt.sp.manager.IGatewayManager;
+import com.lnt.sp.manager.IServiceProviderManager;
 
 import com.lnt.core.model.Gateway;
+import com.lnt.core.model.ServiceProvider;
+import com.lnt.core.model.SmartDevice;
 
 
 @Component
@@ -26,6 +31,11 @@ public class GatewayHandler implements IGatewayHandler {
 
 	@Autowired
 	private IGatewayManager gatewayMgr;
+	
+	@Autowired
+	private IServiceProviderManager servMgr;
+	
+	String serviceProviderName = Config.getInstance().getProperty("service.provider.username");
 
 	@Override
 	@WriteTransaction
@@ -111,6 +121,47 @@ public class GatewayHandler implements IGatewayHandler {
 	public List<GatewayDto> getGatewayList() throws ServiceApplicationException {
 		logger.info("GatewayHandler :  getGatewayList method ");
 		return gatewayMgr.getAllGateway();
+	}
+	
+	@Override
+	@WriteTransaction
+	public void addSmartDevice(SmartDeviceDto smartDeviceDto, String gatewayID) throws ServiceApplicationException{
+		logger.info("createGateway :  addSmartDevice method ");
+		if (smartDeviceDto == null) {
+			throw new ServiceApplicationException("Invalid device Details ");
+		}
+
+		if (smartDeviceDto.getDeviceID() == null)
+			throw new ValidationException("Device ID is mandatory");
+		
+		if (gatewayID == null)
+			throw new ValidationException("Gateway ID is mandatory");
+		
+		ServiceProvider servProvider = servMgr.getServiceProvider(serviceProviderName);
+		Gateway gateway = gatewayMgr.findGatewayByGatewayID(gatewayID, servProvider.getId());
+
+		if (gatewayMgr.findDeviceGatewayID(gateway.getId(), smartDeviceDto.getDeviceID())
+				!= null) {
+			throw new ValidationException(
+					"Duplicate device - device already exists with Gateway: "
+							+ smartDeviceDto.getDeviceID());
+		}
+		
+		SmartDevice device = new SmartDevice();
+		device.setGatewayID(gateway.getId());
+		device.setDeviceID(smartDeviceDto.getDeviceID());
+		device.setActive("True");
+		gatewayMgr.addDevice(device);
+	}
+	
+	@Override
+	@Transactional
+	public List<SmartDeviceDto> getDeviceList(String gatewayID) throws ServiceApplicationException {
+		logger.info("GatewayHandler :  getDeviceList method ");
+		
+		ServiceProvider servProvider = servMgr.getServiceProvider(serviceProviderName);
+		Gateway gateway = gatewayMgr.findGatewayByGatewayID(gatewayID, servProvider.getId());
+		return gatewayMgr.getAllDevice(gateway.getId());
 	}
 
 }
