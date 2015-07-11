@@ -8,16 +8,16 @@ import com.lnt.core.common.exception.ServiceApplicationException;
 
 public interface IGatewayHandler {
 
-	public void createGateway(GatewayDto gateway)
+	public void createGateway(GatewayDto gateway, String sessionID)
 			throws ServiceApplicationException;
 
-	public GatewayDto getGatewayByUserID(int userID, int serviceProviderID)
+	public GatewayDto getGatewayByUserID(String sessionID)
 			throws ServiceApplicationException;
 
-	public void updateGateway(GatewayDto gateway)
+	public void updateGateway(GatewayDto gateway, String sessionID)
 			throws ServiceApplicationException;
 
-	public void deleteGateway(String gatewayID, int userID, int serviceProviderID) throws ServiceApplicationException;
+	public void deleteGateway(String gatewayID, String sessionID) throws ServiceApplicationException;
 
 	List<GatewayDto> getGatewayList()
 			throws ServiceApplicationException;

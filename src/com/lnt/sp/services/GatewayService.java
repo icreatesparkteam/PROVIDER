@@ -41,10 +41,10 @@ public class GatewayService {
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Path("/create")
 	//@PreAuthorize("hasAuthority('CREATE_USER')")
-	public Response createGateway(GatewayDto gateayDto) {
+	public Response createGateway(GatewayDto gateayDto, @PathParam("sessionId") String sessionID) {
 		logger.info("GatewayService createGateway method");
 		try {
-			gatewayHandler.createGateway(gateayDto);
+			gatewayHandler.createGateway(gateayDto, sessionID);
 			return Response.ok().entity("Gateway created successfully").build();
 		} catch (ServiceApplicationException e) {
 			logger.error("Application Exception while creating gateway: {}",
@@ -62,10 +62,10 @@ public class GatewayService {
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Path("/update")
 //	@PreAuthorize("hasAuthority('UPDATE_MY_PROFILE')")
-	public Response update(GatewayDto gatewayDto) {
+	public Response update(GatewayDto gatewayDto, @PathParam("sessionId") String sessionID) {
 		logger.info("GatewayService update method");
 		try {
-			gatewayHandler.updateGateway(gatewayDto);
+			gatewayHandler.updateGateway(gatewayDto, sessionID);
 			return Response.ok().entity("Gateway updated successfully").build();
 		} catch (ServiceApplicationException e) {
 			logger.error("Application Exception while update : {}",
@@ -81,11 +81,10 @@ public class GatewayService {
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Path("/{getgatewaybyuser}")
 	@PreAuthorize("hasAuthority('VIEW_PERSONAL_DATA')")
-	public Response getGatewayByUser(@PathParam("userid") int userID,
-			@PathParam("serviceproviderID") int serviceproviderID) {
+	public Response getGatewayByUser(@PathParam("sessionId") String sessionID) {
 		logger.info("GatewayService getGatewayByUser method");
 		try {
-			GatewayDto gateway = gatewayHandler.getGatewayByUserID(userID, serviceproviderID);
+			GatewayDto gateway = gatewayHandler.getGatewayByUserID(sessionID);
 			return Response.ok().entity(gateway).build();
 		} catch (ServiceRuntimeException e) {
 			logger.error("Runtime Exception while getGatewayByUser : {}", e.getMessage());
@@ -103,11 +102,10 @@ public class GatewayService {
 	@Path("/delete/{gateway}")
 	// @PreAuthorize("hasAuthority('DELETE_ACCOUNT')")
 	public Response deleteGateway(@PathParam("gatewayid") String gatewayID,
-			@PathParam("userid") int userID,
-			@PathParam("serviceproviderID") int serviceproviderID) {
+			@PathParam("sessionId") String sessionID) {
 		logger.info("GatewayService Delete Gateway method");
 		try {
-			gatewayHandler.deleteGateway(gatewayID, userID, serviceproviderID);
+			gatewayHandler.deleteGateway(gatewayID, sessionID);
 			return Response.ok().entity("Gateway deleted successfully").build();
 		} catch (ServiceApplicationException e) {
 			return Response.status(e.getCode()).entity(e.getMessage()).build();

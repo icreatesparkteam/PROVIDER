@@ -18,10 +18,12 @@ import com.lnt.core.common.exception.ValidationException;
 
 import com.lnt.sp.manager.IGatewayManager;
 import com.lnt.sp.manager.IServiceProviderManager;
+import com.lnt.sp.manager.ISessionManager;
 
 import com.lnt.core.model.Gateway;
 import com.lnt.core.model.ServiceProvider;
 import com.lnt.core.model.SmartDevice;
+import com.lnt.sp.model.UserLoginSession;
 
 
 @Component
@@ -35,11 +37,14 @@ public class GatewayHandler implements IGatewayHandler {
 	@Autowired
 	private IServiceProviderManager servMgr;
 	
+	@Autowired
+	private ISessionManager sessionMgr;
+	
 	String serviceProviderName = Config.getInstance().getProperty("service.provider.username");
 
 	@Override
 	@WriteTransaction
-	public void createGateway(GatewayDto gatewayDto)
+	public void createGateway(GatewayDto gatewayDto, String sessionID)
 			throws ServiceApplicationException {
 		logger.info("createGateway :  register method ");
 		if (gatewayDto == null) {
@@ -49,36 +54,38 @@ public class GatewayHandler implements IGatewayHandler {
 		if (gatewayDto.getGatewayID() == null)
 			throw new ValidationException("Gateway ID is mandatory");
 
-		if (gatewayDto.getUserID() < 0)
-			throw new ValidationException("user ID is mandatory");
+		ServiceProvider servProvider = servMgr.getServiceProvider(serviceProviderName);
+		UserLoginSession session = sessionMgr.getUserSession(sessionID);
 		
-		if (gatewayDto.getServiceProviderID() < 0)
-			throw new ValidationException("Service Provider ID is mandatory");
-
-		if (gatewayMgr.findGatewayByGatewayID(gatewayDto.getGatewayID(), gatewayDto.getServiceProviderID())
+		if (gatewayMgr.findGatewayByGatewayID(gatewayDto.getGatewayID(), servProvider.getId())
 				!= null) {
 			throw new ValidationException(
 					"Duplicate Gateway - Gateway already exists with Service provider: "
 							+ gatewayDto.getGatewayID());
 		}
+		
+		
 		Gateway gateway = new Gateway();
 		gateway.setGatewayID(gatewayDto.getGatewayID());
-		gateway.setServiceProviderID(gatewayDto.getServiceProviderID());
-		gateway.setUserID(gatewayDto.getUserID());
+		gateway.setServiceProviderID(servProvider.getId());
+		gateway.setUserID(session.getUserId());
 		gateway.setActive("True");
 		gatewayMgr.createGateway(gateway);
 	}
 
 	@Override
 	@Transactional
-	public GatewayDto getGatewayByUserID(int userID, int serviceProviderID)
+	public GatewayDto getGatewayByUserID(String sessionID)
 			throws ServiceApplicationException {
 		logger.info("GatewayHandler :  getGatewayByUserID method ");
-		Gateway gateway = gatewayMgr.findGatewayByUserID(userID, serviceProviderID);
+		ServiceProvider servProvider = servMgr.getServiceProvider(serviceProviderName);
+		UserLoginSession session = sessionMgr.getUserSession(sessionID);
+		
+		Gateway gateway = gatewayMgr.findGatewayByUserID(session.getUserId(), servProvider.getId());
 		if (gateway == null) {
-			logger.error("gateway : {} not found", userID);
+			logger.error("gateway : {} not found", session.getUserId());
 			throw new ServiceApplicationException("Gateway not found : "
-					+ userID);
+					+ session.getUserId());
 		}
 		GatewayDto gatewayDto = new GatewayDto();
 		gatewayDto.formGateway(gateway);
@@ -87,18 +94,22 @@ public class GatewayHandler implements IGatewayHandler {
 
 	@Override
 	@WriteTransaction
-	public void updateGateway(GatewayDto gatewayDto)
+	public void updateGateway(GatewayDto gatewayDto, String sessionID)
 			throws ServiceApplicationException {
 		logger.info("GatewayHandler :  updateGateway method ");
 		if (gatewayDto == null) {
 			throw new ServiceApplicationException("Invalid gateway :");
 		}
-		Gateway gateway = gatewayMgr.findGatewayByUserID(gatewayDto.getUserID(), gatewayDto.getServiceProviderID());
+		ServiceProvider servProvider = servMgr.getServiceProvider(serviceProviderName);
+		UserLoginSession session = sessionMgr.getUserSession(sessionID);
+		Gateway gateway = gatewayMgr.findGatewayByUserID(session.getUserId(), servProvider.getId());
 		if (gateway == null) {
 			throw new ServiceApplicationException(
 					"Gateway is not available with this username : "
 							+ gatewayDto.getUserID());
 		}
+		gatewayDto.setServiceProviderID(servProvider.getId());
+		gatewayDto.setUserID(session.getUserId());
 		gatewayDto.toServiceProvider(gateway);
 		gatewayMgr.updateGateway(gateway);
 
@@ -106,9 +117,13 @@ public class GatewayHandler implements IGatewayHandler {
 
 	@Override
 	@WriteTransaction
-	public void deleteGateway(String gatewayID, int userID, int serviceProviderID) throws ServiceApplicationException {
+	public void deleteGateway(String gatewayID, String sessionID) throws ServiceApplicationException {
 		logger.info("GatewayHandler :  deleteGateway method ");
-		Gateway gateway = gatewayMgr.findGatewayByUserID(userID, serviceProviderID);
+		
+		ServiceProvider servProvider = servMgr.getServiceProvider(serviceProviderName);
+		UserLoginSession session = sessionMgr.getUserSession(sessionID);
+		
+		Gateway gateway = gatewayMgr.findGatewayByUserID(session.getUserId(), servProvider.getId());
 		if (gateway == null) {
 			throw new ServiceApplicationException("Invalid Gateway :");
 		}
