@@ -2,6 +2,7 @@ package com.lnt.sp.handler;
 
 import java.util.List;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +56,9 @@ public class GatewayHandler implements IGatewayHandler {
 			throw new ValidationException("Gateway ID is mandatory");
 
 		ServiceProvider servProvider = servMgr.getServiceProvider(serviceProviderName);
+		
 		UserLoginSession session = sessionMgr.getUserSession(sessionID);
+		
 		
 		if (gatewayMgr.findGatewayByGatewayID(gatewayDto.getGatewayID(), servProvider.getId())
 				!= null) {
@@ -69,8 +72,9 @@ public class GatewayHandler implements IGatewayHandler {
 		gateway.setGatewayID(gatewayDto.getGatewayID());
 		gateway.setServiceProviderID(servProvider.getId());
 		gateway.setUserID(session.getUserId());
-		gateway.setActive("True");
+		gateway.setActive("1");
 		gatewayMgr.createGateway(gateway);
+		
 	}
 
 	@Override

@@ -67,7 +67,7 @@ public class AuthenticationHandler implements IAuthenticationHandler {
 			}
 			token = getToken(user);
 		}
-		if(user == null)
+		else if(user == null)
 		{
 			ServiceProvider serviceProvider = servMgr.getServiceProvider(userName);
 			if (serviceProvider == null) {
@@ -78,7 +78,7 @@ public class AuthenticationHandler implements IAuthenticationHandler {
 
 			if ((serviceProvider.getActive() == 0)) {
 				throw new AuthenticationException(
-						"Authentication failed :User marked as deleted  : "
+						"Authentication failed :ServiceProvider marked as deleted  : "
 								+ userName, 401);
 			}
 
@@ -113,7 +113,7 @@ public class AuthenticationHandler implements IAuthenticationHandler {
 		else
 		{
 				throw new AuthenticationException(
-						"Authentication failed : Unable to find ServiceProvider : " + userName,
+						"Authentication failed : Unable to find any user : " + userName,
 						401);
 		}
 		return token;

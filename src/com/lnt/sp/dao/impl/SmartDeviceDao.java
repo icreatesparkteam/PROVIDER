@@ -17,7 +17,7 @@ import com.lnt.core.model.SmartDevice;
 public class SmartDeviceDao extends AbstractAppSPDao<SmartDevice, Integer> {
 
 	public SmartDevice findByDeviceID(int gatewayID, String deviceID) {
-		Session session = (Session) entityManager.getDelegate();
+		Session session = (Session) entityManagerCore.getDelegate();
 		Criteria crit = session.createCriteria(SmartDevice.class);
 		crit.add(Restrictions.eq("gatewayID", gatewayID));
 		crit.add(Restrictions.eq("deviceID", deviceID));

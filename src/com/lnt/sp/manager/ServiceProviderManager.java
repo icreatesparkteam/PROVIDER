@@ -52,7 +52,7 @@ public class ServiceProviderManager implements IServiceProviderManager {
 
 	@Override
 	public ServiceProvider getServiceProviderById(int id) {
-		logger.info("UserManager Retrieving user information with id {}", id);
+		logger.info("ServiceProviderManager Retrieving user information with id {}", id);
 		return serviceProviderDao.findById(id);
 	}
 

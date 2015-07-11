@@ -13,7 +13,7 @@ public interface IAuthenticationHandler {
 	public String validatePassword(String password, User user)
 			throws ServiceApplicationException;
 
-	String authenticate(String deviceID) throws ServiceApplicationException,
+	public String authenticate(String deviceID) throws ServiceApplicationException,
 			com.lnt.core.common.exception.ServiceApplicationException;
 
 }

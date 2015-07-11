@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -41,7 +42,7 @@ public class GatewayService {
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Path("/create")
 	//@PreAuthorize("hasAuthority('CREATE_USER')")
-	public Response createGateway(GatewayDto gateayDto, @PathParam("sessionId") String sessionID) {
+	public Response createGateway(GatewayDto gateayDto, @HeaderParam("lnt_access_token") String sessionID) {
 		logger.info("GatewayService createGateway method");
 		try {
 			gatewayHandler.createGateway(gateayDto, sessionID);
@@ -62,7 +63,7 @@ public class GatewayService {
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Path("/update")
 //	@PreAuthorize("hasAuthority('UPDATE_MY_PROFILE')")
-	public Response update(GatewayDto gatewayDto, @PathParam("sessionId") String sessionID) {
+	public Response update(GatewayDto gatewayDto, @HeaderParam("lnt_access_token") String sessionID) {
 		logger.info("GatewayService update method");
 		try {
 			gatewayHandler.updateGateway(gatewayDto, sessionID);
@@ -81,7 +82,7 @@ public class GatewayService {
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Path("/{getgatewaybyuser}")
 	@PreAuthorize("hasAuthority('VIEW_PERSONAL_DATA')")
-	public Response getGatewayByUser(@PathParam("sessionId") String sessionID) {
+	public Response getGatewayByUser(@HeaderParam("lnt_access_token") String sessionID) {
 		logger.info("GatewayService getGatewayByUser method");
 		try {
 			GatewayDto gateway = gatewayHandler.getGatewayByUserID(sessionID);

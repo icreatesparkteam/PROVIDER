@@ -17,7 +17,7 @@ import com.lnt.core.model.SmartDevice;
 public class GatewayDao extends AbstractAppSPDao<Gateway, Integer> {
 
 	public Gateway findByUserID(int userID, int serviceProviderID) {
-		Session session = (Session) entityManager.getDelegate();
+		Session session = (Session) entityManagerCore.getDelegate();
 		Criteria crit = session.createCriteria(Gateway.class);
 		crit.add(Restrictions.eq("userID", userID));
 		crit.add(Restrictions.eq("serviceProviderID", serviceProviderID));
@@ -29,7 +29,7 @@ public class GatewayDao extends AbstractAppSPDao<Gateway, Integer> {
 	}
 	
 	public Gateway findByGatewayID(String gatewayID, int serviceProviderID) {
-		Session session = (Session) entityManager.getDelegate();
+		Session session = (Session) entityManagerCore.getDelegate();
 		Criteria crit = session.createCriteria(Gateway.class);
 		crit.add(Restrictions.eq("gatewayID", gatewayID));
 		crit.add(Restrictions.eq("serviceProviderID", serviceProviderID));

@@ -24,11 +24,18 @@ public class UserInRequest {
 		return instance;
 	}
 
-	public void setUserContext(UserContextData serviceProvider) {
+	public void setUserContext(UserContextData user) {
 		logger.info(
 				"Setting the serviceProvider --- [{}] -- information of logged in user to the thread local context",
-				serviceProvider.getServiceProviderInfo().getId());
-		this.serviceProvider.set(serviceProvider);
+				user.getUserInfo().getId());
+		this.serviceProvider.set(user);
+	}
+	
+	public void setServiceProviderContext(UserContextData user) {
+		logger.info(
+				"Setting the serviceProvider --- [{}] -- information of logged in user to the thread local context",
+				user.getServiceProviderInfo().getId());
+		this.serviceProvider.set(user);
 	}
 
 	public UserContextData getUserContext() {

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.lnt.core.model.ServiceProvider;
 import com.lnt.sp.common.cache.SessionCache;
 import com.lnt.sp.common.dto.SessionInfo;
 import com.lnt.sp.common.exception.InvalidTokenException;
@@ -19,6 +20,7 @@ import com.lnt.sp.model.User;
 
 import com.lnt.sp.model.UserLoginSession;
 import com.lnt.sp.manager.IRegistrationManager;
+import com.lnt.sp.manager.IServiceProviderManager;
 import com.lnt.sp.manager.ISessionManager;
 
 @Component
@@ -32,6 +34,9 @@ public class SessionHandler implements ISessionHandler {
 
 	@Autowired
 	IRegistrationManager regMgr;
+	
+	@Autowired
+	IServiceProviderManager servMgr;
 
 	@Override
 	@Transactional
@@ -83,7 +88,15 @@ public class SessionHandler implements ISessionHandler {
 			int id = session.getUserId();
 			logger.info("SessionHandler user id   {} ", id);
 			User user = regMgr.getUserById(id);
-			sessionInfo.setUser(user);
+			if(user != null)
+			{
+				sessionInfo.setUser(user);
+			}
+			else
+			{
+				ServiceProvider servProv = servMgr.getServiceProviderById(id);
+				sessionInfo.setSerProvider(servProv);
+			}
 			sessionInfo.setLastAccessedTime(System.currentTimeMillis());
 			SessionCache.getInstance().put(sessionId, sessionInfo);
 		}

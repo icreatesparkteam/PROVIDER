@@ -23,7 +23,7 @@ public abstract class AbstractAppSPDao<E, K> implements IDao<E, K> {
 	protected Class<E> entityClass;
 
 	@PersistenceContext(unitName = "iControlE-Core")
-	protected EntityManager entityManager;
+	protected EntityManager entityManagerCore;
 
 	@SuppressWarnings("unchecked")
 	public AbstractAppSPDao() {
@@ -35,9 +35,10 @@ public abstract class AbstractAppSPDao<E, K> implements IDao<E, K> {
 
 	@Override
 	public void create(E entity) {
-		logger.info("AbstractAppDao create : ");
+		logger.info("AbstractAppSPDao create : ");
 		try {
-			entityManager.persist(entity);			
+			entityManagerCore.persist(entity);	
+			logger.info("AbstractAppSPDao created : ");
 		} catch (PersistenceException e) {
 			logger.error("AbstractAppDao error while creating : "
 					+ e.getMessage());
@@ -47,18 +48,18 @@ public abstract class AbstractAppSPDao<E, K> implements IDao<E, K> {
 
 	@Override
 	public void remove(E entity) {
-		entityManager.remove(entity);
+		entityManagerCore.remove(entity);
 	}
 
 	@Override
 	public E findById(K id) {
-		return entityManager.find(entityClass, id);
+		return entityManagerCore.find(entityClass, id);
 	}
 
 	@Override
 	public E update(E entity) {
 		try {
-			return entityManager.merge(entity);
+			return entityManagerCore.merge(entity);
 		} catch (PersistenceException e) {
 			throw new ServiceRuntimeException("Update Fail: ", e);
 		}
@@ -77,7 +78,7 @@ public abstract class AbstractAppSPDao<E, K> implements IDao<E, K> {
 	protected List<E> findByCriteria(final int firstResult,
 			final int maxResults, final Criterion... criterion) {
 
-		Session session = (Session) entityManager.getDelegate();
+		Session session = (Session) entityManagerCore.getDelegate();
 		Criteria crit = session.createCriteria(entityClass);
 
 		for (final Criterion c : criterion)

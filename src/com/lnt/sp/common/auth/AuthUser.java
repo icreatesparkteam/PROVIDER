@@ -11,6 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.lnt.core.model.ServiceProvider;
 import com.lnt.sp.model.User;
 
 public class AuthUser implements UserDetails {
@@ -19,11 +20,16 @@ public class AuthUser implements UserDetails {
 	private static final Logger logger = LoggerFactory
 			.getLogger(AuthUser.class);
 	private User user;
+	private ServiceProvider servProvider;
 
 	List<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
 
 	public AuthUser(User user) {
 		this.user = user;
+	}
+	
+	public AuthUser(ServiceProvider servProvider) {
+		this.servProvider = servProvider;
 	}
 
 	public void setAuthorities(Set<String> permissions) {
@@ -40,12 +46,26 @@ public class AuthUser implements UserDetails {
 
 	@Override
 	public String getPassword() {
-		return user.getPassword();
+		if(user != null)
+		{
+			return user.getPassword();
+		}
+		else
+		{
+			return servProvider.getPassword();
+		}
 	}
 
 	@Override
 	public String getUsername() {
-		return user.getUserName();
+		if(user != null)
+		{
+			return user.getUserName();
+		}
+		else
+		{
+			return servProvider.getUserName();
+		}
 	}
 
 	@Override

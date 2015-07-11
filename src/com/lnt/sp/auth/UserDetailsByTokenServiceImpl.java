@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import com.lnt.core.model.ServiceProvider;
 import com.lnt.sp.common.auth.AuthUser;
 import com.lnt.sp.common.dto.SessionInfo;
 import com.lnt.sp.common.dto.UserContextData;
@@ -38,11 +39,22 @@ public class UserDetailsByTokenServiceImpl implements
 
 		SessionInfo sessionInfo = sessionHandler.getSessionInfo(token);
 		User user = sessionInfo.getUser();
-		AuthUser authUser = new AuthUser(user);
-		
-		UserContextData userContext = new UserContextData();
-		userContext.setServiceProviderInfo(user);
-		UserInRequest.getInstance().setUserContext(userContext);
+		AuthUser authUser;
+		if(user != null)
+		{
+			authUser = new AuthUser(user);		
+			UserContextData userContext = new UserContextData();
+			userContext.setUserInfo(user);
+			UserInRequest.getInstance().setUserContext(userContext);
+		}
+		else
+		{
+			ServiceProvider servProvider = sessionInfo.getSerProvider();
+			authUser = new AuthUser(servProvider);		
+			UserContextData userContext = new UserContextData();
+			userContext.setServiceProviderInfo(servProvider);
+			UserInRequest.getInstance().setServiceProviderContext(userContext);
+		}
 		
 		return authUser;
 	}

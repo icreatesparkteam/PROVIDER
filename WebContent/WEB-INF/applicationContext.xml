@@ -15,6 +15,7 @@
 	</bean>
 
 	<tx:annotation-driven transaction-manager="txnManager" proxy-target-class="true"/>
+	<tx:annotation-driven transaction-manager="txnManager-core" proxy-target-class="true"/>
 	<!-- <tx:annotation-driven transaction-manager="txnManager-core" proxy-target-class="true"/> -->
 	
 	<bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">	 	
