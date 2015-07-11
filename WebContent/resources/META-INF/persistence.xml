@@ -6,9 +6,4 @@
 		<class>com.lnt.sp.model.User</class>
 		<class>com.lnt.sp.model.UserLoginSession</class>
 	</persistence-unit>
-	<persistence-unit name="iControlE-Core">
-		<class>com.lnt.core.model.ServiceProvider</class>
-		<class>com.lnt.core.model.Gateway</class>
-		<class>com.lnt.core.model.SmartDevice</class>
-	</persistence-unit>
 </persistence>

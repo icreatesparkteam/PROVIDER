@@ -14,9 +14,9 @@
 		<property name="resourceRef" value="true" />
 	</bean>
 
-	<tx:annotation-driven transaction-manager="txnManager" proxy-target-class="true"/>
-	<tx:annotation-driven transaction-manager="txnManager-core" proxy-target-class="true"/>
-	<!-- <tx:annotation-driven transaction-manager="txnManager-core" proxy-target-class="true"/> -->
+	<tx:annotation-driven/>
+	<!-- <tx:annotation-driven transaction-manager="txnManager-core" proxy-target-class="true"/>
+	 <tx:annotation-driven transaction-manager="txnManager-core" proxy-target-class="true"/> -->
 	
 	<bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">	 	
 	 	<property name="showSql" value="false" />
@@ -25,6 +25,7 @@
     </bean>
     
 	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+	    <property name="persistenceXmlLocation" value="classpath:/META-INF/persistence.xml" />
 	    <property name="persistenceUnitName" value="iControlE-ServiceProvider" />
 	 	<property name="dataSource" ref="dataSource" />
 	 	<property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
@@ -46,6 +47,7 @@
 	</bean>
 	
 	<bean id="entityManagerFactory-core" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+	    <property name="persistenceXmlLocation" value="classpath:/META-INF/persistence-core.xml" />
 	    <property name="persistenceUnitName" value="iControlE-Core" />
 	 	<property name="dataSource" ref="dataSource-core" />
 	 	<property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
@@ -88,7 +90,10 @@
 	
 	<context:annotation-config />
     <context:component-scan base-package="com.lnt.sp"/>
-    <context:component-scan base-package="com.lnt.core"/>
+    <!-- <context:component-scan base-package="com.lnt.core"/> -->
+    
+    <bean id="persistenceAnnotation"
+		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
     
 	<bean id="pswdManager" class="com.lnt.sp.manager.PasswordManager">
 		<property name="passwdPolicy" ref="passwdPolicy"/>

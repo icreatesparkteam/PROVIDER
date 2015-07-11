@@ -44,6 +44,7 @@ public class GatewayHandler implements IGatewayHandler {
 	String serviceProviderName = Config.getInstance().getProperty("service.provider.username");
 
 	@Override
+	@Transactional
 	@WriteTransaction
 	public void createGateway(GatewayDto gatewayDto, String sessionID)
 			throws ServiceApplicationException {

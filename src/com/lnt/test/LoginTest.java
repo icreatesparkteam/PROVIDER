@@ -60,7 +60,7 @@ public class LoginTest {
 	private static void createUser(String token)
 			throws JsonGenerationException, JsonMappingException, IOException {
 		UserRegistrationDto reg = new UserRegistrationDto();
-		reg.setUserName("user2");
+		reg.setUserName("user3");
 		reg.setPassword("Newuser@123");
 		reg.setAddress("Munnekolala 2,Banagalore");
 		reg.setPhoneNum("66555775757");

@@ -37,7 +37,7 @@ public abstract class AbstractAppSPDao<E, K> implements IDao<E, K> {
 	public void create(E entity) {
 		logger.info("AbstractAppSPDao create : ");
 		try {
-			entityManagerCore.persist(entity);	
+			entityManagerCore.persist(entity);
 			logger.info("AbstractAppSPDao created : ");
 		} catch (PersistenceException e) {
 			logger.error("AbstractAppDao error while creating : "
