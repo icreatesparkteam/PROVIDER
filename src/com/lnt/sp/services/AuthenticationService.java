@@ -39,7 +39,7 @@ public class AuthenticationService {
 	@Produces(MediaType.TEXT_PLAIN)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response authenticate(@FormParam("username") String userName,
-			@FormParam("password") String password)
+			@FormParam("password") String password, @FormParam("deviceID") String deviceID)
 			throws ServiceApplicationException {
 		logger.info("AuthenticationService authenticate method userName:"
 				+ userName);

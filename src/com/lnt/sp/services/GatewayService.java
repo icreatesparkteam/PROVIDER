@@ -136,12 +136,13 @@ public class GatewayService {
 		}
 	}
 	
-	@GET
+	
+	@POST
 	@Produces({ MediaType.TEXT_PLAIN })
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Path("/addsmartdevice")
 	// @PreAuthorize("hasAuthority('VIEW_PROFILE')")
-	public Response addSmartDevice(SmartDeviceDto smartDevice, String gatewayID) {
+	public Response addSmartDevice(SmartDeviceDto smartDevice, @HeaderParam("gatewayid") String gatewayID) {
 		logger.info("GatewayService addSmartDevice method");
 		try {
 			gatewayHandler.addSmartDevice(smartDevice, gatewayID);

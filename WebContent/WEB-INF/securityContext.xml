@@ -16,6 +16,14 @@
 	<http pattern="/**/login*" security="none" />
 	<http pattern="/**/login/**" security="none" />
 	
+	<http pattern="/**/gateway" security="none" />
+	<http pattern="/**/gateway*" security="none" />
+	<http pattern="/**/gateway/**" security="none" />
+	
+	<http pattern="/**/devicelogin" security="none" />
+	<http pattern="/**/devicelogin*" security="none" />
+	<http pattern="/**/devicelogin/**" security="none" />
+	
 	<http pattern="/**/logout" security="none" />
 	<http pattern="/**/logout*" security="none" />
 	<http pattern="/**/logout/**" security="none" />
