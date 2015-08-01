@@ -124,7 +124,7 @@ public class RegistrationHandler implements IRegistrationHandler {
 
 		String resultMsg;
 		User user = UserInRequest.getInstance().getUserContext()
-				.getServiceProviderInfo();
+				.getUserInfo();
 
 		int userId = user.getId();
 		resultMsg = passwordManager.validatePassword(user.getUserName(),
@@ -207,7 +207,7 @@ public class RegistrationHandler implements IRegistrationHandler {
 	public void setSecurityQuestions(String question, String answer)
 			throws ServiceApplicationException {
 		User user = UserInRequest.getInstance().getUserContext()
-				.getServiceProviderInfo();
+				.getUserInfo();
 		// UserInfo user = userMgr.getUser(userName);
 		if (user == null) {
 			logger.error("serviceProvider : {} not found");

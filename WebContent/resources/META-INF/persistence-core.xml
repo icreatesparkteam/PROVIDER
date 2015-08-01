@@ -6,6 +6,9 @@
 		<class>com.lnt.core.model.ServiceProvider</class>
 		<class>com.lnt.core.model.Gateway</class>
 		<class>com.lnt.core.model.SmartDevice</class>
+		<class>com.lnt.core.model.Cluster</class>
+		<class>com.lnt.core.model.ClusterCommand</class>
+		<class>com.lnt.core.model.Manufacturer</class>
 		<exclude-unlisted-classes />
 	</persistence-unit> 
 </persistence>

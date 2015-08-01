@@ -1,5 +1,6 @@
 package com.lnt.sp.services;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -7,6 +8,7 @@ import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -19,6 +21,7 @@ import com.lnt.sp.common.exception.ServiceApplicationException;
 import com.lnt.sp.common.exception.ServiceRuntimeException;
 import com.lnt.sp.common.util.IConstants;
 import com.lnt.sp.handler.IAuthenticationHandler;
+import com.lnt.sp.handler.IGatewayHandler;
 import com.lnt.sp.handler.IRegistrationHandler;
 
 @Component
@@ -33,6 +36,10 @@ public class AuthenticationService {
 
 	@Autowired
 	private IRegistrationHandler userHandler;
+	
+	@Autowired
+	private IGatewayHandler gatewayHandler;
+
 
 	@POST
 	@Path("/login")
@@ -66,13 +73,20 @@ public class AuthenticationService {
 	@Path("/devicelogin")
 	@Produces(MediaType.TEXT_PLAIN)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response authenticateDevice(@FormParam("deviceID") String deviceID)
+	public Response authenticateDevice(@FormParam("deviceID") String deviceID, @Context HttpServletRequest requestContext)
 			throws ServiceApplicationException {
 		logger.info("AuthenticationService authenticate method deviceID:"
 				+ deviceID);
 		String token = null;
 		try {
 			token = authHandler.authenticate(deviceID);
+			logger.info("got token***************************");
+//			MessageContext messageContext = webServiceContext.getMessageContext();
+//		    HttpServletRequest request = (HttpServletRequest) messageContext.get(MessageContext.SERVLET_REQUEST); 
+//		    String callerIpAddress = request.getRemoteAddr();
+			String callerIpAddress = requestContext.getRemoteAddr().toString();
+		    logger.info("callerIpAddress***************************:  "+callerIpAddress);
+		    gatewayHandler.updateGatewayIP(callerIpAddress, token);
 			return Response.ok().entity(token).build();
 		} catch (ServiceApplicationException e) {
 			logger.error("Application Exception while authenticating : {}",

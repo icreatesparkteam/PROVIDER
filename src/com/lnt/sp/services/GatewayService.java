@@ -81,7 +81,7 @@ public class GatewayService {
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Path("/{getgatewaybyuser}")
-	@PreAuthorize("hasAuthority('VIEW_PERSONAL_DATA')")
+//	@PreAuthorize("hasAuthority('VIEW_PERSONAL_DATA')")
 	public Response getGatewayByUser(@HeaderParam("lnt_access_token") String sessionID) {
 		logger.info("GatewayService getGatewayByUser method");
 		try {
@@ -163,7 +163,7 @@ public class GatewayService {
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Path("/devicelist")
 	// @PreAuthorize("hasAuthority('VIEW_PROFILE')")
-	public Response getDeviceList(@PathParam("gatewayid") String gatewayID) {
+	public Response getDeviceList(@HeaderParam("gatewayid") String gatewayID) {
 		logger.info("GatewayService getDeviceList method");
 		try {
 			List<SmartDeviceDto> deviceList = gatewayHandler.getDeviceList(gatewayID);

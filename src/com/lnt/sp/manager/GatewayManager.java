@@ -114,7 +114,9 @@ public class GatewayManager implements IGatewayManager {
 			dto.setDeviceID(deviceList.getDeviceID());
 			dto.setGatewayID(deviceList.getGatewayID());
 			dto.setStatus(deviceList.getActive());
-			
+			dto.setEndpoint(deviceList.getEndpoint());
+			dto.setCluster(deviceList.getCluster());
+			dto.setId(deviceList.getId());
 			deviceDtoList.add(dto);
 
 		}

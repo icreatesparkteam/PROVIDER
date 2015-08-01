@@ -115,7 +115,27 @@ public class GatewayHandler implements IGatewayHandler {
 		}
 		gatewayDto.setServiceProviderID(servProvider.getId());
 		gatewayDto.setUserID(session.getUserId());
-		gatewayDto.toServiceProvider(gateway);
+		gatewayDto.toGateway(gateway);
+		gatewayMgr.updateGateway(gateway);
+
+	}
+	
+	@Override
+	@WriteTransaction
+	public void updateGatewayIP(String ipAddress, String sessionID)
+			throws ServiceApplicationException {
+		logger.info("GatewayHandler :  updateGateway method ");
+		if (ipAddress == null) {
+			throw new ServiceApplicationException("Invalid IP Address :");
+		}
+		ServiceProvider servProvider = servMgr.getServiceProvider(serviceProviderName);
+		UserLoginSession session = sessionMgr.getUserSession(sessionID);
+		Gateway gateway = gatewayMgr.findGatewayByUserID(session.getUserId(), servProvider.getId());
+		if (gateway == null) {
+			throw new ServiceApplicationException(
+					"Gateway is not available with this username");
+		}
+		gateway.setIPAddress(ipAddress);
 		gatewayMgr.updateGateway(gateway);
 
 	}
@@ -171,6 +191,9 @@ public class GatewayHandler implements IGatewayHandler {
 		device.setGatewayID(gateway.getId());
 		device.setDeviceID(smartDeviceDto.getDeviceID());
 		device.setActive("True");
+		device.setEndpoint(smartDeviceDto.getEndpoint());
+		device.setCluster(smartDeviceDto.getCluster());
+		device.setManufacturerID(smartDeviceDto.getManufacturerID());
 		gatewayMgr.addDevice(device);
 	}
 	

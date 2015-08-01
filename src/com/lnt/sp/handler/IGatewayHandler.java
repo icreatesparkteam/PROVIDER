@@ -26,6 +26,9 @@ public interface IGatewayHandler {
 
 	public List<SmartDeviceDto> getDeviceList(String gatewayID) throws ServiceApplicationException;
 
+	void updateGatewayIP(String ipAddress, String sessionID)
+			throws ServiceApplicationException;
+
 	
 
 }

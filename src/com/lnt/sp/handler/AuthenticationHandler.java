@@ -137,6 +137,7 @@ public class AuthenticationHandler implements IAuthenticationHandler {
 			}
 	
 			token = getToken(gateway);
+			
 		}
 		else
 		{

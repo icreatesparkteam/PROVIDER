@@ -20,7 +20,7 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
 //Test Client
 
 public class UserTest {
-	public static String UrlConstant = "http://localhost:8080/iControlE-ServiceProvider/rest/";
+	public static String UrlConstant = "http://52.27.53.182:8080/iControlE-ServiceProvider/rest/";
 	static Client client = Client.create();
 
 	static String token;
@@ -28,7 +28,7 @@ public class UserTest {
 			JsonMappingException, IOException {
 
 		loginUser();
-		//createGateway(token);
+//		createGateway(token);
 
 	}
 
@@ -37,7 +37,7 @@ public class UserTest {
 			JsonMappingException, IOException {
 		System.out.println("Login user method : ");
 		MultivaluedMap<String, String> inputMap = new MultivaluedMapImpl();
-		inputMap.add("username", "user1");
+		inputMap.add("username", "user2");
 		inputMap.add("password", "Newuser@123");
 		System.out.println("Login user method : inputMap " + inputMap);
 		WebResource webResource = client.resource(UrlConstant + "auth/login");
@@ -46,6 +46,7 @@ public class UserTest {
 				ClientResponse.class, inputMap);
 
 		if (response.getStatus() != 200) {
+			System.out.println("Output from Server .... :" + response.toString());
 			throw new RuntimeException("Failed : HTTP error code : "
 					+ response.getStatus());
 		}

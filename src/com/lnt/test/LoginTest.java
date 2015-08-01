@@ -21,7 +21,7 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
 //Test Client
 
 public class LoginTest {
-	public static String UrlConstant = "http://localhost:8080/iControlE-ServiceProvider/rest/";
+	public static String UrlConstant = "http://52.27.53.182:8080/iControlE-ServiceProvider/rest/";
 	static Client client = Client.create();
 
 	static String token;
