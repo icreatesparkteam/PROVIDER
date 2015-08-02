@@ -2,6 +2,7 @@ package com.lnt.sp.manager;
 
 import java.util.List;
 
+import com.lnt.core.common.dto.DeviceCommandDto;
 import com.lnt.core.common.dto.GatewayDto;
 import com.lnt.core.common.dto.SmartDeviceDto;
 import com.lnt.core.common.exception.ServiceApplicationException;
@@ -28,5 +29,9 @@ public interface IGatewayManager {
 	public void addDevice(SmartDevice device) throws ServiceApplicationException;
 
 	public List<SmartDeviceDto> getAllDevice( int gatewayID) throws ServiceApplicationException;
+
+	public void executeDeviceCommand(DeviceCommandDto command, Gateway gateway);
+
+	Gateway findGatewayById(int id, int serviceProviderID);
 	
 }

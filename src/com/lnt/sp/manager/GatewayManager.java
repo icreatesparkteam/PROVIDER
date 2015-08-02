@@ -8,13 +8,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.lnt.core.common.dto.DeviceCommandDto;
 import com.lnt.core.common.dto.GatewayDto;
 import com.lnt.core.common.dto.SmartDeviceDto;
 import com.lnt.core.common.exception.ServiceApplicationException;
 
+import com.lnt.sp.common.util.Config;
 import com.lnt.sp.dao.impl.GatewayDao;
 import com.lnt.sp.dao.impl.SmartDeviceDao;
+import com.lnt.sp.zigbee.Control;
 import com.lnt.core.model.Gateway;
+import com.lnt.core.model.ServiceProvider;
 import com.lnt.core.model.SmartDevice;
 
 @Component
@@ -27,6 +31,11 @@ public class GatewayManager implements IGatewayManager {
 	
 	@Autowired
 	private SmartDeviceDao deviceDao;
+	
+	@Autowired
+	private IServiceProviderManager servMgr;
+	
+	String serviceProviderName = Config.getInstance().getProperty("service.provider.username");
 
 	@Override
 	public void createGateway(Gateway gateway) throws ServiceApplicationException {
@@ -39,6 +48,14 @@ public class GatewayManager implements IGatewayManager {
 		logger.info("GatewayManager Retrieving gateway information with userID {}",
 				userID);
 		Gateway gateway = gatewayDao.findByUserID(userID, serviceProviderID);
+		return gateway;
+	}
+	
+	@Override
+	public Gateway findGatewayById(int id, int serviceProviderID) {
+		logger.info("GatewayManager Retrieving gateway information with userID {}",
+				id);
+		Gateway gateway = gatewayDao.findByID(id, serviceProviderID);
 		return gateway;
 	}
 
@@ -117,10 +134,26 @@ public class GatewayManager implements IGatewayManager {
 			dto.setEndpoint(deviceList.getEndpoint());
 			dto.setCluster(deviceList.getCluster());
 			dto.setId(deviceList.getId());
+			dto.setManufacturerID(deviceList.getManufacturerID());
 			deviceDtoList.add(dto);
 
 		}
 		return deviceDtoList;
+	}
+
+	@Override
+	public void executeDeviceCommand(DeviceCommandDto command, Gateway gateway) {
+		logger.info("GatewayManager  executeDeviceCommand!!!!!!!!!!!!!!");	
+		
+		Control control = new Control();
+		try{
+			control.openConnection(gateway.getIPAddress());
+			control.changeDeviceStatus(gateway.getGatewayID(), command.getEndpointID(),
+					command.getCommand());
+		}catch (Exception e){
+			
+		}
+		
 	}
 
 }

@@ -2,7 +2,6 @@ package com.lnt.sp.handler;
 
 import java.util.List;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lnt.sp.annotations.WriteTransaction;
 import com.lnt.sp.common.util.Config;
+import com.lnt.core.common.dto.DeviceCommandDto;
 import com.lnt.core.common.dto.GatewayDto;
 import com.lnt.core.common.dto.SmartDeviceDto;
-
 import com.lnt.core.common.exception.ServiceApplicationException;
 import com.lnt.core.common.exception.ValidationException;
 
@@ -130,7 +129,7 @@ public class GatewayHandler implements IGatewayHandler {
 		}
 		ServiceProvider servProvider = servMgr.getServiceProvider(serviceProviderName);
 		UserLoginSession session = sessionMgr.getUserSession(sessionID);
-		Gateway gateway = gatewayMgr.findGatewayByUserID(session.getUserId(), servProvider.getId());
+		Gateway gateway = gatewayMgr.findGatewayById(session.getUserId(), servProvider.getId());
 		if (gateway == null) {
 			throw new ServiceApplicationException(
 					"Gateway is not available with this username");
@@ -201,10 +200,25 @@ public class GatewayHandler implements IGatewayHandler {
 	@Transactional
 	public List<SmartDeviceDto> getDeviceList(String gatewayID) throws ServiceApplicationException {
 		logger.info("GatewayHandler :  getDeviceList method ");
-		
+		if(serviceProviderName == null)
+			serviceProviderName = "servpro1";
 		ServiceProvider servProvider = servMgr.getServiceProvider(serviceProviderName);
 		Gateway gateway = gatewayMgr.findGatewayByGatewayID(gatewayID, servProvider.getId());
 		return gatewayMgr.getAllDevice(gateway.getId());
+	}
+
+	@Override
+	@Transactional
+	public void deviceCommand(DeviceCommandDto command)
+			throws ServiceApplicationException {
+		logger.info("GatewayHandler :  deviceCommand method ");
+		if(serviceProviderName == null)
+			serviceProviderName = "servpro1";
+		ServiceProvider servProvider = servMgr.getServiceProvider(serviceProviderName);
+		logger.info("got servProvider :  deviceCommand method : "+servProvider.getId());
+		Gateway gateway = gatewayMgr.findGatewayByGatewayID(command.getGatewayID(), servProvider.getId());
+		gatewayMgr.executeDeviceCommand(command, gateway);
+		
 	}
 
 }

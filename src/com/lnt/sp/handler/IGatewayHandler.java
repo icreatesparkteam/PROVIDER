@@ -5,6 +5,7 @@ import java.util.List;
 import com.lnt.core.common.dto.GatewayDto;
 import com.lnt.core.common.dto.SmartDeviceDto;
 import com.lnt.core.common.exception.ServiceApplicationException;
+import com.lnt.core.common.dto.DeviceCommandDto;
 
 public interface IGatewayHandler {
 
@@ -28,6 +29,8 @@ public interface IGatewayHandler {
 
 	void updateGatewayIP(String ipAddress, String sessionID)
 			throws ServiceApplicationException;
+
+	public void deviceCommand(DeviceCommandDto command) throws ServiceApplicationException;
 
 	
 

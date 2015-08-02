@@ -80,7 +80,7 @@ public class Control {
 	private static final int ATTR_TYPE_INT16 = 6;
 	private static final int ATTR_TYPE_INT32 = 7;
 			
-	public static void openConnection(String srvrIp) throws Exception {					
+	public void openConnection(String srvrIp) throws Exception {					
 
 		//Set IP addr of nwk and hagw clients
         haGatewayClient = new HagatewayClient(srvrIp);
@@ -139,10 +139,14 @@ public class Control {
 //		}			
 //	};	
 		
-	public void changeDeviceStatus(long devIeee, int ep, byte bState) {			
+	public void changeDeviceStatus(String devIeee, String ep, String bState) {			
+			
+			long devIeeeAdd = Integer.parseInt(devIeee);
+			int endPoint = Integer.parseInt(ep);
+			byte stateByte = Byte.parseByte(bState);
 			
 			final gwOnOffState_t state;
-			if(bState == 0)
+			if(stateByte == 0)
 			{
 				state = gwOnOffState_t.OFF_STATE;
 			}
@@ -160,7 +164,7 @@ public class Control {
 				}				
 			};
 			
-			int cnf = haGatewayClient.hagwSetDevStateReq(devIeee, ep, state, 
+			int cnf = haGatewayClient.hagwSetDevStateReq(devIeeeAdd, endPoint, state, 
 					zclCallback);
 					
 			if(cnf != -1)

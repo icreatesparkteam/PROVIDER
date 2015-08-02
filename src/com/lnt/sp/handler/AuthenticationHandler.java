@@ -124,9 +124,14 @@ public class AuthenticationHandler implements IAuthenticationHandler {
 	public String authenticate(String deviceID)
 			throws ServiceApplicationException, com.lnt.core.common.exception.ServiceApplicationException {
 		logger.info("AuthenticationHandler.authenticate - deviceID : {}", deviceID);
+		System.out.println("AuthenticationHandler.authenticate - deviceID : {}" +deviceID);
 //		User user = regMgr.getUser(userName);
 		String token = "";
+		System.out.println("AuthenticationHandler.authenticate - serviceProviderName : {}" +serviceProviderName);
+		if(serviceProviderName == null)
+			serviceProviderName = "servpro1";
 		ServiceProvider servProvider = servMgr.getServiceProvider(serviceProviderName);
+		System.out.println("Got service provider: {}" +servProvider.getId());
 		Gateway gateway = gatewayMgr.findGatewayByGatewayID(deviceID, servProvider.getId());
 		if (gateway != null)
 		{

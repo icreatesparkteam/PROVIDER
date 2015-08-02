@@ -20,6 +20,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
 import com.lnt.core.common.dto.GatewayDto;
+import com.lnt.core.common.dto.DeviceCommandDto;
 import com.lnt.core.common.dto.ServiceProviderRegistrationDto;
 import com.lnt.core.common.dto.SmartDeviceDto;
 import com.lnt.core.common.exception.ServiceApplicationException;
@@ -175,6 +176,28 @@ public class GatewayService {
 		} catch (ServiceApplicationException e) {
 			logger.error(
 					"Application Exception while gatewayList : {}",
+					e.getMessage());
+			return Response.status(e.getCode()).entity(e.getMessage()).build();
+		}
+	}
+	
+	@POST
+	@Produces({ MediaType.TEXT_PLAIN })
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Path("/devicecommand")
+	// @PreAuthorize("hasAuthority('VIEW_PROFILE')")
+	public Response deviceCommand(DeviceCommandDto command) {
+		logger.info("GatewayService deviceCommand method");
+		try {
+			gatewayHandler.deviceCommand(command);
+			return Response.ok().entity("Command executed successfully").build();
+		} catch (ServiceRuntimeException e) {
+			logger.error("Runtime Exception while executing command : {}",
+					e.getMessage());
+			return Response.status(e.getCode()).entity(e.getMessage()).build();
+		} catch (ServiceApplicationException e) {
+			logger.error(
+					"Application Exception while executing command : {}",
 					e.getMessage());
 			return Response.status(e.getCode()).entity(e.getMessage()).build();
 		}

@@ -9,6 +9,8 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.lnt.core.common.dto.DeviceCommandDto;
+import com.lnt.core.common.util.IConstants;
 //import com.lnt.core.common.dto.SmartDeviceDto;
 //import com.lnt.core.common.dto.SmartDeviceDto;
 //import com.lnt.core.common.dto.SmartDeviceDto;
@@ -29,13 +31,14 @@ public class DeviceTest {
 	static String token;
 	public static void main(String[] args) throws JsonGenerationException,
 			JsonMappingException, IOException {
-
-		loginUser();
-//		createDevice(token);
-		getDevice(token);
-		getCluster(token);
-		getManufacturer(token);
-
+		loginDevice();
+//		loginUser();
+//		getGetway(token);
+////		createDevice(token);
+//		getDevice(token);
+////		getCluster(token);
+////		getManufacturer(token);
+//		deviceCommand(token);
 	}
 
 	private static void getManufacturer(String token) throws JsonGenerationException,
@@ -66,11 +69,11 @@ public class DeviceTest {
 			JsonMappingException, IOException {
 		System.out.println("Login device method : ");
 		MultivaluedMap<String, String> inputMap = new MultivaluedMapImpl();
-		inputMap.add("username", "user1");
+		inputMap.add("username", "user2");
 		inputMap.add("password", "Newuser@123");
 		System.out.println("Login user method : inputMap " + inputMap);
 		WebResource webResource = client.resource(UrlConstant + "auth/login");
-		System.out.println("URL -  " + UrlConstant + "auth/devicelogin");
+		System.out.println("URL -  " + UrlConstant + "http://52.27.53.182:8080/iControlE-ServiceProvider/rest/auth/devicelogin");
 		ClientResponse response = webResource.type(
 				MediaType.APPLICATION_FORM_URLENCODED).post(
 				ClientResponse.class, inputMap);
@@ -86,6 +89,31 @@ public class DeviceTest {
 		token = output;
 	}
 	
+	private static void loginDevice() throws JsonGenerationException,
+	JsonMappingException, IOException {
+		System.out.println("Login device method : ");
+		MultivaluedMap<String, String> inputMap = new MultivaluedMapImpl();
+		inputMap.add("deviceID", "0x00:0x12:0x4B:0x00:0x01:0xDD:0x7B:0xBE");
+		
+//		System.out.println("Login device method : inputMap " + inputMap);
+		WebResource webResource = client.resource(UrlConstant + "auth/devicelogin");
+//		System.out.println("URL -  " + UrlConstant + "http://52.27.53.182:8080/iControlE-ServiceProvider/rest/auth/devicelogin");
+		ClientResponse response = webResource.type(
+				MediaType.APPLICATION_FORM_URLENCODED).post(
+				ClientResponse.class, inputMap);
+		
+		if (response.getStatus() != 200) {
+			throw new RuntimeException("Failed : HTTP error code : "
+					+ response.getStatus());
+		}
+		
+//		System.out.println("Output from Server .... \n" + response.toString());
+		String output = response.getEntity(String.class);
+		System.out.println("login method : token.......... " + output);
+		token = output;
+		}
+	
+	
 	private static void getGetway(String token) throws JsonGenerationException,
 	JsonMappingException, IOException {
 		System.out.println("getGetway device method : ");
@@ -98,7 +126,7 @@ public class DeviceTest {
 			
 			ClientResponse response = webResource.type("application/json")
 					.header("lnt_access_token", token)
-					.header("gatewayid", "newgateway111")
+//					.header("gatewayid", "0x00:0x12:0x4B:0x00:0x01:0xDD:0x7B:0xBE")
 					.get(ClientResponse.class);
 	
 //			if (response.getStatus() != 200) {
@@ -127,7 +155,7 @@ public class DeviceTest {
 			
 			ClientResponse response = webResource.type("application/json")
 					.header("lnt_access_token", token)
-					.header("gatewayid", "newgateway111")
+					.header("gatewayid", "0x00:0x12:0x4B:0x00:0x01:0xDD:0x7B:0xBE")
 					.get(ClientResponse.class);
 	
 //			if (response.getStatus() != 200) {
@@ -208,6 +236,44 @@ public class DeviceTest {
 //			System.out.println("Exception: "+e.toString());
 //			e.printStackTrace();
 //		}
+	}
+	
+	private static void deviceCommand(String token)
+			throws JsonGenerationException, JsonMappingException, IOException {
+		DeviceCommandDto reg = new DeviceCommandDto();
+		reg.setDeviceID("0x0200");
+		reg.setGatewayID("0x00:0x12:0x4B:0x00:0x01:0xDD:0x7B:0xBE");
+		reg.setEndpointID("0x0104");
+		reg.setCommand("0x01");
+		
+		WebResource webResource = client.resource(UrlConstant + "gateway/devicecommand");
+		ObjectMapper mapper = new ObjectMapper();
+		String inputData = mapper.writeValueAsString(reg);
+		// String
+		// inputJson="{\"userName\": \"TestUser9\",\"password\": \"1234\",\"name\": \"Murali1\", \"phoneNumber1\": \"0000000009\",\"phoneNumber2\": null,\"role\": 1,\"primaryEmailId\": \"murali.dhuli@gmail.com\",\"activationCode\": \"ABC9\",\"address\": \"Address1\"}";
+
+		// String
+		// callCenterInputJson="{\"userName\": \"TestUser11\",\"password\": \"1234\",\"name\": \"Murali1\",\"role\": 2,\"primaryEmailId\": \"murali.dhuli@gmail.com\",\"address\": \"Address1\"}";
+//		System.out.println("URL: "+UrlConstant + "registration/create");
+		System.out.println("inputData : " + inputData);
+		try{
+			
+			ClientResponse response = webResource.type("application/json")
+					.header(IConstants.TOKEN_HEADER_KEY, token)
+					.post(ClientResponse.class, inputData);
+	
+//			if (response.getStatus() != 200) {
+//				throw new RuntimeException("Failed : HTTP error code : "
+//						+ response.getStatus());
+//			}
+	
+			System.out.println("Output from Server .... \n" + response.getStatus());
+			String output1 = response.getEntity(String.class);
+			System.out.println(output1);
+		}catch(Exception e){
+			System.out.println("Exception: "+e.toString());
+			e.printStackTrace();
+		}
 	}
 
 }

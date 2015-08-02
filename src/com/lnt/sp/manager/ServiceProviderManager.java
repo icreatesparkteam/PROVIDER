@@ -44,9 +44,13 @@ public class ServiceProviderManager implements IServiceProviderManager {
 
 	@Override
 	public ServiceProvider getServiceProvider(String username) {
-		logger.info("ServiceProviderManager Retrieving user information with userName {}",
+		logger.info("ServiceProviderManager Retrieving service provider information with userName {}",
 				username);
+		System.out.println("ServiceProviderManager Retrieving service provider information with userName {}" +username);
 		ServiceProvider serviceProvider = serviceProviderDao.findByUserName(username);
+		logger.info("got service provider {}",
+				username);
+		System.out.println("got service provider {}");
 		return serviceProvider;
 	}
 
