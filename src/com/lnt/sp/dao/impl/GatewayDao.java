@@ -31,7 +31,7 @@ public class GatewayDao extends AbstractAppSPDao<Gateway, Integer> {
 	public Gateway findByID(int id, int serviceProviderID) {
 		Session session = (Session) entityManagerCore.getDelegate();
 		Criteria crit = session.createCriteria(Gateway.class);
-		crit.add(Restrictions.eq("userID", id));
+		crit.add(Restrictions.eq("id", id));
 		crit.add(Restrictions.eq("serviceProviderID", serviceProviderID));
 		List<Gateway> deviceList = crit.list();
 

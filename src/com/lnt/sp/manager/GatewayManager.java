@@ -147,9 +147,9 @@ public class GatewayManager implements IGatewayManager {
 		
 		Control control = new Control();
 		try{
-			control.openConnection(gateway.getIPAddress());
-			control.changeDeviceStatus(gateway.getGatewayID(), command.getEndpointID(),
-					command.getCommand());
+//			control.openConnection(gateway.getIPAddress());
+//			control.changeDeviceStatus(gateway.getGatewayID(), command.getEndpointID(),
+//					command.getCommand());
 		}catch (Exception e){
 			
 		}

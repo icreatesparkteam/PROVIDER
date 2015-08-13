@@ -178,6 +178,13 @@ public class GatewayHandler implements IGatewayHandler {
 		
 		ServiceProvider servProvider = servMgr.getServiceProvider(serviceProviderName);
 		Gateway gateway = gatewayMgr.findGatewayByGatewayID(gatewayID, servProvider.getId());
+		
+		if(gateway == null)
+		{
+			throw new ValidationException(
+					"Gateway doesn't exist "
+							+ gatewayID);
+		}
 
 		if (gatewayMgr.findDeviceGatewayID(gateway.getId(), smartDeviceDto.getDeviceID())
 				!= null) {

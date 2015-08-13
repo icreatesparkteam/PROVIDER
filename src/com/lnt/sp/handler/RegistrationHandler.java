@@ -10,6 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.lnt.core.common.dto.ServiceProviderRegistrationDto;
+import com.lnt.core.model.ServiceProvider;
+import com.lnt.sp.common.dto.SessionInfo;
 import com.lnt.sp.common.dto.UserRegistrationDto;
 import com.lnt.sp.common.exception.ServiceApplicationException;
 import com.lnt.sp.common.exception.ValidationException;
@@ -37,6 +40,9 @@ public class RegistrationHandler implements IRegistrationHandler {
 
 	@Autowired
 	private IAuthenticationHandler authHandler;
+	
+	@Autowired
+	private ISessionHandler sessionHandler;
 
 	@Override
 	@WriteTransaction
@@ -224,6 +230,37 @@ public class RegistrationHandler implements IRegistrationHandler {
 	public List<UserRegistrationDto> getUserList() throws ServiceApplicationException {
 		logger.info("UserHandler :  getUserList by role id method ");
 		return regMgr.getAlluserlist();
+	}
+	
+	@Override
+	@Transactional
+	public List<ServiceProviderRegistrationDto> getServiceProviderList() throws ServiceApplicationException {
+		logger.info("UserHandler :  getUserList by role id method ");
+		return regMgr.getAllServiceProvider();
+	}
+	
+	@Override
+	public String getUserRole(String token) throws ServiceApplicationException {
+		logger.info("UserHandler :  getUserRole by role id method: "+token);
+		SessionInfo session = sessionHandler.getSessionInfo(token);
+		
+		User user = session.getUser();
+		if(user != null)
+		{
+			return "user";
+		}
+		else
+		{
+			ServiceProvider servProvider = session.getSerProvider();
+			if(servProvider != null)
+			{
+				return "serviceprovider";
+			}
+			else
+			{
+				return null;
+			}
+		}
 	}
 
 }

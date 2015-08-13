@@ -2,6 +2,7 @@ package com.lnt.sp.manager;
 
 import java.util.List;
 
+import com.lnt.core.common.dto.ServiceProviderRegistrationDto;
 import com.lnt.sp.common.dto.UserRegistrationDto;
 import com.lnt.sp.common.exception.ServiceApplicationException;
 import com.lnt.sp.model.User;
@@ -19,6 +20,8 @@ public interface IRegistrationManager {
 	public List<UserRegistrationDto> getUserlist(int id) throws ServiceApplicationException;
 	
 	public List<UserRegistrationDto> getAlluserlist() throws ServiceApplicationException;
-	
+
+	List<ServiceProviderRegistrationDto> getAllServiceProvider()
+			throws ServiceApplicationException;
 
 }

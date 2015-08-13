@@ -22,6 +22,7 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 public class LoginTest {
 	public static String UrlConstant = "http://52.27.53.182:8080/iControlE-ServiceProvider/rest/";
+//	public static String UrlConstant = "http://localhost:8080/iControlE-ServiceProvider/rest/";
 	static Client client = Client.create();
 
 	static String token;
@@ -29,7 +30,9 @@ public class LoginTest {
 			JsonMappingException, IOException {
 
 		loginUser();
-		createUser(token);
+//		createUser(token);
+		getServPro(token);
+		getRole(token);
 
 	}
 
@@ -102,6 +105,62 @@ public class LoginTest {
 		}
 	}
 
+	private static void getServPro(String token) throws JsonGenerationException,
+	JsonMappingException, IOException {
+		System.out.println("getGetway device method : ");
+
+		WebResource webResource = client.resource(UrlConstant + "registration/serviceproviderlist");
+
+		ObjectMapper mapper = new ObjectMapper();
+
+		try{
+			
+			ClientResponse response = webResource.type("application/json")
+					.header("lnt_access_token", token)
+//					.header("gatewayid", "0x00:0x12:0x4B:0x00:0x01:0xDD:0x7B:0xBE")
+					.get(ClientResponse.class);
 	
+//			if (response.getStatus() != 200) {
+//				throw new RuntimeException("Failed : HTTP error code : "
+//						+ response.getStatus());
+//			}
+	
+			System.out.println("Output from Server .... \n" + response.getStatus());
+			String output1 = response.getEntity(String.class);
+			System.out.println(output1);
+		}catch(Exception e){
+			System.out.println("Exception: "+e.toString());
+			e.printStackTrace();
+		}
+	}
+	
+	private static void getRole(String token) throws JsonGenerationException,
+	JsonMappingException, IOException {
+		System.out.println("getGetway device method : ");
+
+		WebResource webResource = client.resource(UrlConstant + "registration/getrole");
+
+		ObjectMapper mapper = new ObjectMapper();
+
+		try{
+			
+			ClientResponse response = webResource.type("application/json")
+					.header("lnt_access_token", token)
+//					.header("gatewayid", "0x00:0x12:0x4B:0x00:0x01:0xDD:0x7B:0xBE")
+					.get(ClientResponse.class);
+	
+//			if (response.getStatus() != 200) {
+//				throw new RuntimeException("Failed : HTTP error code : "
+//						+ response.getStatus());
+//			}
+	
+			System.out.println("Output from Server .... \n" + response.getStatus());
+			String output1 = response.getEntity(String.class);
+			System.out.println(output1);
+		}catch(Exception e){
+			System.out.println("Exception: "+e.toString());
+			e.printStackTrace();
+		}
+	}
 
 }

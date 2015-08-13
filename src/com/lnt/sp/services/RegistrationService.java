@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -18,9 +19,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
+import com.lnt.core.common.dto.ServiceProviderRegistrationDto;
 import com.lnt.sp.common.dto.UserRegistrationDto;
 import com.lnt.sp.common.exception.ServiceApplicationException;
 import com.lnt.sp.common.exception.ServiceRuntimeException;
+import com.lnt.sp.dao.impl.RoleDao;
 import com.lnt.sp.handler.IRegistrationHandler;
 
 @Component
@@ -197,11 +200,53 @@ public class RegistrationService {
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Path("/serviceproviderlist")
 	// @PreAuthorize("hasAuthority('VIEW_PROFILE')")
+	public Response getServiceProviderList() {
+		logger.info("RegistrationService serviceproviderlist method");
+		try {
+			List<ServiceProviderRegistrationDto> serviceProviderList = regHandler.getServiceProviderList();
+			return Response.ok().entity(serviceProviderList).build();
+		} catch (ServiceRuntimeException e) {
+			logger.error("Runtime Exception while getUserListByRoleName : {}",
+					e.getMessage());
+			return Response.status(e.getCode()).entity(e.getMessage()).build();
+		} catch (ServiceApplicationException e) {
+			logger.error(
+					"Application Exception while getUserListByRoleName : {}",
+					e.getMessage());
+			return Response.status(e.getCode()).entity(e.getMessage()).build();
+		}
+	}
+	
+	@GET
+	@Produces({ MediaType.APPLICATION_JSON })
+	@Path("/userlist")
+	// @PreAuthorize("hasAuthority('VIEW_PROFILE')")
 	public Response getUserList() {
 		logger.info("RegistrationService getUserListByRoleName method");
 		try {
-			List<UserRegistrationDto> serviceProviderList = regHandler.getUserList();
-			return Response.ok().entity(serviceProviderList).build();
+			List<UserRegistrationDto> userList = regHandler.getUserList();
+			return Response.ok().entity(userList).build();
+		} catch (ServiceRuntimeException e) {
+			logger.error("Runtime Exception while getUserListByRoleName : {}",
+					e.getMessage());
+			return Response.status(e.getCode()).entity(e.getMessage()).build();
+		} catch (ServiceApplicationException e) {
+			logger.error(
+					"Application Exception while getUserListByRoleName : {}",
+					e.getMessage());
+			return Response.status(e.getCode()).entity(e.getMessage()).build();
+		}
+	}
+	
+	@GET
+	@Produces({ MediaType.TEXT_PLAIN })
+	@Path("/getrole")
+	// @PreAuthorize("hasAuthority('VIEW_PROFILE')")
+	public Response getRole(@HeaderParam("lnt_access_token") String sessionID) {
+		logger.info("RegistrationService getRole method");
+		try {
+			String role = regHandler.getUserRole(sessionID);
+			return Response.ok().entity(role).build();
 		} catch (ServiceRuntimeException e) {
 			logger.error("Runtime Exception while getUserListByRoleName : {}",
 					e.getMessage());

@@ -10,6 +10,7 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.lnt.core.common.dto.DeviceCommandDto;
+import com.lnt.core.common.dto.SmartDeviceDto;
 import com.lnt.core.common.util.IConstants;
 //import com.lnt.core.common.dto.SmartDeviceDto;
 //import com.lnt.core.common.dto.SmartDeviceDto;
@@ -24,8 +25,8 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
 //Test Client
 
 public class DeviceTest {
-//	public static String UrlConstant = "http://52.27.53.182:8080/iControlE-ServiceProvider/rest/";
-	public static String UrlConstant = "http://localhost:8080/iControlE-ServiceProvider/rest/";
+	public static String UrlConstant = "http://52.27.53.182:8080/iControlE-ServiceProvider/rest/";
+//	public static String UrlConstant = "http://localhost:8080/iControlE-ServiceProvider/rest/";
 	static Client client = Client.create();
 
 	static String token;
@@ -34,10 +35,10 @@ public class DeviceTest {
 		loginDevice();
 //		loginUser();
 //		getGetway(token);
-////		createDevice(token);
+		createDevice(token);
 //		getDevice(token);
-////		getCluster(token);
-////		getManufacturer(token);
+//		getCluster(token);
+//		getManufacturer(token);
 //		deviceCommand(token);
 	}
 
@@ -198,44 +199,44 @@ public class DeviceTest {
 
 	private static void createDevice(String token)
 			throws JsonGenerationException, JsonMappingException, IOException {
-//		SmartDeviceDto reg = new SmartDeviceDto();
-//		reg.setGatewayID(1);
-//		reg.setDeviceID("0x0200");
-//		reg.setManufacturerID("1");
-//		reg.setDeviceStatus(1);
-//		reg.setEndpoint("0x0104");
-//		reg.setCluster("0x0006");
-//		
-//		WebResource webResource = client.resource(UrlConstant + "gateway/addsmartdevice");
-//		ObjectMapper mapper = new ObjectMapper();
-//		String inputData = mapper.writeValueAsString(reg);
-//
-//		// String
-//		// inputJson="{\"userName\": \"TestUser9\",\"password\": \"1234\",\"name\": \"Murali1\", \"phoneNumber1\": \"0000000009\",\"phoneNumber2\": null,\"role\": 1,\"primaryEmailId\": \"murali.dhuli@gmail.com\",\"activationCode\": \"ABC9\",\"address\": \"Address1\"}";
-//
-//		// String
-//		// callCenterInputJson="{\"userName\": \"TestUser11\",\"password\": \"1234\",\"name\": \"Murali1\",\"role\": 2,\"primaryEmailId\": \"murali.dhuli@gmail.com\",\"address\": \"Address1\"}";
-//		System.out.println("URL: "+UrlConstant + "gateway/addsmartdevice");
-//		System.out.println("inputData : " + inputData);
-//		try{
-//			
-//			ClientResponse response = webResource.type("application/json")
-//					.header("lnt_access_token", token)
-//					.header("gatewayid", "newgateway111")
-//					.post(ClientResponse.class, inputData);
-//	
-////			if (response.getStatus() != 200) {
-////				throw new RuntimeException("Failed : HTTP error code : "
-////						+ response.getStatus());
-////			}
-//	
-//			System.out.println("Output from Server .... \n" + response.getStatus());
-//			String output1 = response.getEntity(String.class);
-//			System.out.println(output1);
-//		}catch(Exception e){
-//			System.out.println("Exception: "+e.toString());
-//			e.printStackTrace();
-//		}
+		SmartDeviceDto reg = new SmartDeviceDto();
+		reg.setGatewayID(1);
+		reg.setDeviceID("0x0202");
+		reg.setManufacturerID("1");
+		reg.setDeviceStatus(1);
+		reg.setEndpoint("0x0104");
+		reg.setCluster("0x0006");
+		
+		WebResource webResource = client.resource(UrlConstant + "gateway/addsmartdevice");
+		ObjectMapper mapper = new ObjectMapper();
+		String inputData = mapper.writeValueAsString(reg);
+
+		// String
+		// inputJson="{\"userName\": \"TestUser9\",\"password\": \"1234\",\"name\": \"Murali1\", \"phoneNumber1\": \"0000000009\",\"phoneNumber2\": null,\"role\": 1,\"primaryEmailId\": \"murali.dhuli@gmail.com\",\"activationCode\": \"ABC9\",\"address\": \"Address1\"}";
+
+		// String
+		// callCenterInputJson="{\"userName\": \"TestUser11\",\"password\": \"1234\",\"name\": \"Murali1\",\"role\": 2,\"primaryEmailId\": \"murali.dhuli@gmail.com\",\"address\": \"Address1\"}";
+		System.out.println("URL: "+UrlConstant + "gateway/addsmartdevice");
+		System.out.println("inputData : " + inputData);
+		try{
+			
+			ClientResponse response = webResource.type("application/json")
+					.header("lnt_access_token", token)
+					.header("gatewayid", "0x00:0x12:0x4B:0x00:0x01:0xDD:0x7B:0xBE")
+					.post(ClientResponse.class, inputData);
+	
+//			if (response.getStatus() != 200) {
+//				throw new RuntimeException("Failed : HTTP error code : "
+//						+ response.getStatus());
+//			}
+	
+			System.out.println("Output from Server .... \n" + response.getStatus());
+			String output1 = response.getEntity(String.class);
+			System.out.println(output1);
+		}catch(Exception e){
+			System.out.println("Exception: "+e.toString());
+			e.printStackTrace();
+		}
 	}
 	
 	private static void deviceCommand(String token)

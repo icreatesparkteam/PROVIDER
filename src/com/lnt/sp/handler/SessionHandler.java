@@ -90,6 +90,8 @@ public class SessionHandler implements ISessionHandler {
 			User user = regMgr.getUserById(id);
 			if(user != null)
 			{
+				logger.info(
+						"This is an user");
 				sessionInfo.setUser(user);
 			}
 			else
