@@ -32,7 +32,7 @@
 				} else {
 					$.ajax({
 						type : "POST",
-						url : config.Server_IP + config.loginURL,
+						url : config.Server_IP + config.splogin,
 						data : {
 							'username' : username,
 							'password' : password
@@ -43,7 +43,7 @@
 							//goto main page		
 							document.cookie = "lnt_access_token" + "=" + JSON.parse(JSON.stringify(data));
 							window.sessionStorage.setItem("token",JSON.parse(JSON.stringify(data)));					 
-							window.location = "/iControlE-Core/html/mainPage.html";
+							window.location = "/iControlE-ServiceProvider/html/mainPage.html";
 						},
 						error : function() {
 							alert('Invalid Credentials');
