@@ -825,7 +825,7 @@ public class Control {
     public static void main(String[] args) {
         try {
             // open websocket
-            final WebsocketClientEndpoint clientEndPoint = new WebsocketClientEndpoint(new URI("wss://real.okcoin.cn:10440/websocket/okcoinapi"));
+            final WebsocketClientEndpoint clientEndPoint = new WebsocketClientEndpoint(new URI("wss://14.99.235.191:2541"));
 
             // add listener
             clientEndPoint.addMessageHandler(new WebsocketClientEndpoint.MessageHandler() {
@@ -843,6 +843,9 @@ public class Control {
         } catch (InterruptedException ex) {
             System.err.println("InterruptedException exception: " + ex.getMessage());
         } catch (URISyntaxException ex) {
+            System.err.println("URISyntaxException exception: " + ex.getMessage());
+        }
+        catch (Exception ex) {
             System.err.println("URISyntaxException exception: " + ex.getMessage());
         }
     }

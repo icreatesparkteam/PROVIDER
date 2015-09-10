@@ -35,11 +35,12 @@ public class DeviceTest {
 		loginDevice();
 //		loginUser();
 //		getGetway(token);
-		createDevice(token);
+//		createDevice(token);
 //		getDevice(token);
 //		getCluster(token);
 //		getManufacturer(token);
 //		deviceCommand(token);
+		getQueue(token);
 	}
 
 	private static void getManufacturer(String token) throws JsonGenerationException,
@@ -47,6 +48,30 @@ public class DeviceTest {
 		System.out.println("getDevice device method : ");
 
 		WebResource webResource = client.resource(UrlConstant + "manufacturer/manufacturerlist");
+
+		ObjectMapper mapper = new ObjectMapper();
+
+		try{
+			
+			ClientResponse response = webResource.type("application/json")
+					.header("lnt_access_token", token)
+					.get(ClientResponse.class);
+	
+	
+			System.out.println("Output from Server .... \n" + response.getStatus());
+			String output1 = response.getEntity(String.class);
+			System.out.println(output1);
+		}catch(Exception e){
+			System.out.println("Exception: "+e.toString());
+			e.printStackTrace();
+		}
+	}
+	
+	private static void getQueue(String token) throws JsonGenerationException,
+	JsonMappingException, IOException {
+		System.out.println("getDevice device method : ");
+
+		WebResource webResource = client.resource(UrlConstant + "gateway/queuecommand");
 
 		ObjectMapper mapper = new ObjectMapper();
 
@@ -94,7 +119,7 @@ public class DeviceTest {
 	JsonMappingException, IOException {
 		System.out.println("Login device method : ");
 		MultivaluedMap<String, String> inputMap = new MultivaluedMapImpl();
-		inputMap.add("deviceID", "0x00:0x12:0x4B:0x00:0x01:0xDD:0x7B:0xBE");
+		inputMap.add("deviceID", "00:12:4B:00:02:F1:D4:65");
 		
 //		System.out.println("Login device method : inputMap " + inputMap);
 		WebResource webResource = client.resource(UrlConstant + "auth/devicelogin");
@@ -201,11 +226,11 @@ public class DeviceTest {
 			throws JsonGenerationException, JsonMappingException, IOException {
 		SmartDeviceDto reg = new SmartDeviceDto();
 		reg.setGatewayID(1);
-		reg.setDeviceID("0x0202");
+		reg.setDeviceID("0x0215");
 		reg.setManufacturerID("1");
 		reg.setDeviceStatus(1);
-		reg.setEndpoint("0x0104");
-		reg.setCluster("0x0006");
+		reg.setEndpoint("0x0114");
+		reg.setCluster("0x0016");
 		
 		WebResource webResource = client.resource(UrlConstant + "gateway/addsmartdevice");
 		ObjectMapper mapper = new ObjectMapper();

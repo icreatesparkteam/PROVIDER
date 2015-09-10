@@ -9,14 +9,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.lnt.core.common.dto.DeviceCommandDto;
+import com.lnt.core.common.dto.DeviceCommandQueueDto;
 import com.lnt.core.common.dto.GatewayDto;
 import com.lnt.core.common.dto.SmartDeviceDto;
 import com.lnt.core.common.exception.ServiceApplicationException;
 
 import com.lnt.sp.common.util.Config;
+import com.lnt.sp.dao.impl.DeviceCommandQueueDao;
 import com.lnt.sp.dao.impl.GatewayDao;
 import com.lnt.sp.dao.impl.SmartDeviceDao;
 import com.lnt.sp.zigbee.Control;
+import com.lnt.core.model.DeviceCommandQueue;
 import com.lnt.core.model.Gateway;
 import com.lnt.core.model.ServiceProvider;
 import com.lnt.core.model.SmartDevice;
@@ -31,6 +34,9 @@ public class GatewayManager implements IGatewayManager {
 	
 	@Autowired
 	private SmartDeviceDao deviceDao;
+	
+	@Autowired
+	private DeviceCommandQueueDao queueDao;
 	
 	@Autowired
 	private IServiceProviderManager servMgr;
@@ -103,10 +109,10 @@ public class GatewayManager implements IGatewayManager {
 	}
 	
 	@Override
-	public SmartDevice findDeviceGatewayID(int gatewayID, String deviceID) throws ServiceApplicationException {
+	public SmartDevice findDeviceGatewayID(int gatewayID, String deviceID, String endpoint) throws ServiceApplicationException {
 		logger.info("GatewayManager Retrieving gateway information with Device ID {}",
 				deviceID);
-		SmartDevice device = deviceDao.findByDeviceID(gatewayID, deviceID);
+		SmartDevice device = deviceDao.findByDeviceEndpointID(gatewayID, deviceID, endpoint);
 		return device;
 	}
 	
@@ -142,18 +148,43 @@ public class GatewayManager implements IGatewayManager {
 	}
 
 	@Override
-	public void executeDeviceCommand(DeviceCommandDto command, Gateway gateway) {
+	public void executeDeviceCommand(DeviceCommandQueueDto command, Gateway gateway) throws ServiceApplicationException {
 		logger.info("GatewayManager  executeDeviceCommand!!!!!!!!!!!!!!");	
+		DeviceCommandQueue deviceCommand = new DeviceCommandQueue();
+		deviceCommand.setCommand(command.getCommand());
+		deviceCommand.setDeviceID(command.getDeviceID());
+		deviceCommand.setEndpoint(command.getEndPoint());
+		deviceCommand.setGatewayID(command.getGatewayID());
+		deviceCommand.setCommandVal(command.getCommandVal());
+		deviceCommand.setSynced(0);
+		queueDao.create(deviceCommand);
+	}
+	
+	@Override
+	public List<DeviceCommandQueueDto> getDeviceCommand(int gatewayId) 
+			throws ServiceApplicationException {
+		logger.info("GatewayManager  getDeviceCommand!!!!!!!!!!!!!!  "+gatewayId);	
+		List<DeviceCommandQueue> deviceCommand = queueDao.getDeviceCommand(gatewayId);
+		List<DeviceCommandQueueDto> queuoDto = new ArrayList<>();
 		
-		Control control = new Control();
-		try{
-//			control.openConnection(gateway.getIPAddress());
-//			control.changeDeviceStatus(gateway.getGatewayID(), command.getEndpointID(),
-//					command.getCommand());
-		}catch (Exception e){
-			
+		if (deviceCommand == null) {
+			throw new ServiceApplicationException(
+					"Bad request.No command available "
+							);
+		}
+		for (DeviceCommandQueue commandList : deviceCommand) {
+			DeviceCommandQueueDto dto = new DeviceCommandQueueDto();
+			dto.setCommand(commandList.getCommand());
+			dto.setDeviceID(commandList.getDeviceID());
+			dto.setEndPoint(commandList.getEndpoint());
+			dto.setCommandVal(commandList.getCommandVal());
+			queuoDto.add(dto);
+			commandList.setSynced(1);
+			queueDao.update(commandList);
+
 		}
 		
+		return queuoDto;
 	}
 
 }

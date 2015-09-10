@@ -2,6 +2,7 @@ package com.lnt.sp.handler;
 
 import java.util.List;
 
+import com.lnt.core.common.dto.DeviceCommandQueueDto;
 import com.lnt.core.common.dto.GatewayDto;
 import com.lnt.core.common.dto.SmartDeviceDto;
 import com.lnt.core.common.exception.ServiceApplicationException;
@@ -30,7 +31,9 @@ public interface IGatewayHandler {
 	void updateGatewayIP(String ipAddress, String sessionID)
 			throws ServiceApplicationException;
 
-	public void deviceCommand(DeviceCommandDto command) throws ServiceApplicationException;
+	public void deviceCommand(DeviceCommandQueueDto command) throws ServiceApplicationException;
+
+	public List<DeviceCommandQueueDto> getQueuedDeviceCommand(String sessionID)  throws ServiceApplicationException;
 
 	
 

@@ -27,6 +27,19 @@ public class SmartDeviceDao extends AbstractAppSPDao<SmartDevice, Integer> {
 			return deviceList.get(0);
 		return null;
 	}
+	
+	public SmartDevice findByDeviceEndpointID(int gatewayID, String deviceID, String endpoint) {
+		Session session = (Session) entityManagerCore.getDelegate();
+		Criteria crit = session.createCriteria(SmartDevice.class);
+		crit.add(Restrictions.eq("gatewayID", gatewayID));
+		crit.add(Restrictions.eq("deviceID", deviceID));
+		crit.add(Restrictions.eq("endpoint", endpoint));
+		List<SmartDevice> deviceList = crit.list();
+
+		if (deviceList != null && !deviceList.isEmpty())
+			return deviceList.get(0);
+		return null;
+	}
 
 	public void addDevice(SmartDevice device) {
 		// TODO Auto-generated method stub

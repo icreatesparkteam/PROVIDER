@@ -30,9 +30,9 @@ public class LoginTest {
 			JsonMappingException, IOException {
 
 		loginUser();
-//		createUser(token);
-		getServPro(token);
-		getRole(token);
+		createUser(token);
+//		getServPro(token);
+//		getRole(token);
 
 	}
 
@@ -62,46 +62,51 @@ public class LoginTest {
 	
 	private static void createUser(String token)
 			throws JsonGenerationException, JsonMappingException, IOException {
-		UserRegistrationDto reg = new UserRegistrationDto();
-		reg.setUserName("user3");
-		reg.setPassword("Newuser@123");
-		reg.setAddress("Munnekolala 2,Banagalore");
-		reg.setPhoneNum("66555775757");
-		reg.setPrimaryEmailId("atanu.niyogi11@gmail.com");
-		reg.setCity("Bangalore");
-		reg.setState("KA");
-		reg.setCountry("India");
-		reg.setsQuestion("What is your name?");
-		reg.setsAnswer("Atanu");
-		reg.setZipCode(560037);
 		
-		WebResource webResource = client.resource(UrlConstant + "registration/create");
-		ObjectMapper mapper = new ObjectMapper();
-		String inputData = mapper.writeValueAsString(reg);
-		// String
-		// inputJson="{\"userName\": \"TestUser9\",\"password\": \"1234\",\"name\": \"Murali1\", \"phoneNumber1\": \"0000000009\",\"phoneNumber2\": null,\"role\": 1,\"primaryEmailId\": \"murali.dhuli@gmail.com\",\"activationCode\": \"ABC9\",\"address\": \"Address1\"}";
-
-		// String
-		// callCenterInputJson="{\"userName\": \"TestUser11\",\"password\": \"1234\",\"name\": \"Murali1\",\"role\": 2,\"primaryEmailId\": \"murali.dhuli@gmail.com\",\"address\": \"Address1\"}";
-		System.out.println("URL: "+UrlConstant + "registration/create");
-		System.out.println("inputData : " + inputData);
-		try{
+		UserRegistrationDto reg = new UserRegistrationDto();
+		
+		for(int i = 500; i < 550; i++)
+		{
+			reg.setUserName("user"+i);
+			reg.setPassword("Newuser@123");
+			reg.setAddress("Munnekolala 2,Banagalore");
+			reg.setPhoneNum("66555775757");
+			reg.setPrimaryEmailId("atanu.niyogi11@gmail.com");
+			reg.setCity("Bangalore");
+			reg.setState("KA");
+			reg.setCountry("India");
+			reg.setsQuestion("What is your name?");
+			reg.setsAnswer("Atanu");
+			reg.setZipCode(560037);
 			
-			ClientResponse response = webResource.type("application/json")
-					.header(IConstants.TOKEN_HEADER_KEY, token)
-					.post(ClientResponse.class, inputData);
+			WebResource webResource = client.resource(UrlConstant + "registration/create");
+			ObjectMapper mapper = new ObjectMapper();
+			String inputData = mapper.writeValueAsString(reg);
+			// String
+			// inputJson="{\"userName\": \"TestUser9\",\"password\": \"1234\",\"name\": \"Murali1\", \"phoneNumber1\": \"0000000009\",\"phoneNumber2\": null,\"role\": 1,\"primaryEmailId\": \"murali.dhuli@gmail.com\",\"activationCode\": \"ABC9\",\"address\": \"Address1\"}";
 	
-//			if (response.getStatus() != 200) {
-//				throw new RuntimeException("Failed : HTTP error code : "
-//						+ response.getStatus());
-//			}
-	
-			System.out.println("Output from Server .... \n" + response.getStatus());
-			String output1 = response.getEntity(String.class);
-			System.out.println(output1);
-		}catch(Exception e){
-			System.out.println("Exception: "+e.toString());
-			e.printStackTrace();
+			// String
+			// callCenterInputJson="{\"userName\": \"TestUser11\",\"password\": \"1234\",\"name\": \"Murali1\",\"role\": 2,\"primaryEmailId\": \"murali.dhuli@gmail.com\",\"address\": \"Address1\"}";
+			System.out.println("URL: "+UrlConstant + "registration/create");
+			System.out.println("inputData : " + inputData);
+			try{
+				
+				ClientResponse response = webResource.type("application/json")
+						.header(IConstants.TOKEN_HEADER_KEY, token)
+						.post(ClientResponse.class, inputData);
+		
+	//			if (response.getStatus() != 200) {
+	//				throw new RuntimeException("Failed : HTTP error code : "
+	//						+ response.getStatus());
+	//			}
+		
+				System.out.println("Output from Server .... \n" + response.getStatus());
+				String output1 = response.getEntity(String.class);
+				System.out.println(output1);
+			}catch(Exception e){
+				System.out.println("Exception: "+e.toString());
+				e.printStackTrace();
+			}
 		}
 	}
 

@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.lnt.sp.annotations.WriteTransaction;
 import com.lnt.sp.common.util.Config;
 import com.lnt.core.common.dto.DeviceCommandDto;
+import com.lnt.core.common.dto.DeviceCommandQueueDto;
 import com.lnt.core.common.dto.GatewayDto;
 import com.lnt.core.common.dto.SmartDeviceDto;
 import com.lnt.core.common.exception.ServiceApplicationException;
@@ -186,7 +187,7 @@ public class GatewayHandler implements IGatewayHandler {
 							+ gatewayID);
 		}
 
-		if (gatewayMgr.findDeviceGatewayID(gateway.getId(), smartDeviceDto.getDeviceID())
+		if (gatewayMgr.findDeviceGatewayID(gateway.getId(), smartDeviceDto.getDeviceID(), smartDeviceDto.getEndpoint())
 				!= null) {
 			throw new ValidationException(
 					"Duplicate device - device already exists with Gateway: "
@@ -216,16 +217,38 @@ public class GatewayHandler implements IGatewayHandler {
 
 	@Override
 	@Transactional
-	public void deviceCommand(DeviceCommandDto command)
+	public void deviceCommand(DeviceCommandQueueDto command)
 			throws ServiceApplicationException {
 		logger.info("GatewayHandler :  deviceCommand method ");
 		if(serviceProviderName == null)
 			serviceProviderName = "servpro1";
 		ServiceProvider servProvider = servMgr.getServiceProvider(serviceProviderName);
 		logger.info("got servProvider :  deviceCommand method : "+servProvider.getId());
-		Gateway gateway = gatewayMgr.findGatewayByGatewayID(command.getGatewayID(), servProvider.getId());
+		Gateway gateway = gatewayMgr.findGatewayById(command.getGatewayID(), servProvider.getId());
 		gatewayMgr.executeDeviceCommand(command, gateway);
 		
 	}
+	
+	@Override
+	@Transactional
+	@WriteTransaction
+	public List<DeviceCommandQueueDto> getQueuedDeviceCommand(String sessionID) throws ServiceApplicationException{
+		logger.info("GatewayHandler :  getQueuedDeviceCommand method ");
+		
+		UserLoginSession session = sessionMgr.getUserSession(sessionID);
+		ServiceProvider servProvider = servMgr.getServiceProvider(serviceProviderName);
+		
+		logger.info("*****session.getUserId() :   "+session.getUserId());
+		
+		Gateway gateway = gatewayMgr.findGatewayById(session.getUserId(), servProvider.getId());
+		if (gateway == null) {
+			throw new ServiceApplicationException(
+					"Bad gateway "
+							);
+		}
+		logger.info("*****gateway.getId() :   "+gateway.getId());
+		return gatewayMgr.getDeviceCommand(gateway.getId());
+	}
+
 
 }

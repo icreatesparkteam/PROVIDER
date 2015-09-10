@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
+import com.lnt.core.common.dto.DeviceCommandQueueDto;
 import com.lnt.core.common.dto.GatewayDto;
 import com.lnt.core.common.dto.DeviceCommandDto;
 import com.lnt.core.common.dto.ServiceProviderRegistrationDto;
@@ -186,7 +187,7 @@ public class GatewayService {
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Path("/devicecommand")
 	// @PreAuthorize("hasAuthority('VIEW_PROFILE')")
-	public Response deviceCommand(DeviceCommandDto command) {
+	public Response deviceCommand(DeviceCommandQueueDto command) {
 		logger.info("GatewayService deviceCommand method");
 		try {
 			gatewayHandler.deviceCommand(command);
@@ -202,5 +203,27 @@ public class GatewayService {
 			return Response.status(e.getCode()).entity(e.getMessage()).build();
 		}
 	}
+	
+	@GET
+	@Produces({ MediaType.APPLICATION_JSON })
+	@Path("/queuecommand")
+	// @PreAuthorize("hasAuthority('VIEW_PROFILE')")
+	public Response getQueuedDeviceCommand(@HeaderParam("lnt_access_token") String sessionID) {
+		logger.info("GatewayService getQueuedDeviceCommand method");
+		try {
+			List<DeviceCommandQueueDto> queue = gatewayHandler.getQueuedDeviceCommand(sessionID);
+			return Response.ok().entity(queue).build();
+		} catch (ServiceRuntimeException e) {
+			logger.error("Runtime Exception while executing command : {}",
+					e.getMessage());
+			return Response.status(e.getCode()).entity(e.getMessage()).build();
+		} catch (ServiceApplicationException e) {
+			logger.error(
+					"Application Exception while executing command : {}",
+					e.getMessage());
+			return Response.status(e.getCode()).entity(e.getMessage()).build();
+		}
+	}
+
 
 }

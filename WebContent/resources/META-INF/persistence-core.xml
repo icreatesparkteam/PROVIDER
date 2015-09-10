@@ -9,6 +9,8 @@
 		<class>com.lnt.core.model.Cluster</class>
 		<class>com.lnt.core.model.ClusterCommand</class>
 		<class>com.lnt.core.model.Manufacturer</class>
+		<class>com.lnt.core.model.DeviceStatus</class>
+		<class>com.lnt.core.model.DeviceCommandQueue</class>
 		<exclude-unlisted-classes />
 	</persistence-unit> 
 </persistence>

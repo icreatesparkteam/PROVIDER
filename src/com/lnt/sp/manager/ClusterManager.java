@@ -76,6 +76,8 @@ public class ClusterManager implements IClusterManager {
 			dto.setClusterID(clusterCommandList.getClusterID());
 			dto.setCommandName(clusterCommandList.getCommandName());
 			dto.setCommandValue(clusterCommandList.getCommandValue());
+			dto.setCommandUpRange(clusterCommandList.getCommandUpRange());
+			dto.setCommandLowRange(clusterCommandList.getCommandLowRange());
 			clusterCommandDtoList.add(dto);
 
 		}
