@@ -12,6 +12,8 @@ var config = {
 	"setquestion":"/iControlE-ServiceProvider/rest/registration/setquestion",
 	
 	"userlist" : "/iControlE-ServiceProvider/rest/registration/userlist",
+	"getrole":"/iControlE-ServiceProvider/rest/registration/getrole",
+	
 	
 	"clusterlist":"/iControlE-ServiceProvider/rest/cluster/clusterlist",
 	"clusterlistbyid":"/iControlE-ServiceProvider/rest/cluster/clusterlistbyid",

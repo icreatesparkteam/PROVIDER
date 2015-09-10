@@ -39,11 +39,11 @@
 						},
 						contentType : "application/x-www-form-urlencoded",
 
-						success : function(data) {	
-							//goto main page		
+						success : function(data) {		
+																				
 							document.cookie = "lnt_access_token" + "=" + JSON.parse(JSON.stringify(data));
-							window.sessionStorage.setItem("token",JSON.parse(JSON.stringify(data)));					 
-							window.location = "/iControlE-ServiceProvider/html/mainPage.html";
+							window.sessionStorage.setItem("token",JSON.parse(JSON.stringify(data)));
+							getRole();							
 						},
 						error : function() {
 							alert('Invalid Credentials');
@@ -53,6 +53,32 @@
 					});
 				}
 			}
+			
+			function getRole(){				
+				var token = window.sessionStorage.getItem("token");	
+				$.ajax({
+				type : "GET",
+				url : config.Server_IP + config.getrole,				
+					headers: {
+			             'lnt_access_token': token
+			         },	
+			        contentType : 'application/json',
+					accepts : "text/plain",
+					success : function(data) {						
+						if(data==="serviceprovider"){
+							window.location = "/iControlE-ServiceProvider/html/spMainPage.html";	
+						}
+						else if(data==="user"){
+							window.location = "/iControlE-ServiceProvider/html/userMainPage.html";	
+						}					
+						
+					},
+					error : function() {								
+						
+					}
+				});
+			}
+
 		</script>
 		<table border="0" cellpadding="5" cellspacing="0" width="600"
 			class="login">

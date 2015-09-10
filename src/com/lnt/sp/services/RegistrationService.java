@@ -41,11 +41,11 @@ public class RegistrationService {
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Path("/create")
 	//@PreAuthorize("hasAuthority('CREATE_USER')")
-	public Response createServiceProvider(UserRegistrationDto register) {
-		logger.info("RegistrationService createServiceProvider method");
+	public Response createUser(UserRegistrationDto register) {
+		logger.info("RegistrationService createUser method");
 		try {
 			regHandler.createUser(register);
-			return Response.ok().entity("ServiceProvider created successfully").build();
+			return Response.ok().entity("User created successfully").build();
 		} catch (ServiceApplicationException e) {
 			logger.error("Application Exception while creating user: {}",
 					e.getMessage());
@@ -66,7 +66,7 @@ public class RegistrationService {
 		logger.info("RegistrationService update method");
 		try {
 			regHandler.updateUser(register);
-			return Response.ok().entity("ServiceProvider updated successfully").build();
+			return Response.ok().entity("User updated successfully").build();
 		} catch (ServiceApplicationException e) {
 			logger.error("Application Exception while update : {}",
 					e.getMessage());
