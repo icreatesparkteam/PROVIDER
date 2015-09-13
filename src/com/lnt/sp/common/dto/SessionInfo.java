@@ -46,5 +46,4 @@ public class SessionInfo {
 		this.serProvider = serProvider;
 	}
 
-
 }

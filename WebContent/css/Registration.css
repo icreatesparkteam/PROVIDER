@@ -19,7 +19,7 @@ body {
 #Submit {
 	width: 400px;
 	height: 40px;
-	background-color: green;
+	background-color: #024d87;
 	color: white;
 	font-size: 20px;
 }
@@ -27,7 +27,7 @@ body {
 #banner {
 	width: 100%;
 	height: 170px;
-	background-color: green;
+	background-color: #024d87;
 	background: url("../images/image1.jpg") center center no-repeat;
 	margin: 0px;
 	padding: 0px !important;
