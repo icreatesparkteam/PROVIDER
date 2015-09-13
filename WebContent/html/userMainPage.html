@@ -11,9 +11,11 @@
         <link rel="stylesheet" href="/iControlE-ServiceProvider/css/flexslider.css" type="text/css" media="screen" />
 
         <!-- javascript -->
+        <script type="text/javascript" src="/iControlE-ServiceProvider/js/config.js"></script>
         <script type="text/javascript" src="/iControlE-ServiceProvider/js/jquery.js"></script>
         <script src="/iControlE-ServiceProvider/js/modernizr.js"></script>
         <script defer src="/iControlE-ServiceProvider/js/jquery.flexslider.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
         <script type="text/javascript">
             $(window).load(function() {
@@ -28,14 +30,35 @@
                 screenHeight = screenHeight.split('px');
                 $('.footerContainer').css('top', (screenHeight[0]-30) + 'px');
             });
-        </script>
-
+            </script>      
+           
 </head>
 <body>
+<script type="text/javascript">
+function logout(){            	
+	var token = window.sessionStorage.getItem("token");	
+	$.ajax({
+	type : "GET",
+	url : config.Server_IP + config.logout,				
+		headers: {
+             'lnt_access_token': document.cookie
+         },	
+        contentType : 'application/json',		
+		success : function(data) {			
+			window.location = '/iControlE-ServiceProvider/html/Login.html';																	
+		},
+		error : function() {								
+			alert("Please try again");
+		}
+	});
+	
+}
+</script>
+
         <div align="center" style="width:100%;">
             <div class="mainContainer" align="center">
                 <div class='headerContainer'>
-                        <div id='logoutHomeScreen'></div>
+                        <div id='logoutHomeScreen' onclick=logout()></div>
                 </div>
                 <div id="bodyContainer" class="w100">
                     <div id='leftPanel'>

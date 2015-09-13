@@ -32,14 +32,14 @@
 				} else {
 					$.ajax({
 						type : "POST",
-						url : config.Server_IP + config.splogin,
+						url : config.Server_IP + config.login,
 						data : {
 							'username' : username,
 							'password' : password
 						},
 						contentType : "application/x-www-form-urlencoded",
 
-						success : function(data) {																						
+						success : function(data) {
 							document.cookie = "lnt_access_token" + "=" + JSON.parse(JSON.stringify(data));
 							window.sessionStorage.setItem("token",JSON.parse(JSON.stringify(data)));
 							getRole();							
@@ -53,8 +53,8 @@
 				}
 			}
 			
-			function getRole(){				
-				var token = window.sessionStorage.getItem("token");	
+			function getRole(){							
+				var token = window.sessionStorage.getItem("token");				
 				$.ajax({
 				type : "GET",
 				url : config.Server_IP + config.getrole,				
@@ -63,8 +63,7 @@
 			         },	
 			        contentType : 'application/json',
 					accepts : "text/plain",
-					success : function(data) {
-				//		alert("data:::"+data);
+					success : function(data) {						
 						if(data==="serviceprovider"){
 							window.location = "/iControlE-ServiceProvider/html/spMainPage.html";	
 						}
@@ -72,8 +71,8 @@
 							window.location = "/iControlE-ServiceProvider/html/userMainPage.html";	
 						}											
 					},
-					error : function() {								
-						
+					error : function() {	
+						alert("Sorry, your role is not found..Please check credentials");						
 					}
 				});
 			}

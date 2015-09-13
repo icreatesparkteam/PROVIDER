@@ -1,7 +1,7 @@
 var config = {
 	"Server_IP" : "http://localhost:8080",
-	"splogin" : "/iControlE-ServiceProvider/rest/auth/login",
-	"splogout" : "/iControlE-ServiceProvider/rest/auth/logout",
+	"login" : "/iControlE-ServiceProvider/rest/auth/login",
+	"logout" : "/iControlE-ServiceProvider/rest/auth/logout",
 	"devicelogin":"/iControlE-ServiceProvider/rest/auth/devicelogin",
 		
 	"createUser" : "/iControlE-ServiceProvider/rest/registration/create",
