@@ -25,16 +25,21 @@
                         $('body').removeClass('loading');
                     }
                 });
-                sessionStorage.clear();
+             <!--   sessionStorage.clear();
                 var screenHeight = $('.mainContainer').css('height');
                 screenHeight = screenHeight.split('px');
                 $('.footerContainer').css('top', (screenHeight[0]-30) + 'px');
-            });
+            });-->
             </script>      
            
 </head>
 <body>
 <script type="text/javascript">
+
+/*document.getElementById('iframe').onload = function() {
+  alert('myframe is loaded');
+  window.location = '/iControlE-ServiceProvider/html/userHome.html';
+};*/
 function logout(){            	
 	var token = window.sessionStorage.getItem("token");	
 	$.ajax({
@@ -90,18 +95,18 @@ function logout(){
                                     <!--add header here-->
                                 </div>
                             </div>
-                              <iframe src="" name="iframe" class="iframe"></iframe>
+                              <iframe src="" id ="iframe" name="iframe" class="iframe"></iframe>
 
                         </div>
                     </div>  
 
                 </div>
-                <div class='footerContainer w100 cb'>
+           <!--      <div class='footerContainer w100 cb'>
                     </div>
                     <div class="fr" style="margin-right:15px;">
                         2015 L&T Technology Services. All rights reserved
                     </div>
-                </div>
+                </div> -->
             </div>
     </body>
 </html>

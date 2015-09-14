@@ -1,5 +1,6 @@
 var config = {
 	"Server_IP" : "http://localhost:8080",
+//	"Server_IP":"http://52.27.53.182:8080",
 	"login" : "/iControlE-ServiceProvider/rest/auth/login",
 	"logout" : "/iControlE-ServiceProvider/rest/auth/logout",
 	"devicelogin":"/iControlE-ServiceProvider/rest/auth/devicelogin",

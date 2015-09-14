@@ -2,9 +2,42 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<link rel="stylesheet" type="text/css" media="screen"
+	href="../css/forms.css" />
+<script type="text/javascript" src="../js/config.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
 <title>Insert title here</title>
 </head>
-<body>
+<body onload='getgatewaybyuser()'>
+
+<script type="text/javascript">
+function getgatewaybyuser(){	
+	alert("sending request for getgatewaybyuser ");
+	var token ;	
+	token = window.sessionStorage.getItem("token");	
+	if(token==null){
+	token=	document.cookie;
+	}
+	alert("access token for getgatewaybyuser::"+token);
+	$.ajax({
+		type : "GET",
+		url : config.Server_IP + config.getgatewaybyuser,
+		headers: {
+             'lnt_access_token': token
+         },	
+		contentType: 'application/json',
+		accepts: "application/json",
+		success : function(data) {								
+			alert("success::"+data);
+		},
+		error : function() {
+			alert('Error in getting gateway by user');			
+			return false;
+		}
+	});
+}
+</script>
 
 </body>
 </html>

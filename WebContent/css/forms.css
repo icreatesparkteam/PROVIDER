@@ -1,6 +1,7 @@
 .iframe{
     width:1147px;
-    height: auto;
+	min-height: 1000px; 
+    height: auto;    
     margin: 0px;
 }
 
@@ -8,7 +9,7 @@
     width: 100%;
     height: auto;
     margin: 0px;
-    margin-top: 5px;
+    margin-top: 5px;	
 }
 
 .slider {
@@ -43,6 +44,7 @@
     border: 1px solid #e0e0e0;
     border-radius: 10px;    
 }
+
 
 #loginEntryWrapper {
     width: 380px;
@@ -91,6 +93,8 @@
     border: none;
     color: #fff;
     cursor: pointer;
+    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .submitBtn:active {
@@ -101,15 +105,16 @@
     margin-top: -50px;
     width: 100px;
     height: 50px;   
-    background: url(/iControlE-ServiceProvider/images/login_title.png) no-repeat;
+    background: url(/iControlE-Core/images/login_title.png) no-repeat;
     background-size: 100% 100%;
     position: absolute;
     left: 50%;
     margin-left: -50px;
 }
+/*
 .mainContainer{
     height:845px !important;
-}
+}*/
 
 .footerContainer{
     top:815px;
@@ -171,16 +176,16 @@ body {
 
 .mainContainer {
     width: 1150px;
-    height: 830px;
-    min-height: 760px; 
-    box-shadow: -3px -9px 15px 0px rgba(0,0,0,0.75);
+    height: auto;
+    min-height: 200px; 
+    box-shadow: -3px -9px 15px 0px rgba(0,0,0,0.75);		
 }
 
 .headerContainer {
     width:100%;
     height: 80px;
     background: #024d87;
-    background: url(/iControlE-ServiceProvider/images/banner.jpg) no-repeat;
+    background: url(/iControlE-Core/images/banner.jpg) no-repeat;
 }
 
 .headerMargin {
@@ -242,10 +247,77 @@ input[type=password] {
 #logoutHomeScreen{
     width:25px;
     height:25px;
-    background: URL('/iControlE-ServiceProvider/images/logout_icn.png')no-repeat;
+    background: URL('/iControlE-Core/images/logout_icn.png')no-repeat;
     background-size: 100% 100%;
     float:right;
     margin-left:12px;
     margin-top:-1px;
     cursor:pointer;    
+}
+
+/*#container {*/
+	/*width: 700px;*/
+	/*background-color: white;*/
+	/*margin: auto;*/
+	/*margin-top: 130px !important;*/
+	/*margin-left: 100px;*/
+	/*verticle-align: centre;*/
+    /*border: 2px solid #08558b;*/
+    /*padding-left: 60px;*/
+    /*padding-top: 60px;*/
+/*}*/
+#container {
+    width: 700px;
+    background-color: white;
+    /*margin: auto;*/
+    margin-top: 30px !important;
+    margin-left: 230px;
+    verticle-align: centre;
+    border: 2px solid #08558b;
+    padding-left: 60px;
+    padding-top: 30px;
+    position: relative;
+
+}
+
+input[type=text],
+input[type=password] {
+    width:225px;
+    height:20px;
+    border:1px solid #DDD;
+    border-radius:8px;
+    background-color:#ffffff;
+    outline:none;
+    padding:5px 35px 5px 10px;
+    margin-bottom: 10px;
+
+}
+select{
+    width: 275px;
+    margin-bottom: 10px;
+}
+
+.listElement{
+width:1100px;
+height:60px;
+background-color: #08558b;
+color: white;
+font-size: 18px;
+border-radius:5px;				
+cursor:pointer;
+margin-left:20px;
+}
+.listElement:hover {
+background-color:#1682ba ;
+}
+.header {
+	height: 40px;
+	width: 100%;
+	margin: 0px;
+	margin-top:40px;
+	margin-left:100px;
+	padding-top: 15px !important;	
+	color: black;
+	font-size: 20px;
+	text-align: left;	
 }

@@ -9,10 +9,10 @@
 
 <title>Insert title here</title>
 </head>
-<body onload='getUserssList()'>
+<body onload='getUsersList()'>
 
 <script type="text/javascript">
-function getusersList(){	
+function getUsersList(){	
 	var token = window.sessionStorage.getItem("token");	
 	$.ajax({
 		type : "GET",

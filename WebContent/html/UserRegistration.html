@@ -2,13 +2,13 @@
 <html>
 <head>
 
-<link rel="stylesheet" type="text/css" media="screen"
-	href="../css/Registration.css" />
 	<link rel="stylesheet" type="text/css" media="screen"
-	href="../css/form.css" />
-<script type="text/javascript" src="../js/config.js"></script>
-	
-<title></title>
+		  href="../css/forms.css" />
+	<script type="text/javascript" src="../js/config.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+	<title>iControl-E</title>
+
 </head>
 <body>
 
@@ -85,51 +85,45 @@
 				return true;
 			}
 		</script>
-		<table border="0" cellpadding="5" cellspacing="0" width="600"
-			id="container">
-			
-			<tr>
-				<td colspan="2"><h1 id="header">USER REGISTARTION</h1></td>
-			</tr>
-
-			<tr>
-				<td><b>User Name:</b></td>
+		<table id="container">	
+				<tr>
+				<td>User Name:</td>
 				<td><input id="UserName" name="UserName" type="text" /></td>
 			</tr>
 			<tr>
-				<td><b>Password:</b></td>
+				<td>Password:</td>
 				<td><input id="Password" name="Password" type="password" /></td>
 			</tr>
 			<tr>
-				<td><b>Email address:</b></td>
+				<td>Email address:</td>
 				<td><input id="EmailAddress" name="EmailAddress" type="text" /></td>
 			</tr>
 			<tr>
-				<td><b>Phone:</b></td>
+				<td>Phone:</td>
 				<td><input id="Phone" name="Phone" type="text" /></td>
 			</tr>
 			<tr>
-				<td><b>Address:</b></td>
+				<td>Address:</td>
 				<td><input id="Address" name="Address" type="text" /></td>
 			</tr>
 			<tr>
-				<td><b>City:</b></td>
+				<td>City:</td>
 				<td><input id="City" name="City" type="text" maxlength="120" /></td>
 			</tr>
 			<tr>
-				<td><b>State/Province:</b></td>
+				<td>State/Province:</td>
 				<td><input id="State" name="State" type="text" maxlength="120" /></td>
 			</tr>
 			<tr>
-				<td><b>Country:</b></td>
+				<td>Country:</td>
 				<td><input id="Country" name="Country" type="text" /></td>
 			</tr>
 			<tr>
-				<td><b>Zip/Postal Code:</b></td>
+				<td>Zip/Postal Code:</td>
 				<td><input id="Zip" name="Zip" type="text" maxlength="30" /></td>
 			</tr>
 			<tr>
-				<td><b>Active:</b></td>
+				<td>Active:</td>
 				<td><select name="Active">
 						<option value="" selected>Select Active Status</option>
 						<option value="1">Yes</option>
@@ -137,7 +131,7 @@
 				</select></td>
 			</tr>
 			<tr>
-				<td><b>Security Question:</b></td>
+				<td>Security Question:</td>
 				<td><select name="Question">
 						<option value="" selected>Select Security Question</option>
 						<option value="1">What was your childhood nickname?</option>
@@ -152,13 +146,13 @@
 				</select></td>
 			</tr>
 			<tr>
-				<td><b>Answer:</b></td>
+				<td>Answer:</td>
 				<td><input id="Answer" name="Answer" type="text" /></td>
 			</tr>
 
 			<tr>
 				<td colspan="2" align="center"><input id="Submit" name="Submit"
-					type="submit" value="SUBMIT" /></td>
+					class="submitBtn" type="submit" value="SUBMIT" /></td>
 			</tr>
 		</table>
 		<br />
