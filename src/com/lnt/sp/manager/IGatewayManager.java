@@ -4,9 +4,11 @@ import java.util.List;
 
 import com.lnt.core.common.dto.DeviceCommandDto;
 import com.lnt.core.common.dto.DeviceCommandQueueDto;
+import com.lnt.core.common.dto.DeviceStatusDto;
 import com.lnt.core.common.dto.GatewayDto;
 import com.lnt.core.common.dto.SmartDeviceDto;
 import com.lnt.core.common.exception.ServiceApplicationException;
+import com.lnt.core.model.DeviceStatus;
 import com.lnt.core.model.Gateway;
 import com.lnt.core.model.SmartDevice;
 
@@ -18,7 +20,7 @@ public interface IGatewayManager {
 	
 	public Gateway findGatewayByGatewayID(String gatewayID, int serviceProviderID) throws ServiceApplicationException;
 
-	public List<Gateway> getGatewayByServiceProviderById(int serviceProviderID);
+	public List<Gateway> getGatewayByServiceProviderById(int serviceProviderID) throws ServiceApplicationException;
 
 	public void updateGateway(Gateway gateway) throws ServiceApplicationException;
 
@@ -35,6 +37,10 @@ public interface IGatewayManager {
 	
 	public List<DeviceCommandQueueDto> getDeviceCommand(int gatewayId) throws ServiceApplicationException;
 
-	Gateway findGatewayById(int id, int serviceProviderID);
+	public Gateway findGatewayById(int id, int serviceProviderID) throws ServiceApplicationException;
+	
+	public DeviceStatusDto getDeviceStatus(String gatewayId, String endPoint, String deviceID) throws ServiceApplicationException;
+	
+	public void updateDeviceStatus(List<DeviceStatusDto> status) throws ServiceApplicationException;;
 	
 }

@@ -12,6 +12,7 @@ import com.lnt.sp.annotations.WriteTransaction;
 import com.lnt.sp.common.util.Config;
 import com.lnt.core.common.dto.DeviceCommandDto;
 import com.lnt.core.common.dto.DeviceCommandQueueDto;
+import com.lnt.core.common.dto.DeviceStatusDto;
 import com.lnt.core.common.dto.GatewayDto;
 import com.lnt.core.common.dto.SmartDeviceDto;
 import com.lnt.core.common.exception.ServiceApplicationException;
@@ -21,6 +22,7 @@ import com.lnt.sp.manager.IGatewayManager;
 import com.lnt.sp.manager.IServiceProviderManager;
 import com.lnt.sp.manager.ISessionManager;
 
+import com.lnt.core.model.DeviceStatus;
 import com.lnt.core.model.Gateway;
 import com.lnt.core.model.ServiceProvider;
 import com.lnt.core.model.SmartDevice;
@@ -248,6 +250,20 @@ public class GatewayHandler implements IGatewayHandler {
 		}
 		logger.info("*****gateway.getId() :   "+gateway.getId());
 		return gatewayMgr.getDeviceCommand(gateway.getId());
+	}
+
+	@Override
+	@WriteTransaction
+	public void setDeviceStatus(List<DeviceStatusDto> status)
+			throws ServiceApplicationException {
+		gatewayMgr.updateDeviceStatus(status);
+	}
+
+	@Override
+	@Transactional
+	public DeviceStatusDto getDeviceStatus(String gatewayId, String endPoint, String deviceID)
+			throws ServiceApplicationException {
+		return gatewayMgr.getDeviceStatus(gatewayId, endPoint, deviceID);
 	}
 
 

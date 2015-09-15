@@ -30,9 +30,9 @@ public class LoginTest {
 			JsonMappingException, IOException {
 
 		loginUser();
-		createUser(token);
+//		createUser(token);
 //		getServPro(token);
-//		getRole(token);
+		getRole(token);
 
 	}
 

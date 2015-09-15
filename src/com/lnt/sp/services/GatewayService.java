@@ -20,6 +20,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
 import com.lnt.core.common.dto.DeviceCommandQueueDto;
+import com.lnt.core.common.dto.DeviceStatusDto;
 import com.lnt.core.common.dto.GatewayDto;
 import com.lnt.core.common.dto.DeviceCommandDto;
 import com.lnt.core.common.dto.ServiceProviderRegistrationDto;
@@ -224,6 +225,49 @@ public class GatewayService {
 			return Response.status(e.getCode()).entity(e.getMessage()).build();
 		}
 	}
+	
+	@GET
+	@Produces({ MediaType.APPLICATION_JSON })
+	@Path("/devicestatus")
+	// @PreAuthorize("hasAuthority('VIEW_PROFILE')")
+	public Response getDeviceStatus(@PathParam("gatewayId") String gatewayId, @PathParam("endPoint") String endPoint,
+			@PathParam("deviceID") String deviceID) {
+		logger.info("GatewayService getDeviceStatus method");
+		try {
+			DeviceStatusDto status = gatewayHandler.getDeviceStatus(gatewayId, endPoint, deviceID);
+			return Response.ok().entity(status).build();
+		} catch (ServiceRuntimeException e) {
+			logger.error("Runtime Exception while executing command : {}",
+					e.getMessage());
+			return Response.status(e.getCode()).entity(e.getMessage()).build();
+		} catch (ServiceApplicationException e) {
+			logger.error(
+					"Application Exception while executing command : {}",
+					e.getMessage());
+			return Response.status(e.getCode()).entity(e.getMessage()).build();
+		}
+	}
 
+	@POST
+	@Produces({ MediaType.TEXT_PLAIN })
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Path("/setdevicestatus")
+	// @PreAuthorize("hasAuthority('VIEW_PROFILE')")
+	public Response setDeviceStatus(List<DeviceStatusDto> status) {
+		logger.info("GatewayService deviceCommand method");
+		try {
+			gatewayHandler.setDeviceStatus(status);
+			return Response.ok().entity("Command executed successfully").build();
+		} catch (ServiceRuntimeException e) {
+			logger.error("Runtime Exception while executing command : {}",
+					e.getMessage());
+			return Response.status(e.getCode()).entity(e.getMessage()).build();
+		} catch (ServiceApplicationException e) {
+			logger.error(
+					"Application Exception while executing command : {}",
+					e.getMessage());
+			return Response.status(e.getCode()).entity(e.getMessage()).build();
+		}
+	}
 
 }

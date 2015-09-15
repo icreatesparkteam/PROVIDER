@@ -3,10 +3,12 @@ package com.lnt.sp.handler;
 import java.util.List;
 
 import com.lnt.core.common.dto.DeviceCommandQueueDto;
+import com.lnt.core.common.dto.DeviceStatusDto;
 import com.lnt.core.common.dto.GatewayDto;
 import com.lnt.core.common.dto.SmartDeviceDto;
 import com.lnt.core.common.exception.ServiceApplicationException;
 import com.lnt.core.common.dto.DeviceCommandDto;
+import com.lnt.core.model.DeviceStatus;
 
 public interface IGatewayHandler {
 
@@ -33,8 +35,10 @@ public interface IGatewayHandler {
 
 	public void deviceCommand(DeviceCommandQueueDto command) throws ServiceApplicationException;
 
-	public List<DeviceCommandQueueDto> getQueuedDeviceCommand(String sessionID)  throws ServiceApplicationException;
+	public List<DeviceCommandQueueDto> getQueuedDeviceCommand(String sessionID) throws ServiceApplicationException;
 
+	public void setDeviceStatus(List<DeviceStatusDto> status) throws ServiceApplicationException;
 	
+	public DeviceStatusDto getDeviceStatus(String gatewayId, String endPoint, String deviceID) throws ServiceApplicationException;
 
 }

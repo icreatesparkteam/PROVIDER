@@ -10,16 +10,19 @@ import org.springframework.stereotype.Component;
 
 import com.lnt.core.common.dto.DeviceCommandDto;
 import com.lnt.core.common.dto.DeviceCommandQueueDto;
+import com.lnt.core.common.dto.DeviceStatusDto;
 import com.lnt.core.common.dto.GatewayDto;
 import com.lnt.core.common.dto.SmartDeviceDto;
 import com.lnt.core.common.exception.ServiceApplicationException;
 
 import com.lnt.sp.common.util.Config;
 import com.lnt.sp.dao.impl.DeviceCommandQueueDao;
+import com.lnt.sp.dao.impl.DeviceStatusDao;
 import com.lnt.sp.dao.impl.GatewayDao;
 import com.lnt.sp.dao.impl.SmartDeviceDao;
 import com.lnt.sp.zigbee.Control;
 import com.lnt.core.model.DeviceCommandQueue;
+import com.lnt.core.model.DeviceStatus;
 import com.lnt.core.model.Gateway;
 import com.lnt.core.model.ServiceProvider;
 import com.lnt.core.model.SmartDevice;
@@ -39,6 +42,9 @@ public class GatewayManager implements IGatewayManager {
 	private DeviceCommandQueueDao queueDao;
 	
 	@Autowired
+	private DeviceStatusDao statusDao;
+	
+	@Autowired
 	private IServiceProviderManager servMgr;
 	
 	String serviceProviderName = Config.getInstance().getProperty("service.provider.username");
@@ -50,7 +56,7 @@ public class GatewayManager implements IGatewayManager {
 	}
 
 	@Override
-	public Gateway findGatewayByUserID(int userID, int serviceProviderID) {
+	public Gateway findGatewayByUserID(int userID, int serviceProviderID) throws ServiceApplicationException {
 		logger.info("GatewayManager Retrieving gateway information with userID {}",
 				userID);
 		Gateway gateway = gatewayDao.findByUserID(userID, serviceProviderID);
@@ -58,7 +64,7 @@ public class GatewayManager implements IGatewayManager {
 	}
 	
 	@Override
-	public Gateway findGatewayById(int id, int serviceProviderID) {
+	public Gateway findGatewayById(int id, int serviceProviderID) throws ServiceApplicationException {
 		logger.info("GatewayManager Retrieving gateway information with userID {}",
 				id);
 		Gateway gateway = gatewayDao.findByID(id, serviceProviderID);
@@ -66,7 +72,7 @@ public class GatewayManager implements IGatewayManager {
 	}
 
 	@Override
-	public List<Gateway> getGatewayByServiceProviderById(int serviceProviderID) {
+	public List<Gateway> getGatewayByServiceProviderById(int serviceProviderID) throws ServiceApplicationException {
 		logger.info("GatewayManager Retrieving gateway information with serviceProviderID {}", serviceProviderID);
 		return gatewayDao.getByServiceProviderById(serviceProviderID);
 	}
@@ -185,6 +191,32 @@ public class GatewayManager implements IGatewayManager {
 		}
 		
 		return queuoDto;
+	}
+
+	@Override
+	public DeviceStatusDto getDeviceStatus(String gatewayId, String endPoint,
+			String deviceID) throws ServiceApplicationException {
+		
+		DeviceStatus status = statusDao.getDeviceCommand(gatewayId, endPoint, deviceID);
+		DeviceStatusDto dto = new DeviceStatusDto();
+		dto = dto.formDeviceStatus(status);
+		return dto;
+	}
+
+	@Override
+	public void updateDeviceStatus(List<DeviceStatusDto> statusDtoList)
+			throws ServiceApplicationException {
+		for (DeviceStatusDto statusDto : statusDtoList) {
+			DeviceStatus status = new DeviceStatus();
+			status.setDeviceID(statusDto.getDeviceID());
+			status.setGatewayID(statusDto.getGatewayID());
+			status.setDeviceStatus(statusDto.getDeviceStatus());
+			status.setHue(statusDto.getHue());
+			status.setLevel(statusDto.getLevel());
+			status.setEndpoint(statusDto.getEndPoint());
+			status.setSaturation(statusDto.getSaturation());
+			statusDao.update(status);
+		}
 	}
 
 }
