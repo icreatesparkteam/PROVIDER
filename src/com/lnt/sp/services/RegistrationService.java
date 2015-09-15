@@ -105,7 +105,7 @@ public class RegistrationService {
 		logger.info("RegistrationService Delete Usere method");
 		try {
 			regHandler.deleteUser(userName);
-			return Response.ok().entity("ServiceProvider deleted successfully").build();
+			return Response.ok().entity("User deleted successfully").build();
 		} catch (ServiceApplicationException e) {
 			return Response.status(e.getCode()).entity(e.getMessage()).build();
 		} catch (ServiceRuntimeException e) {

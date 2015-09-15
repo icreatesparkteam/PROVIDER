@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" media="screen"
+	href="../css/forms.css" />
+<script type="text/javascript" src="../js/config.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<title>iControl-E</title>
+
+</head>
+<body onload='getUserList()'>
+
+<script type="text/javascript">
+function getUserList(){	
+	var token = window.sessionStorage.getItem("token");	
+	$.ajax({
+		type : "GET",
+		url : config.Server_IP + config.userlist,
+		headers: {
+             'lnt_access_token': window.sessionStorage.getItem("token")
+         },	
+		contentType: 'application/json',
+		accepts: "application/json",
+		success : function(data) {								
+			showInfo(data);
+		},
+		error : function() {
+			alert('Error in getting status details');			
+			return false;
+		}
+	});
+}
+function showInfo(data){
+	var spList=data;
+	var count=0;
+	
+	spList.forEach(function(sp) {
+		  count++;
+		});	
+	document.getElementById('contentInfo').innerText="Total Number of Users:      "+count;
+	
+}
+</script>
+<body>
+<div class='header' id='contentInfo'></div>
+</body>
+</html>

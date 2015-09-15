@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>iControl-E</title>
-    <meta http-equiv='X-UA-Compatible' content='IE=9'>
-    <link rel="icon" href="images/iControlE.ico" type="image/ico" sizes="16x16">
+<title>iControl-E</title>
+<meta http-equiv='X-UA-Compatible' content='IE=9'>
+<link rel="icon" href="images/iControlE.ico" type="image/ico"
+	sizes="16x16">
 
 
 <link rel="stylesheet" type="text/css" media="screen"
 	href="css/forms.css" />
 <script type="text/javascript" src="js/config.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
 </head>
 <body>
 
-		<script type="text/javascript">
+	<script type="text/javascript">
 			function loginfunction() {
 				var form = document.getElementById("loginForm");
 
@@ -63,45 +65,45 @@
 			         },	
 			        contentType : 'application/json',
 					accepts : "text/plain",
-					success : function(data) {						
+					success : function(data) {													
 						if(data==="serviceprovider"){
 							window.location = "/iControlE-ServiceProvider/html/spMainPage.html";	
 						}
 						else if(data==="user"){
 							window.location = "/iControlE-ServiceProvider/html/userMainPage.html";	
-						}											
+						}									
 					},
 					error : function() {	
 						alert("Sorry, your role is not found..Please check credentials");						
 					}
 				});
 			}
-		</script>	
-		
-<div class='w100 loadingContainer'>
-    <div id='loginEntryWrapper'>
-        <form action="" id="loginForm" method="post">
-            <div id='formHeader'></div>
-            <table>
-                <tr>
-                    <td><input id="UserName" name="UserName" type="text" maxlength='20'
-                               class="loginFileds" placeholder='Enter User Name'/></td>
-                </tr>
-                <tr>
+		</script>
 
-                    <td><input id="Password" name="Password" type="password"
-                               placeholder="Enter Password" class="loginFileds"/></td>
-                </tr>
-                <tr>
-                    <td class="loginButtonContainer"><input type="button" class='submitBtn'
-                                                            id="loginButton" name="Submit" onclick=loginfunction()
-                                                            value="Login"/></td>
-                </tr>
-            </table>
+	<div class='w100 loadingContainer'>
+		<div id='loginEntryWrapper'>
+			<form action="" id="loginForm" method="post">
+				<div id='formHeader'></div>
+				<table>
+					<tr>
+						<td><input id="UserName" name="UserName" type="text"
+							maxlength='20' class="loginFileds" placeholder='Enter User Name' /></td>
+					</tr>
+					<tr>
 
-        </form>
-    </div>
-</div>
-		
+						<td><input id="Password" name="Password" type="password"
+							placeholder="Enter Password" class="loginFileds" /></td>
+					</tr>
+					<tr>
+						<td class="loginButtonContainer"><input type="button"
+							class='submitBtn' id="loginButton" name="Submit"
+							onclick=loginfunction() value="Login" /></td>
+					</tr>
+				</table>
+
+			</form>
+		</div>
+	</div>
+
 </body>
 </html>
