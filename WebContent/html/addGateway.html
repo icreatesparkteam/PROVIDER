@@ -17,34 +17,17 @@
 		function Submitfunction() {
 			var frm = document.getElementById("addGatewayForm");
 
-			var gatewayID = document.getElementById("gatewayID").value;
-			var serviceProviderID = document.getElementById("serviceProviderID").value;
-			var userID = document.getElementById("userID").value;					
-			var ipAddress = document.getElementById("ipAddress").value;
-			
+			var gatewayID = document.getElementById("gatewayID").value;			
 			
 			if (gatewayID === "") {
 				alert('Gateway ID is required.');
 				frm.gatewayID.focus();
 				return false;
 			}
-			if (serviceProviderID === "") {
-				alert('Service Provider ID is required.');
-				frm.serviceProviderID.focus();
-				return false;
-			}
-			if (userID === "") {
-				alert('User ID is required.');
-				frm.userID.focus();
-				return false;
-			}
 			else {
 				var token = window.sessionStorage.getItem("token");
 				var jsonobj = {
-					'gatewayID' : gatewayID,
-					'serviceProviderID' : serviceProviderID,				
-					'userID' : userID,
-					'ipAddress' : ipAddress			
+					'gatewayID' : gatewayID					
 				}
 				$.ajax({
 					type : "POST",
@@ -74,24 +57,10 @@
 		<table id="container">
 
 			<tr>
-				<td>Gateway ID:</td>
+				<td>Please Enter Gateway ID:</td>
 				<td><input id="gatewayID" name="gatewayID" type="text" /></td>
 			</tr>
-			<tr>
-				<td>Service Provider ID:</td>
-				<td><input id="serviceProviderID" name="serviceProviderID"
-					type="password" /></td>
-			</tr>
-
-			<tr>
-				<td>User ID:</td>
-				<td><input id="userID" name=userID type="text" /></td>
-			</tr>
-			<tr>
-				<td>IP Address:</td>
-				<td><input id="ipAddress" name="ipAddress" type="text" /></td>
-			</tr>
-			<tr>
+						<tr>
 				<td colspan="2" align="center"><input type="button"
 					class="submitBtn" id="submitButton" name="Submit"
 					onclick=Submitfunction() value="Add Gateway" /></td>
