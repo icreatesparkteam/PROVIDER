@@ -252,8 +252,6 @@ public class GatewayHandler implements IGatewayHandler {
 		return gatewayMgr.getDeviceCommand(gateway.getId());
 	}
 
-<<<<<<< HEAD
-=======
 	@Override
 	@WriteTransaction
 	public void setDeviceStatus(List<DeviceStatusDto> status)
@@ -269,5 +267,5 @@ public class GatewayHandler implements IGatewayHandler {
 	}
 
 
->>>>>>> 7a201f90825562edc490a3f8941bc9b844cfc442
+
 }
