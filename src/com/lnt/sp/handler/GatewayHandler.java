@@ -250,5 +250,4 @@ public class GatewayHandler implements IGatewayHandler {
 		return gatewayMgr.getDeviceCommand(gateway.getId());
 	}
 
-
 }

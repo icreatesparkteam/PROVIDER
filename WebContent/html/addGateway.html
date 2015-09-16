@@ -1,10 +1,105 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+
+<link rel="stylesheet" type="text/css" media="screen"
+	href="../css/forms.css" />
+<script type="text/javascript" src="../js/config.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<title>iControl-E</title>
 </head>
 <body>
+
+	<form action="" id="addGatewayForm">
+		<script type="text/javascript">
+		function Submitfunction() {
+			var frm = document.getElementById("addGatewayForm");
+
+			var gatewayID = document.getElementById("gatewayID").value;
+			var serviceProviderID = document.getElementById("serviceProviderID").value;
+			var userID = document.getElementById("userID").value;					
+			var ipAddress = document.getElementById("ipAddress").value;
+			
+			
+			if (gatewayID === "") {
+				alert('Gateway ID is required.');
+				frm.gatewayID.focus();
+				return false;
+			}
+			if (serviceProviderID === "") {
+				alert('Service Provider ID is required.');
+				frm.serviceProviderID.focus();
+				return false;
+			}
+			if (userID === "") {
+				alert('User ID is required.');
+				frm.userID.focus();
+				return false;
+			}
+			else {
+				var token = window.sessionStorage.getItem("token");
+				var jsonobj = {
+					'gatewayID' : gatewayID,
+					'serviceProviderID' : serviceProviderID,				
+					'userID' : userID,
+					'ipAddress' : ipAddress			
+				}
+				$.ajax({
+					type : "POST",
+					url : config.Server_IP+ config.creategateway,
+					headers : {
+						'lnt_access_token' : token
+					},
+
+					data : JSON.stringify(jsonobj),
+					contentType : 'application/json',
+					accepts : "text/plain",
+
+					success : function(data) {
+						alert("Gateway is added successfully.........");
+						frm.reset();
+					},
+					error : function() {
+						alert("Issue in adding Gateway");
+						frm.gatewayID.focus();
+						return false;
+					}
+				});
+			}
+		}
+	</script>
+
+		<table id="container">
+
+			<tr>
+				<td>Gateway ID:</td>
+				<td><input id="gatewayID" name="gatewayID" type="text" /></td>
+			</tr>
+			<tr>
+				<td>Service Provider ID:</td>
+				<td><input id="serviceProviderID" name="serviceProviderID"
+					type="password" /></td>
+			</tr>
+
+			<tr>
+				<td>User ID:</td>
+				<td><input id="userID" name=userID type="text" /></td>
+			</tr>
+			<tr>
+				<td>IP Address:</td>
+				<td><input id="ipAddress" name="ipAddress" type="text" /></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center"><input type="button"
+					class="submitBtn" id="submitButton" name="Submit"
+					onclick=Submitfunction() value="Add Gateway" /></td>
+			</tr>
+		</table>
+
+		<br />
+	</form>
 
 </body>
 </html>
