@@ -9,6 +9,7 @@
 
 <title>iControl-E</title>
 </head>
+
 <body onload='getgatewaybyuser()'>
 
 <script type="text/javascript">
@@ -22,12 +23,12 @@ function getgatewaybyuser(){
          },	
 		contentType: 'application/json',
 		accepts: "application/json",
-		success : function(data) {								
-			alert("success::getgatewaybyuser"+data);	
-			showInfo(data);
+		success : function(data) {									
+			buildHtmlTable(data);
+		//	showInfo(data);
 		},
 		error : function() {
-			alert('Error in getting gateway by user...');			
+			alert('Error in getting gateway details...');			
 			return false;
 		}
 	});
@@ -70,11 +71,12 @@ function addAllColumnHeaders(myList)
     for (var i = 0 ; i < myList.length ; i++) {
         var rowHash = myList[i];
         for (var key in rowHash) {
-        	
+        	if(key==="gatewayID"){     		
+        	        	
             if ($.inArray(key, columnSet) == -1){
                 columnSet.push(key);
                 headerTr$.append($('<th/>').html(key));
-            }
+            }}
         }
     }
     $("#gatewayTable").append(headerTr$);
@@ -85,7 +87,7 @@ function addAllColumnHeaders(myList)
 </script>
 	<form action="" id="gatewayForm">
 		<div class='header2' id='contentInfo'></div>
-		<div id="listView">
+		<div id="gatewaylistView">
 			<table id="gatewayTable" cellpadding="5px" cellspacing="8px"
 				style="text-align: center;">
 			</table>

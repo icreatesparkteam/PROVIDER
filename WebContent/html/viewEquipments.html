@@ -9,19 +9,40 @@
 
 <title>iControl-E</title>
 
-
 </head>
-<body onload=getDeviceList()>
-
+<body onload=getgatewaybyuser()>
 	<script type="text/javascript">
-function getDeviceList(){	
-	
+
+	function getgatewaybyuser(){		
+		var token = window.sessionStorage.getItem("token");	
+		$.ajax({
+			type : "GET",
+			url : config.Server_IP + config.getgatewaybyuser,
+			headers: {
+	             'lnt_access_token': token
+	         },	
+			contentType: 'application/json',
+			accepts: "application/json",
+			success : function(data) {	
+				alert("gatewayd id::"+JSON.parse(JSON.stringify(data))+"    data::"+data);
+				getDeviceList(data);	
+			
+			},
+			error : function() {
+				alert('Error in getting gateway details...');			
+				return false;
+			}
+		});
+	}
+
+function getDeviceList(gatewayId){		
 	var token = window.sessionStorage.getItem("token");	
+	
 	$.ajax({
 		type : "GET",
 		url : config.Server_IP + config.devicelist,
 		headers: {
-             'lnt_access_token': window.sessionStorage.getItem("token")
+             'gatewayid': gatewayId
          },	
 		contentType: 'application/json',
 		accepts: "application/json",
@@ -36,17 +57,6 @@ function getDeviceList(){
 		}
 	});
 }
-function showInfo(data){
-	var deviceList=data;
-	var count=0;
-	
-	deviceList.forEach(function(sp) {
-		  count++;
-		});	
-	document.getElementById('contentInfo').innerText="Total Number of devices:      "+count;
-	
-}
-
 
 
 function buildHtmlTable(data) {
