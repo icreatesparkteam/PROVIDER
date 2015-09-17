@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+
+<link rel="stylesheet" type="text/css" media="screen"
+	href="../css/forms.css" />
+<script type="text/javascript" src="../js/config.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<title>iControl-E</title>
+</head>
+<body>
+
+	<script type="text/javascript">
+		function searchUser() {
+			var userName = document.getElementById("userName").value;
+
+			$
+					.ajax({
+						type : "GET",
+						url : config.Server_IP + config.getuserdetails + '/'
+								+ userName,
+
+						headers : {
+							'lnt_access_token' : window.sessionStorage
+									.getItem("token")
+						},
+						data : {
+							'username' : userName
+						},
+
+						contentType : 'application/json',
+						accepts : "application/json",
+						success : function(data) {
+							showUserInfo(data);
+						},
+						error : function() {
+							alert('Error in getting user info');
+							return false;
+						}
+					});
+
+			function showUserInfo(data) {
+				var userInfo = JSON.stringify(data);
+				localStorage.setItem('userInfo', userInfo);
+				window.location = "/iControlE-ServiceProvider/html/editUser.html";
+			}
+
+		}
+	</script>
+
+
+	<table id="container">
+		<tr>
+			<td>Please Enter User Name</td>
+			<td><input id="userName" name="UserName" type="text" /></td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center"><input type="button"
+				class="submitBtn" id="submitButton" name="Submit"
+				onclick=searchUser() value="Search User" /></td>
+		</tr>
+	</table>
+</body>
+</html>

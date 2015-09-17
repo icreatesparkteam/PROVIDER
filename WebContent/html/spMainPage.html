@@ -40,7 +40,7 @@ function logout(){
 	type : "GET",
 	url : config.Server_IP + config.logout,				
 		headers: {
-             'lnt_access_token': document.cookie
+             'lnt_access_token': token
          },	
         contentType : 'application/json',		
 		success : function(data) {			
@@ -63,7 +63,6 @@ function logout(){
                         <div class="slider">
                             <div class="flexslider">
                                 <ul class="slides">
-
                                     <li><img src="/iControlE-ServiceProvider/images/slider_images/image1.jpg" alt=''/></li>
                                     <li><img src="/iControlE-ServiceProvider/images/slider_images/image2.jpg" alt=''/></li>
                                     <li><img src="/iControlE-ServiceProvider/images/slider_images/image3.jpg" alt=''/></li>
@@ -74,13 +73,13 @@ function logout(){
                           <div id='aboutContentWrapper'>
                             <p id="aboutHeader" class='indexHeader'>
                               <ul id="menu">
-						<li><a href="sphome.html" title="Home: " target="iframe">Home</a></li>
+						<li><a href="showUsers.html" title="Home: " target="iframe">Home</a></li>
 						<li><a href="UserRegistration.html"
 							title="Create User" target="iframe">Create
 								User</a></li>
-						<li><a href="showUsers.html" title="Show Users" target="iframe">Show Users</a></li>
+						
 						<li><a href="manageUser.html" title="Manage User" target="iframe">Manage User</a></li>
-
+						<li><a href="searchUser.html" title="Manage User" target="iframe">Search User</a></li>
 					</ul>
                             </p>
                             <div>
@@ -89,11 +88,9 @@ function logout(){
                                 </div>
                             </div>
                               <iframe src="" id ="iframe" name="iframe" class="iframe"></iframe>
-
                         </div>
                     </div>  
-                </div>
-               
+                </div>               
             </div>
     </body>
 </body>

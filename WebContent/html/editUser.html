@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<link rel="stylesheet" type="text/css" media="screen"
+	href="../css/forms.css" />
+<script type="text/javascript" src="../js/config.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<title></title>
+</head>
+<body onload="showUserDetails()">
+
+	<form action="" id="editUserForm">
+		<script type="text/javascript">
+			
+		function showUserDetails(){
+			var data=localStorage.getItem('userInfo');		
+			var userObj=JSON.parse(data);	
+			
+			document.getElementById("userName").value=userObj.userName;					
+			document.getElementById("emailAddress").value=userObj.primaryEmailId;
+			document.getElementById("phone").value=userObj.phoneNum;			
+			document.getElementById("address").value=userObj.address;
+			document.getElementById("city").value=userObj.city;
+			document.getElementById("state").value=userObj.state;
+			document.getElementById("country").value=userObj.country;
+			//document.getElementById("zipCode").value=userObj.zip;	
+		}
+		
+		
+			function updateDetails() {			
+				var frm = document.getElementById("editUserForm");
+				var userName = document.getElementById("userName").value;		
+				
+				var emailAddress = document.getElementById("emailAddress").value;
+				var phone = document.getElementById("phone").value;
+				var altPhone = document.getElementById("altPhone").value;
+				var address = document.getElementById("address").value;
+				var city = document.getElementById("city").value;
+				var state = document.getElementById("state").value;
+				var country = document.getElementById("country").value;
+				/*	var zipCode = document.getElementById("zipCode").value;
+				var activeElement = document.getElementById("active");
+				var activeValue = activeElement.options[activeElement.selectedIndex].value;
+				var questionElement = document.getElementById("question");
+				var questionValue = questionElement.options[questionElement.selectedIndex].value;
+
+				var answer = document.getElementById("answer").value;
+
+				if (userName === "") {
+					alert('User Name is required.');
+					frm.userName.focus();
+					return false;
+				}
+				if (password === "") {
+					alert('Password is required.');
+					frm.password.focus();
+					return false;
+				}
+				*/
+				if (emailAddress === "") {
+					alert('Email address is required.');
+					frm.emailAddress.focus();
+					return false;
+				}
+				if (emailAddress.indexOf("@") < 1
+						|| emailAddress.indexOf(".") < 1) {
+					alert('Please enter a valid email address.');
+					frm.emailAddress.focus();
+					return false;
+				}
+				if (phone === "") {
+					alert('Phone number is required.');
+					frm.phone.focus();
+					return false;
+				}
+				if (address === "") {
+					alert('Address is required.');
+					frm.address.focus();
+					return false;
+				}
+				if (city === "") {
+					alert('City is required.');
+					frm.city.focus();
+					return false;
+				}
+				if (state === "") {
+					alert('State is required.');
+					frm.state.focus();
+					return false;
+				}
+				if (country === "") {
+					alert('Country is required.');
+					frm.country.focus();
+					return false;
+				}
+	/*			if (zipCode === "") {
+					alert('Zip Code is required.');
+					frm.zipCode.focus();
+					return false;
+				}
+				if (active === "") {
+					alert('Select Active Status');
+					frm.active.focus();
+					return false;
+				}
+				if (question === "") {
+					alert('Select Security Question');
+					frm.question.focus();
+					return false;
+				}
+				if (answer == "") {
+					alert('Answer is required.');
+					frm.answer.focus();
+					return false;
+				}*/
+				
+				else {
+					var token = window.sessionStorage.getItem("token");
+					var jsonobj = {
+						'userName' : userName,		
+						'primaryEmailId' : emailAddress,
+						'phoneNum' : phone,						
+						'address' : address,
+						'city' : city,
+						'state' : state,
+						'country' : country
+						//'zipCode':zipCode
+						
+					}					
+							$.ajax({
+								type : "POST",
+								url : config.Server_IP
+										+ config.updateUser,
+								headers : {
+									'lnt_access_token' : window.sessionStorage
+											.getItem("token")
+								},
+
+								data : JSON.stringify(jsonobj),
+								contentType : 'application/json',
+								accepts : "text/plain",
+
+								success : function(data) {
+									alert("User updated successfully.........");
+									frm.reset();
+								},
+								error : function() {
+									alert("Issue in updating User details");									
+									return false;
+								}
+							});
+				}
+			}
+		</script>
+		<table id="container"  >
+							<tr>
+					<td>User Name:</td>
+					<td><input id="userName" name="UserName" type="text"
+						 disabled/></td>
+				</tr>			
+
+				<tr>
+					<td>Email address:</td>
+					<td><input id="emailAddress" name="EmailAddress" type="text"
+						 /></td>
+				</tr>
+				<tr>
+					<td>Phone:</td>
+					<td><input id="phone" name="Phone" type="text"
+						 /></td>
+				</tr>
+				
+				<tr>
+					<td>Address:</td>
+					<td><input id="address" name="Address" type="text"
+						/></td>
+				</tr>
+				<tr>
+					<td>City:</td>
+					<td><input id="city" name="City" type="text" maxlength="120"
+						 /></td>
+				</tr>
+				<tr>
+					<td>State/Province:</td>
+					<td><input id="state" name="State" type="text" maxlength="120"
+						 /></td>
+				</tr>
+				<tr>
+					<td>Country:</td>
+					<td><input id="country" name="Country" type="text"
+						 /></td>
+				</tr>
+			  
+			</table>
+		</div>
+		<br />
+	</form>	
+
+</body>
+</html>

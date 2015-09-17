@@ -7,19 +7,14 @@
 <script type="text/javascript" src="../js/config.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
-<title>Insert title here</title>
+<title>iControl-E</title>
 </head>
 <body onload='getgatewaybyuser()'>
 
 <script type="text/javascript">
-function getgatewaybyuser(){	
-//	alert("sending request for getgatewaybyuser ");
-	var token ;	
-	token = window.sessionStorage.getItem("token");	
-	if(token==null){
-	token=	document.cookie;
-	}
-//	alert("access token for getgatewaybyuser::"+token);
+function getgatewaybyuser(){		
+	var token = window.sessionStorage.getItem("token");	
+	//alert("access token for getgatewaybyuser::"+token);
 	$.ajax({
 		type : "GET",
 		url : config.Server_IP + config.getgatewaybyuser,
@@ -32,12 +27,11 @@ function getgatewaybyuser(){
 			//alert("success::"+data);
 		},
 		error : function() {
-		//	alert('Error in getting gateway by user');			
+			alert('Error in getting gateway by user');			
 			return false;
 		}
 	});
 }
 </script>
-
 </body>
 </html>

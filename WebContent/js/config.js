@@ -8,6 +8,8 @@ var config = {
 	"createUser" : "/iControlE-ServiceProvider/rest/registration/create",
 	"updateUser" : "/iControlE-ServiceProvider/rest/registration/update",
 	"deleteUser":"/iControlE-ServiceProvider/rest/registration/delete",
+	"getuserdetails":"/iControlE-ServiceProvider/rest/registration/getuserdetails",
+	
 	
 	"changepassword" : "/iControlE-ServiceProvider/rest/registration/changepassword",	
 	"passwordRecovery" : "/iControlE-ServiceProvider/rest/registration/passwordRecovery",

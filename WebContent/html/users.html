@@ -26,6 +26,7 @@ function getUsersList(){
 		accepts: "application/json",
 		success : function(data) {								
 			buildHtmlTable(data);
+			showInfo(data);
 		},
 		error : function() {
 			alert('Error in getting users list');			
@@ -33,6 +34,17 @@ function getUsersList(){
 		}
 	});
 }
+function showInfo(data){
+	var spList=data;
+	var count=0;
+	
+	spList.forEach(function(sp) {
+		  count++;
+		});	
+	document.getElementById('contentInfo').innerText="Total Number of Users:      "+count;
+	
+}
+
 
 
 function buildHtmlTable(data) {
@@ -73,6 +85,7 @@ function addAllColumnHeaders(myList)
 	
 </script>
 <form action="" id="usersForm">
+<div class='header' id='contentInfo'></div>
 <table id="usersTable" border="1" >
 </table>
 </form>
