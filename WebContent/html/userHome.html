@@ -23,7 +23,8 @@ function getgatewaybyuser(){
 		contentType: 'application/json',
 		accepts: "application/json",
 		success : function(data) {								
-			alert("success::"+data);			
+			alert("success::getgatewaybyuser"+data);	
+			showInfo();
 		},
 		error : function() {
 			alert('Error in getting gateway by user...');			
@@ -31,6 +32,64 @@ function getgatewaybyuser(){
 		}
 	});
 }
+function showInfo(){
+	var list=data;
+	var count=0;
+	
+	list.forEach(function(sp) {
+		  count++;
+		});	
+	document.getElementById('contentInfo').innerText="Total Number of gateway:      "+count;
+	
+}
+
+
+
+function buildHtmlTable(data) {
+	var myList=JSON.parse(JSON.stringify(data));	
+    var columns = addAllColumnHeaders(myList);
+
+    for (var i = 0 ; i < myList.length ; i++) {
+        var row$ = $('<tr/>');
+        for (var colIndex = 0 ; colIndex < columns.length ; colIndex++) {
+            var cellValue = myList[i][columns[colIndex]];
+
+            if (cellValue == null) { cellValue = ""; }
+
+            row$.append($('<td/>').html(cellValue));
+        }
+        $("#gatewayTable").append(row$);
+    }
+}
+
+function addAllColumnHeaders(myList)
+{
+    var columnSet = [];
+    var headerTr$ = $('<tr/>');
+
+    for (var i = 0 ; i < myList.length ; i++) {
+        var rowHash = myList[i];
+        for (var key in rowHash) {
+        	
+            if ($.inArray(key, columnSet) == -1){
+                columnSet.push(key);
+                headerTr$.append($('<th/>').html(key));
+            }
+        }
+    }
+    $("#gatewayTable").append(headerTr$);
+
+    return columnSet;
+}
+	
 </script>
+	<form action="" id="gatewayForm">
+		<div class='header2' id='contentInfo'></div>
+		<div id="listView">
+			<table id="gatewayTable" cellpadding="5px" cellspacing="8px"
+				style="text-align: center;">
+			</table>
+		</div>
+	</form>
 </body>
 </html>
