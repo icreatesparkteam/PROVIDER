@@ -2,122 +2,130 @@
 <html>
 <head>
 
-<title>iControl-E</title>
-<meta http-equiv='X-UA-Compatible' content='IE=9'>
-<link rel="icon" href="/iControlE-ServiceProvider/images/iControlE.ico"
-	type="image/ico" sizes="16x16">
+    <title>iControl-E</title>
+    <meta http-equiv='X-UA-Compatible' content='IE=9'>
+    <link rel="icon" href="/iControlE-ServiceProvider/images/iControlE.ico"
+          type="image/ico" sizes="16x16">
 
-<!--css-->
-<link href="/iControlE-ServiceProvider/css/forms.css" rel="stylesheet"
-	type="text/css" />
-<link rel="stylesheet"
-	href="/iControlE-ServiceProvider/css/flexslider.css" type="text/css"
-	media="screen" />
+    <!--css-->
+    <link href="/iControlE-ServiceProvider/css/forms.css" rel="stylesheet"
+          type="text/css"/>
+    <link rel="stylesheet"
+          href="/iControlE-ServiceProvider/css/flexslider.css" type="text/css"
+          media="screen"/>
 
-<!-- javascript -->
-<script type="text/javascript"
-	src="/iControlE-ServiceProvider/js/config.js"></script>
-<script type="text/javascript"
-	src="/iControlE-ServiceProvider/js/jquery.js"></script>
-<script src="/iControlE-ServiceProvider/js/modernizr.js"></script>
-<script defer src="/iControlE-ServiceProvider/js/jquery.flexslider.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- javascript -->
+    <script type="text/javascript"
+            src="/iControlE-ServiceProvider/js/config.js"></script>
+    <script type="text/javascript"
+            src="/iControlE-ServiceProvider/js/jquery.js"></script>
+    <script src="/iControlE-ServiceProvider/js/modernizr.js"></script>
+    <script defer src="/iControlE-ServiceProvider/js/jquery.flexslider.js"></script>
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
-<script type="text/javascript">
-            $(window).load(function() {
-                $('.flexslider').flexslider({
-                    animation: "slide",
-                    start: function(slider) {
-                        $('body').removeClass('loading');
-                    }
-                });          
+    <script type="text/javascript">
+        $(window).load(function () {
+            $('.flexslider').flexslider({
+                animation: "slide",
+                start: function (slider) {
+                    $('body').removeClass('loading');
+                }
             });
-            </script>
+        });
+    </script>
 
 </head>
 <body>
-	<script type="text/javascript">
+<script type="text/javascript">
 
-/*document.getElementById('iframe').onload = function() {
-  alert('myframe is loaded');
-  window.location = '/iControlE-ServiceProvider/html/userHome.html';
-};*/
-function logout(){            	
-	var token = window.sessionStorage.getItem("token");	
-	$.ajax({
-	type : "GET",
-	url : config.Server_IP + config.logout,				
-		headers: {
-             'lnt_access_token': token
-         },	
-        contentType : 'application/json',		
-		success : function(data) {			
-			window.location = '/iControlE-ServiceProvider/html/Login.html';																	
-		},
-		error : function() {								
-			alert("Please try again");
-		}
-	});
-	
-}
+    /*document.getElementById('iframe').onload = function() {
+     alert('myframe is loaded');
+     window.location = '/iControlE-ServiceProvider/html/userHome.html';
+     };*/
+    function logout() {
+        var token = window.sessionStorage.getItem("token");
+        $.ajax({
+            type: "GET",
+            url: config.Server_IP + config.logout,
+            headers: {
+                'lnt_access_token': token
+            },
+            contentType: 'application/json; charset=utf-8',
+
+            statusCode: {
+                200: function () {
+                    window.location = '/iControlE-ServiceProvider/html/Login.html';
+                    return true;
+                }
+            },
+
+            success: function (data) {
+                window.location = '/iControlE-ServiceProvider/html/Login.html';
+            },
+            error: function () {
+                //alert("Please try again later11");
+            }
+        });
+
+    }
 </script>
 
-	<div align="center" style="width: 100%;">
-		<div class="mainContainer" align="center">
-			<div class='headerContainer'>
-				<div id='logoutHomeScreen' onclick=logout()></div>
-			</div>
-			<div id="bodyContainer" class="w100">
-				<div id='leftPanel'>
-					<div class="slider">
-						<div class="flexslider">
+<div align="center" style="width: 100%;">
+    <div class="mainContainer" align="center">
+        <div class='headerContainer'>
+            <div id='logoutHomeScreen' onclick=logout()></div>
+        </div>
+        <div id="bodyContainer" class="w100">
+            <div id='leftPanel'>
+                <div class="slider">
+                    <div class="flexslider">
 
-							<ul class="slides">
-								<li><img
-									src="/iControlE-ServiceProvider/images/slider_images/image1.jpg"
-									alt='' /></li>
-								<li><img
-									src="/iControlE-ServiceProvider/images/slider_images/image2.jpg"
-									alt='' /></li>
-								<li><img
-									src="/iControlE-ServiceProvider/images/slider_images/image3.jpg"
-									alt='' /></li>
-								<li><img
-									src="/iControlE-ServiceProvider/images/slider_images/image4.jpg"
-									alt='' /></li>
-							</ul>
-						</div>
-					</div>
-					<div id='aboutContentWrapper'>
-						<p id="aboutHeader" class='indexHeader'>
-						<ul id="menu">
-							<li><a href="userHome.html" title="Home: " target="iframe">Home</a></li>							
-							<li><a href="addGateway.html" title="Add Gateway"
-								target="iframe">Add Gateway</a></li>
-							<li><a href="manageGateway.html" title="Manage Gateway"
-								target="iframe">Manage Gateway</a></li>
-							<li><a href="viewEquipments.html" title="View Equipments"
-								target="iframe">View Equipments</a></li>
-						</ul>
-						</p>
-						<div>
-							<div class='fr' id='aboutContentInfo'>
-								<!--add header here-->
-							</div>
-						</div>
-						<iframe src="" id="iframe" name="iframe" class="iframe"></iframe>
-
-					</div>
-				</div>
-
-			</div>
-			<!--      <div class='footerContainer w100 cb'>
+                        <ul class="slides">
+                            <li><img
+                                    src="/iControlE-ServiceProvider/images/slider_images/image1.jpg"
+                                    alt=''/></li>
+                            <li><img
+                                    src="/iControlE-ServiceProvider/images/slider_images/image2.jpg"
+                                    alt=''/></li>
+                            <li><img
+                                    src="/iControlE-ServiceProvider/images/slider_images/image3.jpg"
+                                    alt=''/></li>
+                            <li><img
+                                    src="/iControlE-ServiceProvider/images/slider_images/image4.jpg"
+                                    alt=''/></li>
+                        </ul>
                     </div>
-                    <div class="fr" style="margin-right:15px;">
-                        2015 L&T Technology Services. All rights reserved
+                </div>
+                <div id='aboutContentWrapper'>
+                    <p id="aboutHeader" class='indexHeader'>
+                    <ul id="menu">
+                        <li><a href="userHome.html" title="Home: " target="iframe">Home</a></li>
+                        <li><a href="addGateway.html" title="Add Gateway"
+                               target="iframe">Add Gateway</a></li>
+                        <li><a href="manageGateway.html" title="Manage Gateway"
+                               target="iframe">Manage Gateway</a></li>
+                        <li><a href="viewEquipments.html" title="View Equipments"
+                               target="iframe">View Equipments</a></li>
+                    </ul>
+                    </p>
+                    <div>
+                        <div class='fr' id='aboutContentInfo'>
+                            <!--add header here-->
+                        </div>
                     </div>
-                </div> -->
-		</div>
+                    <iframe src="" id="iframe" name="iframe" class="iframe"></iframe>
+
+                </div>
+            </div>
+
+        </div>
+        <!--      <div class='footerContainer w100 cb'>
+                </div>
+                <div class="fr" style="margin-right:15px;">
+                    2015 L&T Technology Services. All rights reserved
+                </div>
+            </div> -->
+    </div>
 </body>
 </html>
