@@ -24,36 +24,44 @@
 			contentType: 'application/json',
 			accepts: "application/json",
 			success : function(data) {	
-				alert("gatewayd id::"+JSON.parse(JSON.stringify(data))+"    data::"+data);
-				getDeviceList(data);	
+				
+				var gatewayInfo = JSON.stringify(data);
+				var gatewayID=gatewayInfo.gatewayID;
+				console.log("gatewayID:: devicelist page"+gatewayID);		
+				if(gatewayID){
+					getDeviceList(gatewayID);	
+				}
+				else{
+					 document.getElementById('contentInfo').innerText="No Equipment found";	
+				}				
 			
 			},
 			error : function() {
-				alert('Error in getting gateway details...');			
+				//alert('Error in getting gateway details...');			
 				return false;
 			}
 		});
 	}
 
-function getDeviceList(gatewayId){		
+function getDeviceList(gatewayID){		
 	var token = window.sessionStorage.getItem("token");	
 	
 	$.ajax({
 		type : "GET",
 		url : config.Server_IP + config.devicelist,
 		headers: {
-             'gatewayid': gatewayId
+             'gatewayid': gatewayID
          },	
 		contentType: 'application/json',
 		accepts: "application/json",
 		success : function(data) {	
-			alert("success:devicelist"+data);
+			console.log("success:devicelist"+data);
 			buildHtmlTable(data);
-			showInfo(data);
+			//showInfo(data);
 		},
 		error : function() {
-			alert('Error in getting device list');			
-			return false;
+		//	alert('Error in getting device list');			
+			//return false;
 		}
 	});
 }

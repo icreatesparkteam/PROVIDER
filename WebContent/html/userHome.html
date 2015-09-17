@@ -23,13 +23,22 @@ function getgatewaybyuser(){
          },	
 		contentType: 'application/json',
 		accepts: "application/json",
-		success : function(data) {									
-			buildHtmlTable(data);
+		 statusCode: {
+             500: function () {
+            	 document.getElementById('contentInfo').innerText="No gateway is found";
+                 return true;
+             }
+         },
+		success : function(data) {	
+			var gatewayInfo = JSON.stringify(data);
+			var gatewayID=gatewayInfo.gatewayID;
+			console.log("gatewayID::"+gatewayID);	
+			buildHtmlTable(gatewayID);
 		//	showInfo(data);
 		},
 		error : function() {
-			alert('Error in getting gateway details...');			
-			return false;
+			//alert('Error in getting gateway details...');			
+			//return false;
 		}
 	});
 }
@@ -70,13 +79,11 @@ function addAllColumnHeaders(myList)
 
     for (var i = 0 ; i < myList.length ; i++) {
         var rowHash = myList[i];
-        for (var key in rowHash) {
-        	if(key==="gatewayID"){     		
-        	        	
+        for (var key in rowHash) {        	  	        	        	
             if ($.inArray(key, columnSet) == -1){
                 columnSet.push(key);
                 headerTr$.append($('<th/>').html(key));
-            }}
+            }
         }
     }
     $("#gatewayTable").append(headerTr$);
