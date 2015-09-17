@@ -25,8 +25,8 @@
 			var state = document.getElementById("state").value;
 			var country = document.getElementById("country").value;
 			var zipCode = document.getElementById("zipCode").value;
-			var activeElement = document.getElementById("active");
-			var activeValue = activeElement.options[activeElement.selectedIndex].value;
+			//var activeElement = document.getElementById("active");
+			//var activeValue = activeElement.options[activeElement.selectedIndex].value;
 			var questionElement = document.getElementById("question");
 			var questionValue = questionElement.options[questionElement.selectedIndex].value;
 
@@ -83,11 +83,7 @@
 				frm.zipCode.focus();
 				return false;
 			}
-			if (active === "") {
-				alert('Select Active Status');
-				frm.active.focus();
-				return false;
-			}
+			
 			if (question === "") {
 				alert('Select Security Question');
 				frm.question.focus();
@@ -189,14 +185,14 @@
 				<td><input id="zipCode" name="ZipCode" type="text"
 						   maxlength="30" /></td>
 			</tr>
-			<tr>
+		<!-- 	<tr>
 				<td>Active:</td>
 				<td><select name="Active" id="active">
 					<option value="" selected>Select Active Status</option>
 					<option value="1">No</option>
 					<option value="2">Yes</option>
 				</select></td>
-			</tr>
+			</tr> -->
 			<tr>
 				<td>Security Question:</td>
 				<td><select name="Question" id="question">
