@@ -26,7 +26,7 @@ function getUsersList(){
 		accepts: "application/json",
 		success : function(data) {								
 			buildHtmlTable(data);
-			showInfo(data);
+			showInfo();
 		},
 		error : function() {
 			alert('Error in getting users list');			
@@ -34,7 +34,7 @@ function getUsersList(){
 		}
 	});
 }
-function showInfo(data){
+function showInfo(){
 	var userList=data;
 	var count=0;
 	
