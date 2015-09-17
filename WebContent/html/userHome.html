@@ -24,7 +24,7 @@ function getgatewaybyuser(){
 		accepts: "application/json",
 		success : function(data) {								
 			alert("success::getgatewaybyuser"+data);	
-			showInfo();
+			showInfo(data);
 		},
 		error : function() {
 			alert('Error in getting gateway by user...');			
@@ -32,7 +32,7 @@ function getgatewaybyuser(){
 		}
 	});
 }
-function showInfo(){
+function showInfo(data){
 	var list=data;
 	var count=0;
 	

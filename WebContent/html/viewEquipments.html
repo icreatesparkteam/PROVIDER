@@ -28,7 +28,7 @@ function getDeviceList(){
 		success : function(data) {	
 			alert("success:devicelist"+data);
 			buildHtmlTable(data);
-			showInfo();
+			showInfo(data);
 		},
 		error : function() {
 			alert('Error in getting device list');			
@@ -36,7 +36,7 @@ function getDeviceList(){
 		}
 	});
 }
-function showInfo(){
+function showInfo(data){
 	var deviceList=data;
 	var count=0;
 	
