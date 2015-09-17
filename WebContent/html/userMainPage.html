@@ -33,7 +33,14 @@
                 }
             });
         });
+		
+        history.pushState(null, null, '/iControlE-ServiceProvider/html/userMainPage.html');
+        window.addEventListener('popstate', function(event) {
+        history.pushState(null, null, '/iControlE-ServiceProvider/html/userMainPage.html');
+        });
+
     </script>
+	
 
 </head>
 <body>

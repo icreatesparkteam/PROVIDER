@@ -3,7 +3,7 @@
 <head>
 <title>iControl-E</title>
 <meta http-equiv='X-UA-Compatible' content='IE=9'>
-<link rel="icon" href="/iControlE-Core/images/iControlE.ico" type="image/ico"
+<link rel="icon" href="/iControlE-ServiceProvider/images/iControlE.ico" type="image/ico"
 	sizes="16x16">
 
 
@@ -12,6 +12,14 @@
 <script type="text/javascript" src="/iControlE-ServiceProvider/js/config.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+
+<script type="text/javascript">        
+    history.pushState(null, null, '/iControlE-ServiceProvider/html/Login.html');
+    window.addEventListener('popstate', function(event) {
+    history.pushState(null, null, '/iControlE-ServiceProvider/html/Login.html');
+    });
+    </script>
 
 </head>
 <body>

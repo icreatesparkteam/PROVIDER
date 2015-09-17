@@ -22,11 +22,13 @@
                     start: function(slider) {
                         $('body').removeClass('loading');
                     }
-                });
-            /*  sessionStorage.clear();
-                var screenHeight = $('.mainContainer').css('height');
-                screenHeight = screenHeight.split('px');
-                $('.footerContainer').css('top', (screenHeight[0]-30) + 'px');*/
+                });               
+           
+            });
+            
+            history.pushState(null, null, '/iControlE-ServiceProvider/html/spMainPage.html');
+            window.addEventListener('popstate', function(event) {
+            history.pushState(null, null, '/iControlE-ServiceProvider/html/spMainPage.html');
             });
             </script>      
            
