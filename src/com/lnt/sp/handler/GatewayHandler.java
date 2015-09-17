@@ -75,7 +75,7 @@ public class GatewayHandler implements IGatewayHandler {
 		gateway.setGatewayID(gatewayDto.getGatewayID());
 		gateway.setServiceProviderID(servProvider.getId());
 		gateway.setUserID(session.getUserId());
-		gateway.setActive("1");
+		gateway.setActive("0");
 		gatewayMgr.createGateway(gateway);
 		
 	}

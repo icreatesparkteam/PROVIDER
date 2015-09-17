@@ -67,7 +67,7 @@ public class RegistrationHandler implements IRegistrationHandler {
 		User user = new User();
 		user = register.toUser(user);
 		user.setPassword(register.getPassword());
-		user.setActive(true);
+		user.setActive(false);
 		regMgr.createUser(user);
 	}
 
