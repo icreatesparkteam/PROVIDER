@@ -39,6 +39,6 @@ public interface IGatewayHandler {
 
 	public void setDeviceStatus(List<DeviceStatusDto> status) throws ServiceApplicationException;
 	
-	public DeviceStatusDto getDeviceStatus(String gatewayId, String endPoint, String deviceID) throws ServiceApplicationException;
+	public List <DeviceStatusDto> getDeviceStatus(String gatewayId) throws ServiceApplicationException;
 
 }

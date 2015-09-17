@@ -32,15 +32,15 @@ public class DeviceTest {
 	static String token;
 	public static void main(String[] args) throws JsonGenerationException,
 			JsonMappingException, IOException {
-		loginDevice();
-//		loginUser();
+//		loginDevice();
+		loginUser();
 //		getGetway(token);
 //		createDevice(token);
-//		getDevice(token);
+		getDevice(token);
 //		getCluster(token);
 //		getManufacturer(token);
 //		deviceCommand(token);
-		getQueue(token);
+//		getQueue(token);
 	}
 
 	private static void getManufacturer(String token) throws JsonGenerationException,
@@ -181,7 +181,7 @@ public class DeviceTest {
 			
 			ClientResponse response = webResource.type("application/json")
 					.header("lnt_access_token", token)
-					.header("gatewayid", "0x00:0x12:0x4B:0x00:0x01:0xDD:0x7B:0xBE")
+					.header("gatewayid", "00:12:4B:00:02:F1:D4:65")
 					.get(ClientResponse.class);
 	
 //			if (response.getStatus() != 200) {

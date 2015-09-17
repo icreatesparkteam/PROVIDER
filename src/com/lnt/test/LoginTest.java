@@ -30,9 +30,9 @@ public class LoginTest {
 			JsonMappingException, IOException {
 
 		loginUser();
-//		createUser(token);
+		createUser(token);
 //		getServPro(token);
-		getRole(token);
+//		getRole(token);
 
 	}
 
@@ -67,7 +67,7 @@ public class LoginTest {
 		
 		for(int i = 500; i < 550; i++)
 		{
-			reg.setUserName("user"+i);
+			reg.setUserName("smartuser"+i);
 			reg.setPassword("Newuser@123");
 			reg.setAddress("Munnekolala 2,Banagalore");
 			reg.setPhoneNum("66555775757");

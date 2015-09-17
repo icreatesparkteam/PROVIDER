@@ -194,12 +194,23 @@ public class GatewayManager implements IGatewayManager {
 	}
 
 	@Override
-	public DeviceStatusDto getDeviceStatus(String gatewayId, String endPoint,
-			String deviceID) throws ServiceApplicationException {
+	public List <DeviceStatusDto> getDeviceStatus(String gatewayId) throws ServiceApplicationException {
 		
-		DeviceStatus status = statusDao.getDeviceCommand(gatewayId, endPoint, deviceID);
-		DeviceStatusDto dto = new DeviceStatusDto();
-		dto = dto.formDeviceStatus(status);
+		List <DeviceStatus> status = statusDao.getDeviceStatus(gatewayId);
+		List <DeviceStatusDto> dto = new ArrayList<>();
+		for (DeviceStatus statusList : status) {
+			DeviceStatusDto tmpDto = new DeviceStatusDto();
+			tmpDto.setDeviceID(statusList.getDeviceID());
+			tmpDto.setDeviceStatus(statusList.getDeviceStatus());
+			tmpDto.setEndPoint(statusList.getEndpoint());
+			tmpDto.setGatewayID(statusList.getGatewayID());
+			tmpDto.setHue(statusList.getHue());
+			tmpDto.setLevel(statusList.getLevl());
+			tmpDto.setId(statusList.getID());
+			tmpDto.setSaturation(statusList.getSaturation());
+			dto.add(tmpDto);
+		}
+		
 		return dto;
 	}
 
@@ -207,15 +218,27 @@ public class GatewayManager implements IGatewayManager {
 	public void updateDeviceStatus(List<DeviceStatusDto> statusDtoList)
 			throws ServiceApplicationException {
 		for (DeviceStatusDto statusDto : statusDtoList) {
-			DeviceStatus status = new DeviceStatus();
-			status.setDeviceID(statusDto.getDeviceID());
-			status.setGatewayID(statusDto.getGatewayID());
-			status.setDeviceStatus(statusDto.getDeviceStatus());
-			status.setHue(statusDto.getHue());
-			status.setLevel(statusDto.getLevel());
-			status.setEndpoint(statusDto.getEndPoint());
-			status.setSaturation(statusDto.getSaturation());
-			statusDao.update(status);
+			DeviceStatus status = statusDao.getDeviceStatusByID(statusDto.getGatewayID(), statusDto.getDeviceID(), statusDto.getEndPoint());
+			if(status == null)
+			{
+				status = new DeviceStatus();
+				status.setDeviceID(statusDto.getDeviceID());
+				status.setGatewayID(statusDto.getGatewayID());
+				status.setDeviceStatus(statusDto.getDeviceStatus());
+				status.setHue(statusDto.getHue());
+				status.setLevel(statusDto.getLevel());
+				status.setEndpoint(statusDto.getEndPoint());
+				status.setSaturation(statusDto.getSaturation());
+				statusDao.create(status);
+			}
+			else
+			{
+				status.setDeviceStatus(statusDto.getDeviceStatus());
+				status.setHue(statusDto.getHue());
+				status.setLevel(statusDto.getLevel());
+				status.setSaturation(statusDto.getSaturation());
+				statusDao.update(status);
+			}
 		}
 	}
 

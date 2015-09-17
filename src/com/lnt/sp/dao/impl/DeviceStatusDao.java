@@ -9,6 +9,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import com.lnt.core.common.dto.DeviceStatusDto;
 import com.lnt.core.model.DeviceStatus;
 
 @Repository
@@ -16,12 +17,24 @@ import com.lnt.core.model.DeviceStatus;
 public class DeviceStatusDao extends AbstractAppSPDao<DeviceStatus, Integer> {
 
 
-	public DeviceStatus getDeviceCommand(String gatewayId, String endPoint, String deviceID) {
+	public List <DeviceStatus> getDeviceStatus(String gatewayId) {
 		Session session = (Session) entityManagerCore.getDelegate();
 		Criteria crit = session.createCriteria(DeviceStatus.class);
 		crit.add(Restrictions.eq("gatewayID", gatewayId));
-		crit.add(Restrictions.eq("endPoint", endPoint));
-		crit.add(Restrictions.eq("deviceID", deviceID));
+		
+		List<DeviceStatus> status = crit.list();
+
+		if (status != null && !status.isEmpty())
+			return status;
+		return null;
+	}
+	
+	public DeviceStatus getDeviceStatusByID(String gatewayId, String deviceId, String endpoint) {
+		Session session = (Session) entityManagerCore.getDelegate();
+		Criteria crit = session.createCriteria(DeviceStatus.class);
+		crit.add(Restrictions.eq("gatewayID", gatewayId));
+		crit.add(Restrictions.eq("deviceID", deviceId));
+		crit.add(Restrictions.eq("endPoint", endpoint));
 		
 		List<DeviceStatus> status = crit.list();
 

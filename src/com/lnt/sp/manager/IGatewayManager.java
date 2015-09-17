@@ -39,7 +39,7 @@ public interface IGatewayManager {
 
 	public Gateway findGatewayById(int id, int serviceProviderID) throws ServiceApplicationException;
 	
-	public DeviceStatusDto getDeviceStatus(String gatewayId, String endPoint, String deviceID) throws ServiceApplicationException;
+	public List <DeviceStatusDto> getDeviceStatus(String gatewayId) throws ServiceApplicationException;
 	
 	public void updateDeviceStatus(List<DeviceStatusDto> status) throws ServiceApplicationException;;
 	

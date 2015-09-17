@@ -230,11 +230,10 @@ public class GatewayService {
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Path("/devicestatus")
 	// @PreAuthorize("hasAuthority('VIEW_PROFILE')")
-	public Response getDeviceStatus(@PathParam("gatewayId") String gatewayId, @PathParam("endPoint") String endPoint,
-			@PathParam("deviceID") String deviceID) {
-		logger.info("GatewayService getDeviceStatus method");
+	public Response getDeviceStatus(@HeaderParam("gatewayId") String gatewayId) {
+		logger.info("GatewayService getDeviceStatus method" +gatewayId);
 		try {
-			DeviceStatusDto status = gatewayHandler.getDeviceStatus(gatewayId, endPoint, deviceID);
+			List <DeviceStatusDto> status = gatewayHandler.getDeviceStatus(gatewayId);
 			return Response.ok().entity(status).build();
 		} catch (ServiceRuntimeException e) {
 			logger.error("Runtime Exception while executing command : {}",

@@ -28,7 +28,7 @@ public class UserTest {
 			JsonMappingException, IOException {
 
 		loginUser();
-//		createGateway(token);
+		createGateway(token);
 
 	}
 
@@ -37,7 +37,7 @@ public class UserTest {
 			JsonMappingException, IOException {
 		System.out.println("Login user method : ");
 		MultivaluedMap<String, String> inputMap = new MultivaluedMapImpl();
-		inputMap.add("username", "user2");
+		inputMap.add("username", "smartuser549");
 		inputMap.add("password", "Newuser@123");
 		System.out.println("Login user method : inputMap " + inputMap);
 		WebResource webResource = client.resource(UrlConstant + "auth/login");
@@ -60,8 +60,8 @@ public class UserTest {
 	private static void createGateway(String token)
 			throws JsonGenerationException, JsonMappingException, IOException {
 		GatewayDto reg = new GatewayDto();
-		reg.setGatewayID("newgateway111");
-		reg.setStatus("0");
+		reg.setGatewayID("newgateway1111");
+//		reg.setStatus("0");
 		
 		WebResource webResource = client.resource(UrlConstant + "gateway/create");
 		ObjectMapper mapper = new ObjectMapper();

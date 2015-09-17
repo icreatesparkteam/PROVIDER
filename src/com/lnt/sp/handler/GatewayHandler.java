@@ -261,9 +261,9 @@ public class GatewayHandler implements IGatewayHandler {
 
 	@Override
 	@Transactional
-	public DeviceStatusDto getDeviceStatus(String gatewayId, String endPoint, String deviceID)
+	public List <DeviceStatusDto> getDeviceStatus(String gatewayId)
 			throws ServiceApplicationException {
-		return gatewayMgr.getDeviceStatus(gatewayId, endPoint, deviceID);
+		return gatewayMgr.getDeviceStatus(gatewayId);
 	}
 
 
