@@ -25,7 +25,7 @@ function getgatewaybyuser(){
 		accepts: "application/json",
 		 statusCode: {
              500: function () {
-            	 document.getElementById('contentInfo').innerText="No gateway is found";
+            	 document.getElementById('contentInfo').innerText="No Gateway found";
                  return true;
              }
          },
