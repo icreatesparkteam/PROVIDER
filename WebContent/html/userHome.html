@@ -21,20 +21,24 @@ function getgatewaybyuser(){
 		headers: {
              'lnt_access_token': token
          },	
-		contentType: 'application/json',
-		accepts: "application/json",
+         contentType : 'application/json',
+			accepts : "application/json",		
 		 statusCode: {
              500: function () {
             	 document.getElementById('contentInfo').innerText="No Gateway found";
-                 return true;
+                 //return true;
              }
          },
-		success : function(data) {	
+		success : function(data) {					
 			var gatewayInfo = JSON.stringify(data);
-			var gatewayID=gatewayInfo.gatewayID;
-			console.log("gatewayID::"+gatewayID);	
-			buildHtmlTable(gatewayID);
-		//	showInfo(data);
+			localStorage.setItem('gatewayInfo', gatewayInfo);				
+			
+			var newdata=localStorage.getItem('gatewayInfo');		
+			var gatewayObj=JSON.parse(newdata);	
+			console.log("gatewayObj::"+gatewayObj.gatewayID);	
+			document.getElementById('contentInfo').innerText="Gateway ID is :"+gatewayObj.gatewayID;	
+			//buildHtmlTable(gatewayObj.gatewayID);
+			//showInfo(data);
 		},
 		error : function() {
 			//alert('Error in getting gateway details...');			
@@ -94,11 +98,12 @@ function addAllColumnHeaders(myList)
 </script>
 	<form action="" id="gatewayForm">
 		<div class='header2' id='contentInfo'></div>
-		<div id="gatewaylistView">
+		<!-- <div id="gatewaylistView">
+		
 			<table id="gatewayTable" cellpadding="5px" cellspacing="8px"
 				style="text-align: center;">
-			</table>
-		</div>
+			</table> 
+		</div>-->
 	</form>
 </body>
 </html>
