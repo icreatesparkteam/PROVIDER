@@ -36,7 +36,7 @@ function getgatewaybyuser(){
 			var newdata=localStorage.getItem('gatewayInfo');		
 			var gatewayObj=JSON.parse(newdata);	
 			console.log("gatewayObj::"+gatewayObj.gatewayID);	
-			document.getElementById('contentInfo').innerText="Gateway ID is :"+gatewayObj.gatewayID;	
+			document.getElementById('contentInfo').innerText="Gateway ID is   -  "+gatewayObj.gatewayID;	
 			//buildHtmlTable(gatewayObj.gatewayID);
 			//showInfo(data);
 		},
