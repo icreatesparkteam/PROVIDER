@@ -1,21 +1,28 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
 <html>
 <title>iControl-E</title>
-        <meta http-equiv='X-UA-Compatible' content='IE=9'>
-        <link rel="icon" href="/iControlE-ServiceProvider/images/iControlE.ico" type="image/ico" sizes="16x16">
+<meta http-equiv='X-UA-Compatible' content='IE=9'>
+<link rel="icon" href="/iControlE-ServiceProvider/images/iControlE.ico"
+	type="image/ico" sizes="16x16">
 
-        <!--css-->
-        <link href="/iControlE-ServiceProvider/css/forms.css" rel="stylesheet" type="text/css" />        
-        <link rel="stylesheet" href="/iControlE-ServiceProvider/css/flexslider.css" type="text/css" media="screen" />
+<!--css-->
+<link href="/iControlE-ServiceProvider/css/forms.css" rel="stylesheet"
+	type="text/css" />
+<link rel="stylesheet"
+	href="/iControlE-ServiceProvider/css/flexslider.css" type="text/css"
+	media="screen" />
 
-        <!-- javascript -->
-        <script type="text/javascript" src="/iControlE-ServiceProvider/js/config.js"></script>
-        <script type="text/javascript" src="/iControlE-ServiceProvider/js/jquery.js"></script>
-        <script src="/iControlE-ServiceProvider/js/modernizr.js"></script>
-        <script defer src="/iControlE-ServiceProvider/js/jquery.flexslider.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- javascript -->
+<script type="text/javascript"
+	src="/iControlE-ServiceProvider/js/config.js"></script>
+<script type="text/javascript"
+	src="/iControlE-ServiceProvider/js/jquery.js"></script>
+<script src="/iControlE-ServiceProvider/js/modernizr.js"></script>
+<script defer src="/iControlE-ServiceProvider/js/jquery.flexslider.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
-        <script type="text/javascript">
+<script type="text/javascript">
             $(window).load(function() {
                 $('.flexslider').flexslider({
                     animation: "slide",
@@ -30,12 +37,12 @@
             window.addEventListener('popstate', function(event) {
             history.pushState(null, null, '/iControlE-ServiceProvider/html/spMainPage.html');
             });
-            </script>      
-           
+            </script>
+
 </head>
 <body>
 
-<script type="text/javascript">
+	<script type="text/javascript">
 function logout() {
     var token = window.sessionStorage.getItem("token");
     $.ajax({
@@ -57,52 +64,71 @@ function logout() {
             window.location = '/iControlE-ServiceProvider/html/Login.html';
         },
         error: function () {
-            //alert("Please try again later");
+         
         }
     });
 
 }
 
 </script>
- <div align="center" style="width:100%;">
-            <div class="mainContainer" align="center">
-                <div class='headerContainer'>
-                        <div id='logoutHomeScreen' onclick=logout()></div>
-                </div>
-                <div id="bodyContainer" class="w100">
-                    <div id='leftPanel'>
-                        <div class="slider">
-                            <div class="flexslider">
-                                <ul class="slides">
-                                    <li><img src="/iControlE-ServiceProvider/images/slider_images/image1.jpg" alt=''/></li>
-                                    <li><img src="/iControlE-ServiceProvider/images/slider_images/image2.jpg" alt=''/></li>
-                                    <li><img src="/iControlE-ServiceProvider/images/slider_images/image3.jpg" alt=''/></li>
-                                    <li><img src="/iControlE-ServiceProvider/images/slider_images/image4.jpg" alt=''/></li>
-                                </ul>
-                            </div>
-                        </div>
-                          <div id='aboutContentWrapper'>
-                            <p id="aboutHeader" class='indexHeader'>
-                              <ul id="menu">
-						<li><a href="showUsers.html" title="Home: " target="iframe">Home</a></li>
-						<li><a href="UserRegistration.html"
-							title="Create User" target="iframe">Create
-								User</a></li>
-						
-						<li><a href="manageUser.html" title="Manage User" target="iframe">Manage User</a></li>
-						<li><a href="searchUser.html" title="Manage User" target="iframe">Search User</a></li>
-					</ul>
-                            </p>
-                            <div>
-                                <div class='fr' id='aboutContentInfo'>
-                                    <!--add header here-->
-                                </div>
-                            </div>
-                              <iframe src="showUsers.html" id ="iframe" name="iframe" class="iframe"></iframe>
-                        </div>
-                    </div>  
-                </div>               
-            </div>
-    </body>
+	<div align="center" style="width: 100%;">
+		<div class="mainContainer" align="center">
+			<div class='headerContainer'>
+				<div id='logoutHomeScreen' onclick=logout()></div>
+			</div>
+			<div id="bodyContainer" class="w100">
+				<div id='leftPanel'>
+					<div class="slider">
+						<div class="flexslider">
+							<ul class="slides">
+								<li><img
+									src="/iControlE-ServiceProvider/images/slider_images/image1.png"
+									alt='' /></li>
+								<li><img
+									src="/iControlE-ServiceProvider/images/slider_images/image2.png"
+									alt='' /></li>
+								<li><img
+									src="/iControlE-ServiceProvider/images/slider_images/image3.png"
+									alt='' /></li>
+								<li><img
+									src="/iControlE-ServiceProvider/images/slider_images/image4.png"
+									alt='' /></li>
+								<li><img
+									src="/iControlE-ServiceProvider/images/slider_images/image5.png"
+									alt='' /></li>
+								<li><img
+									src="/iControlE-ServiceProvider/images/slider_images/image6.png"
+									alt='' /></li>
+
+							</ul>
+
+
+						</div>
+					</div>
+					<div id='aboutContentWrapper'>
+						<p id="aboutHeader" class='indexHeader'>
+						<ul id="menu">
+							<li><a href="showUsers.html" title="Home: " target="iframe">Home</a></li>
+							<li><a href="UserRegistration.html" title="Create User"
+								target="iframe">Create User</a></li>
+
+							<li><a href="manageUser.html" title="Manage User"
+								target="iframe">Manage User</a></li>
+							<li><a href="searchUser.html" title="Manage User"
+								target="iframe">Search User</a></li>
+						</ul>
+						</p>
+						<div>
+							<div class='fr' id='aboutContentInfo'>
+								<!--add header here-->
+							</div>
+						</div>
+						<iframe src="showUsers.html" id="iframe" name="iframe"
+							class="iframe"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+</body>
 </body>
 </html>

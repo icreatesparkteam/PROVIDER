@@ -35,9 +35,7 @@ function getDeviceList(){
 			buildHtmlTable(data);
 			showInfo(data);
 		},
-		error : function() {
-		//	alert('Error in getting device list');			
-			//return false;
+		error : function() {		
 		}
 	});
 	}
@@ -93,10 +91,8 @@ function showInfo(data){
 	list.forEach(function(sp) {
 		  count++;
 		});	
-	document.getElementById('contentInfo').innerText="Total Number of Devices:      "+count;
-	
+	document.getElementById('contentInfo').innerText="Total Number of Devices:"+count;	
 }
-
 	
 </script>
 	<form action="" id="deviceForm">

@@ -13,35 +13,32 @@
 </head>
 <body>
 
-<script type="text/javascript">
-function deleteUser(){
-	var userName = document.getElementById("userName").value;	
-	$.ajax({
-		type : "POST",
-		url : config.Server_IP + config.deleteUser  + '/' + userName,				
-		headers: {
-             'lnt_access_token': window.sessionStorage.getItem("token")
-         },			
-         data: {        	 
-        	 'username': userName
-        	    },
-      
-		contentType: "text/plain",
-		accepts: "text/plain",
-		success : function(data) {					
-			alert('User is deleted successfully');
-		},
-		error : function() {
-			alert('Error in deleting User');			
-			return false;
+	<script type="text/javascript">
+		function deleteUser() {
+			var userName = document.getElementById("userName").value;
+			$.ajax({
+				type : "POST",
+				url : config.Server_IP + config.deleteUser + '/' + userName,
+				headers : {
+					'lnt_access_token' : window.sessionStorage.getItem("token")
+				},
+				data : {
+					'username' : userName
+				},
+
+				contentType : "text/plain",
+				accepts : "text/plain",
+				success : function(data) {
+					alert('User is deleted successfully');
+				},
+				error : function() {
+					alert('Error in deleting User');
+					return false;
+				}
+			});
+
 		}
-	});
-	
-	
-}
-</script>
-
-
+	</script>
 	<table id="container">
 		<tr>
 			<td>Please Enter User Name</td>

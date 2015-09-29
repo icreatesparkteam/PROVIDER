@@ -25,8 +25,7 @@ function getgatewaybyuser(){
 			accepts : "application/json",		
 		 statusCode: {
              500: function () {
-            	 document.getElementById('contentInfo').innerText="No Gateway found";
-                 //return true;
+            	 document.getElementById('contentInfo').innerText="No Gateway found";                 
              }
          },
 		success : function(data) {					
@@ -36,13 +35,9 @@ function getgatewaybyuser(){
 			var newdata=localStorage.getItem('gatewayInfo');		
 			var gatewayObj=JSON.parse(newdata);	
 			console.log("gatewayObj::"+gatewayObj.gatewayID);	
-			document.getElementById('contentInfo').innerText="Gateway ID is   -  "+gatewayObj.gatewayID;	
-			//buildHtmlTable(gatewayObj.gatewayID);
-			//showInfo(data);
+			document.getElementById('contentInfo').innerText="Gateway ID is   -  "+gatewayObj.gatewayID;			
 		},
 		error : function() {
-			//alert('Error in getting gateway details...');			
-			//return false;
 		}
 	});
 }
@@ -54,10 +49,7 @@ function showInfo(data){
 		  count++;
 		});	
 	document.getElementById('contentInfo').innerText="Total Number of gateway:      "+count;
-	
 }
-
-
 
 function buildHtmlTable(data) {
 	var myList=JSON.parse(JSON.stringify(data));	
@@ -98,12 +90,6 @@ function addAllColumnHeaders(myList)
 </script>
 	<form action="" id="gatewayForm">
 		<div class='header2' id='contentInfo'></div>
-		<!-- <div id="gatewaylistView">
-		
-			<table id="gatewayTable" cellpadding="5px" cellspacing="8px"
-				style="text-align: center;">
-			</table> 
-		</div>-->
 	</form>
 </body>
 </html>

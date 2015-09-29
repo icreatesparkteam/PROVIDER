@@ -3,91 +3,95 @@
 <head>
 <title>iControl-E</title>
 <meta http-equiv='X-UA-Compatible' content='IE=9'>
-<link rel="icon" href="/iControlE-ServiceProvider/images/iControlE.ico" type="image/ico"
-	sizes="16x16">
+<link rel="icon" href="/iControlE-ServiceProvider/images/iControlE.ico"
+	type="image/ico" sizes="16x16">
 
 
 <link rel="stylesheet" type="text/css" media="screen"
 	href="/iControlE-ServiceProvider/css/forms.css" />
-<script type="text/javascript" src="/iControlE-ServiceProvider/js/config.js"></script>
+<script type="text/javascript"
+	src="/iControlE-ServiceProvider/js/config.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
 
-<script type="text/javascript">        
-    history.pushState(null, null, '/iControlE-ServiceProvider/html/Login.html');
-    window.addEventListener('popstate', function(event) {
-    history.pushState(null, null, '/iControlE-ServiceProvider/html/Login.html');
-    });
-    </script>
+<script type="text/javascript">
+	history.pushState(null, null, '/iControlE-ServiceProvider/html/Login.html');
+	window.addEventListener('popstate', function(event) {
+		history.pushState(null, null,
+				'/iControlE-ServiceProvider/html/Login.html');
+	});
+</script>
 
 </head>
 <body>
 
 	<script type="text/javascript">
-			function loginfunction() {
-				var form = document.getElementById("loginForm");
+		function loginfunction() {
+			var form = document.getElementById("loginForm");
 
-				var username = document.getElementById("UserName").value;
-				var password = document.getElementById("Password").value;
+			var username = document.getElementById("UserName").value;
+			var password = document.getElementById("Password").value;
 
-				if (username === "" && password === "") {
-					alert('Please enter your credentials');
-				} else if (username === "") {
-					alert('User Name is required.');
-					form.UserName.focus();
-				} else if (password === "") {
-					alert('Password is required.');
-					form.Password.focus();
-				} else {
-					$.ajax({
-						type : "POST",
-						url : config.Server_IP + config.login,
-						data : {
-							'username' : username,
-							'password' : password
-						},
-						contentType : "application/x-www-form-urlencoded",
-
-						success : function(data) {
-							document.cookie = "lnt_access_token" + "=" + JSON.parse(JSON.stringify(data));
-							window.sessionStorage.setItem("token",JSON.parse(JSON.stringify(data)));
-							getRole();
-							
-						},
-						error : function() {
-							alert('Invalid Credentials');
-							//form.UserName.focus();
-							return false;
-						}
-					});
-				}
-			}
-			
-			function getRole(){							
-				var token = window.sessionStorage.getItem("token");				
+			if (username === "" && password === "") {
+				alert('Please enter your credentials');
+			} else if (username === "") {
+				alert('User Name is required.');
+				form.UserName.focus();
+			} else if (password === "") {
+				alert('Password is required.');
+				form.Password.focus();
+			} else {
 				$.ajax({
-				type : "GET",
-				url : config.Server_IP + config.getrole,				
-					headers: {
-			             'lnt_access_token': token
-			         },	
-			        contentType : 'application/json',
-					accepts : "text/plain",
-					success : function(data) {													
-						if(data==="serviceprovider"){
-							window.location = "/iControlE-ServiceProvider/html/spMainPage.html";	
-						}
-						else if(data==="user"){
-							window.location = "/iControlE-ServiceProvider/html/userMainPage.html";	
-						}									
+					type : "POST",
+					url : config.Server_IP + config.login,
+					data : {
+						'username' : username,
+						'password' : password
 					},
-					error : function() {	
-						alert("Sorry, your role is not found..Please check credentials");						
+					contentType : "application/x-www-form-urlencoded",
+
+					success : function(data) {
+						document.cookie = "lnt_access_token" + "="
+								+ JSON.parse(JSON.stringify(data));
+						window.sessionStorage.setItem("token", JSON.parse(JSON
+								.stringify(data)));
+						getRole();
+
+					},
+					error : function() {
+						alert('Invalid Credentials');
+						//form.UserName.focus();
+						return false;
 					}
 				});
 			}
-		</script>
+		}
+
+		function getRole() {
+			var token = window.sessionStorage.getItem("token");
+			$
+					.ajax({
+						type : "GET",
+						url : config.Server_IP + config.getrole,
+						headers : {
+							'lnt_access_token' : token
+						},
+						contentType : 'application/json',
+						accepts : "text/plain",
+						success : function(data) {
+							if (data === "serviceprovider") {
+								window.location = "/iControlE-ServiceProvider/html/spMainPage.html";
+							} else if (data === "user") {
+								window.location = "/iControlE-ServiceProvider/html/userMainPage.html";
+							}
+						},
+						error : function() {
+							alert("Sorry, your role is not found..Please check credentials");
+						}
+					});
+		}
+	</script>
 
 	<div class='w100 loadingContainer'>
 		<div id='loginEntryWrapper'>
