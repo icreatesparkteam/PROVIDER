@@ -35,7 +35,7 @@ function getgatewaybyuser(){
 			var newdata=localStorage.getItem('gatewayInfo');		
 			var gatewayObj=JSON.parse(newdata);	
 			console.log("gatewayObj::"+gatewayObj.gatewayID);	
-			document.getElementById('contentInfo').innerText="Gateway ID is   -  "+gatewayObj.gatewayID;			
+			document.getElementById('contentInfo').innerText="Assigned Gateway   -  "+gatewayObj.gatewayID;			
 		},
 		error : function() {
 		}
@@ -89,7 +89,10 @@ function addAllColumnHeaders(myList)
 	
 </script>
 	<form action="" id="gatewayForm">
-		<div class='header2' id='contentInfo'></div>
+	<div id="container">
+	<div class='header' id='contentInfo' style="margin-top: -2px;padding-top: 70px;padding-bottom: 40px;"></div>
+	</div>
+		
 	</form>
 </body>
 </html>
