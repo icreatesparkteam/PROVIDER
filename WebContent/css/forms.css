@@ -110,7 +110,7 @@
 	margin-top: -50px;
 	width: 100px;
 	height: 50px;
-	background: url(/iControlE-Core/images/login_title.png) no-repeat;
+	background: url(/iControlE-ServiceProvider/images/login_title.png) no-repeat;
 	background-size: 100% 100%;
 	position: absolute;
 	left: 50%;
@@ -178,7 +178,7 @@ body {
 	width: 100%;
 	height: 80px;
 	background: #024d87;
-	background: url(/iControlE-Core/images/banner.png) no-repeat;
+	background: url(/iControlE-ServiceProvider/images/banner.png) no-repeat;
 }
 
 .headerMargin {
@@ -239,7 +239,7 @@ input[type=text], input[type=password] {
 #logoutHomeScreen {
 	width: 25px;
 	height: 25px;
-	background: URL('/iControlE-Core/images/logout_icn.png') no-repeat;
+	background: URL('/iControlE-ServiceProvider/images/logout_icn.png') no-repeat;
 	background-size: 100% 100%;
 	float: right;
 	margin-left: 12px;
