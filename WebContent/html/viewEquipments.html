@@ -30,6 +30,12 @@ function getDeviceList(){
          },	
 		contentType: 'application/json',
 		accepts: "application/json",
+		 statusCode: {
+             400: function () {
+            	 document.getElementById('contentInfo').innerText="No Equipment found";                 
+             },
+             
+         },
 		success : function(data) {	
 			console.log("success:devicelist"+data);
 			buildHtmlTable(data);
