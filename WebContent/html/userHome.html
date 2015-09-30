@@ -26,6 +26,9 @@ function getgatewaybyuser(){
 		 statusCode: {
              500: function () {
             	 document.getElementById('contentInfo').innerText="No Gateway found";                 
+             },
+             545: function () {
+            	 document.getElementById('contentInfo').innerText="No Gateway found";                 
              }
          },
 		success : function(data) {					
@@ -38,6 +41,7 @@ function getgatewaybyuser(){
 			document.getElementById('contentInfo').innerText="Assigned Gateway   -  "+gatewayObj.gatewayID;			
 		},
 		error : function() {
+			document.getElementById('contentInfo').innerText="No Gateway found";
 		}
 	});
 }
