@@ -258,6 +258,7 @@ input[type=text], input[type=password] {
 	padding-left: 60px;
 	padding-top: 30px;
 	position: relative;
+	
 }
 
 input[type=text], input[type=password] {
@@ -326,10 +327,13 @@ select {
 }
 
 th {
-	padding: 8px;
+	padding: 6px;
 	background-color: #08558b;
-	color: white;
+	color: white;	
+	text-transform: uppercase;	
+	font-weight: 400;
 }
+
 
 #gatewaylistView {
 	width: 250px;
