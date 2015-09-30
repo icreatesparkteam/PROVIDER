@@ -70,10 +70,11 @@ function addAllColumnHeaders(myList)
     for (var i = 0 ; i < myList.length ; i++) {
         var rowHash = myList[i];
         for (var key in rowHash) {
-        	if(key==="cluster"||key==="manufacturerID"||key==="id"){
+        	if(key==="cluster"||key==="manufacturerID"||key==="id"||key==="gatewayID"){        		
         	continue;	
         	}
-        	
+       	
+ 
             if ($.inArray(key, columnSet) == -1){
                 columnSet.push(key);
                 headerTr$.append($('<th/>').html(key));
@@ -97,7 +98,7 @@ function showInfo(data){
 </script>
 	<form action="" id="deviceForm">
 		<div class='header2' id='contentInfo'></div>
-		<div id="listView">
+		<div id="listView" style="width: 650px">
 			<table id="deviceTable" cellpadding="5px" cellspacing="8px"
 				style="text-align: center;">
 			</table>
